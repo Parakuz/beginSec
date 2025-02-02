@@ -1,0 +1,31 @@
+import Topic from "./reuseable/Topic";
+import Detail from "./reuseable/Detail";
+import ButtonPrimary from "./reuseable/button_primary";
+import HightlightCard from "./reuseable/Hightlight-card";
+
+function HightLight() {
+  return (
+    <section className="bg-gray-900 text-white py-16 px-8 md:px-16 lg:px-24 flex flex-col lg:flex-row items-center justify-center">
+      <div className=" mb-12 lg:mb-0 lg:mr-16 basis-1/2 ml-40">
+        <Topic>Highlights</Topic>
+        <Detail>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur
+          esse dolore corrupti assumenda sunt voluptas accusamus, in eaque
+          itaque amet, error odit culpa repudiandae impedit ipsam inventore ipsa
+          quam temporibus!
+        </Detail>
+        <div className="flex space-x-4">
+          <ButtonPrimary>Get started</ButtonPrimary>
+        </div>
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-2 gap-8 basis-1/2 mr-40">
+        <HightlightCard topic="Thai language" emotion="กขค" style />
+        <HightlightCard topic="Free to learn" emotion="📘" />
+        <HightlightCard topic="User friendly" emotion="👩‍🎓" style />
+        <HightlightCard topic="Basic of cyber" emotion="🔒" />
+      </div>
+    </section>
+  );
+}
+
+export default HightLight;

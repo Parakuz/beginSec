@@ -1,0 +1,11 @@
+function ButtonPrimary({ children }) {
+  return (
+    <div className="flex space-x-4">
+      <button className="bg-purple-600 text-white px-6 py-3 rounded hover:bg-purple-700">
+        {children}
+      </button>
+    </div>
+  );
+}
+
+export default ButtonPrimary;
