@@ -1,0 +1,11 @@
+.input_group {
+    @apply flex border rounded-xl relative; /* Combined `position: relative` into the same line */
+}
+
+.input_text {
+    @apply w-full py-3 px-5 border rounded-xl bg-slate-50 focus:outline-none; /* Merged `focus:outline-none` */
+}
+
+.button {
+    @apply bg-[#391A81] text-white py-3 px-5 rounded-xl focus:outline-none font-bold;
+}

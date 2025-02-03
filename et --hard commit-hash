@@ -1,0 +1,14 @@
+[33m0e57f1e9[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mlogin-regis[m[33m)[m HEAD@{0}: revert: Revert "First commit by lnwbeer"
+[33m24796596[m HEAD@{1}: reset: moving to HEAD~1
+[33m02a4fefa[m HEAD@{2}: reset: moving to HEAD~1
+[33m9bf9a6b1[m HEAD@{3}: reset: moving to HEAD~1
+[33m41a43ac0[m HEAD@{4}: commit: Track large file with Git LFS
+[33m9bf9a6b1[m HEAD@{5}: commit: Removed node_modules and added to .gitignore
+[33m02a4fefa[m HEAD@{6}: commit: First commit
+[33m24796596[m HEAD@{7}: rebase (finish): returning to refs/heads/login-regis
+[33m24796596[m HEAD@{8}: rebase (pick): First commit by lnwbeer
+[33m8c47d8e7[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mtmp[m[33m, [m[1;32mmain[m[33m)[m HEAD@{9}: rebase (start): checkout tmp
+[33m8fc04a09[m HEAD@{10}: commit: First commit by lnwbeer
+[33m30f3ee9a[m[33m ([m[1;31morigin/profile[m[33m, [m[1;31morigin/login-regis[m[33m, [m[1;31morigin/learningPath[m[33m, [m[1;31morigin/homepage[m[33m, [m[1;31morigin/database[m[33m, [m[1;31morigin/contact[m[33m, [m[1;31morigin/blog[m[33m, [m[1;31morigin/admin[m[33m)[m HEAD@{11}: checkout: moving from main to login-regis
+[33m8c47d8e7[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mtmp[m[33m, [m[1;32mmain[m[33m)[m HEAD@{12}: reset: moving to HEAD
+[33m8c47d8e7[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mtmp[m[33m, [m[1;32mmain[m[33m)[m HEAD@{13}: clone: from https://github.com/Parakuz/beginSec.git
