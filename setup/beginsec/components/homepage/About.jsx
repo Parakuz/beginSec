@@ -1,4 +1,4 @@
-import ButtonPrimary from "./reuseable/Button_primary";
+import ButtonPrimary from "./reuseable/ButtonPrimary";
 import Topic from "./reuseable/Topic";
 import Detail from "./reuseable/Detail";
 

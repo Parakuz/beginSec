@@ -1,6 +1,6 @@
 import Topic from "./reuseable/Topic";
 import Detail from "./reuseable/Detail";
-import ButtonPrimary from "./reuseable/button_primary";
+import ButtonPrimary from "./reuseable/ButtonPrimary";
 import HightlightCard from "./reuseable/Hightlight-card";
 
 function HightLight() {

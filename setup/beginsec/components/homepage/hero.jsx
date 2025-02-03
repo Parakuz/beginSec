@@ -1,5 +1,5 @@
-import ButtonPrimary from "./reuseable/Button_primary";
-import ButtonSecondary from "./reuseable/Button_secondary";
+import ButtonPrimary from "./reuseable/ButtonPrimary";
+import ButtonSecondary from "./reuseable/ButtonSecondary";
 import Topic from "./reuseable/Topic";
 import Detail from "./reuseable/Detail";
 
