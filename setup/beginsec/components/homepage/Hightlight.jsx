@@ -15,14 +15,24 @@ function HightLight() {
           quam temporibus!
         </Detail>
         <div className="flex space-x-4">
-          <ButtonPrimary>Get started</ButtonPrimary>
+          <ButtonPrimary>Learn More</ButtonPrimary>
         </div>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-2 gap-8 basis-1/2 mr-40">
         <HightlightCard topic="Thai language" emotion="กขค" style />
-        <HightlightCard topic="Free to learn" emotion="📘" />
-        <HightlightCard topic="User friendly" emotion="👩‍🎓" style />
-        <HightlightCard topic="Basic of cyber" emotion="🔒" />
+        <HightlightCard
+          topic="Free to learn"
+          emotion="/homepage/free-to-learn.png"
+        />
+        <HightlightCard
+          topic="User friendly"
+          emotion="/homepage/user-friendly.png"
+          style
+        />
+        <HightlightCard
+          topic="Basic of cyber"
+          emotion="/homepage/basic-of-cyber.png"
+        />
       </div>
     </section>
   );

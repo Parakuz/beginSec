@@ -5,7 +5,7 @@ import Detail from "./reuseable/Detail";
 
 function Hero() {
   return (
-    <section className="bg-gray-900 text-white py-16 px-8 md:px-16 lg:px-24 flex flex-col lg:flex-row justify-between">
+    <section className="bg-gray-900 text-white py-16 px-8 md:px-16 lg:px-24 flex flex-col lg:flex-row justify-between items-center">
       <div className="max-w-lg mb-8 lg:mb-24 ml-40">
         <Topic>Strong Security Starts with Smart Users</Topic>
         <Detail>
@@ -20,9 +20,9 @@ function Hero() {
       <div className="relative flex-shrink-0 mr-40">
         <div className="absolute bg-gradient-to-br from-[#161831] via-[#391A81] to-[#8F6CE1] blur-3xl rounded-full w-96 h-96 -top-10 -right-10"></div>
         <img
-          src="/hero-image.png"
+          src="homepage/hero.png"
           alt="Security Illustration"
-          className="w-full max-w-md"
+          className="relative w-full max-w-md transform scale-100 z-10"
         />
       </div>
     </section>

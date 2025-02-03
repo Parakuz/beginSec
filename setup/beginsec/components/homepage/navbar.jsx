@@ -3,9 +3,9 @@ import NavBtn from "./reuseable/Nav_btn";
 
 function Navbar() {
   return (
-    <nav className="bg-gray-800 text-white px-6 py-4 flex justify-between items-center z-10">
+    <nav className="bg-[rgba(37,37,37)] text-white px-6 py-4 flex justify-between items-center z-10">
       <div className="flex items-center space-x-6 ml-40">
-        <div className="font-bold text-xl">LOGO</div>
+        <img src="homepage/logo.png" alt="Logo" className="h-10 w-auto" />
         <NavBtn des="/">Home</NavBtn>
         <NavBtn des="/learning-path">Learning Path</NavBtn>
         <NavBtn des="/blog">Blog</NavBtn>

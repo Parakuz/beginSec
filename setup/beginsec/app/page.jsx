@@ -1,4 +1,3 @@
-import Navbar from "@/components/homepage/Navbar";
 import Hero from "@/components/homepage/Hero";
 import About from "@/components/homepage/About";
 import HightLight from "@/components/homepage/Hightlight";

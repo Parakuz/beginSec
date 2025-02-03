@@ -9,22 +9,22 @@ function Content() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <ContentCard
-          src="/cybersecurity-job.png"
+          src="/homepage/cybersecurity-job.png"
           alt="Cybersecurity Job"
           description="Cybersecurity Job"
         />
         <ContentCard
-          src="/cyber-blue-team.png"
+          src="/homepage/cyber-blue-team.png"
           alt="Cyber Blue Team"
           description="Cyber Blue Team"
         />
         <ContentCard
-          src="/cyber-red-team.png"
+          src="/homepage/cyber-red-team.png"
           alt="Cyber Red Team"
           description="Cyber Red Team"
         />
         <ContentCard
-          src="/basic-command-cyber.png"
+          src="/homepage/basic-command-cyber.png"
           alt="Basic Command Cyber"
           description="Basic Command Cyber"
           ontop
