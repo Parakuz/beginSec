@@ -1,9 +1,8 @@
-"use client";
 import NavBtn from "./reuseable/Nav_btn";
 
 function Navbar() {
   return (
-    <nav className="bg-[rgba(37,37,37)] text-white px-6 py-4 flex justify-between items-center z-10">
+    <nav className="bg-[#252525]/60 text-white px-6 py-4 flex justify-between items-center z-10">
       <div className="flex items-center space-x-6 ml-40">
         <img src="homepage/logo.png" alt="Logo" className="h-10 w-auto" />
         <NavBtn des="/">Home</NavBtn>
@@ -15,7 +14,7 @@ function Navbar() {
         <NavBtn des="/login">Login</NavBtn>
         <NavBtn
           des="/signup"
-          customClass="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
+          customClass="bg-[#391A81] text-white px-4 py-2 rounded hover:bg-purple-700"
         >
           Sign Up
         </NavBtn>

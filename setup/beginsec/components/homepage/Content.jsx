@@ -3,7 +3,7 @@ import ContentCard from "./reuseable/content-card";
 
 function Content() {
   return (
-    <section className="bg-gray-900 text-white py-16 px-8 md:px-16 lg:px-24 relative ">
+    <section className="text-white py-16 px-8 md:px-16 lg:px-24 relative ">
       <div className="text-center mb-12">
         <Topic>Contents</Topic>
       </div>
@@ -30,7 +30,6 @@ function Content() {
           ontop
         />
       </div>
-      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-br from-purple-600 via-purple-800 to-purple-900 blur-2xl h-64 -z-10"></div>
     </section>
   );
 }

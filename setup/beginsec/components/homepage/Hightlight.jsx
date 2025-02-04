@@ -5,8 +5,8 @@ import HightlightCard from "./reuseable/Hightlight-card";
 
 function HightLight() {
   return (
-    <section className="bg-gray-900 text-white py-16 px-8 md:px-16 lg:px-24 flex flex-col lg:flex-row items-center justify-center">
-      <div className=" mb-12 lg:mb-0 lg:mr-16 basis-1/2 ml-40">
+    <section className="text-white py-16 px-8 md:px-16 lg:px-24 flex flex-col lg:flex-row justify-center items-center gap-x-64 container mx-auto">
+      <div className="mb-12 lg:mb-0 flex-1 text-center lg:text-left">
         <Topic>Highlights</Topic>
         <Detail>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur
@@ -14,11 +14,11 @@ function HightLight() {
           itaque amet, error odit culpa repudiandae impedit ipsam inventore ipsa
           quam temporibus!
         </Detail>
-        <div className="flex space-x-4">
+        <div className="flex justify-center lg:justify-start space-x-4">
           <ButtonPrimary>Learn More</ButtonPrimary>
         </div>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-2 gap-8 basis-1/2 mr-40">
+      <div className="grid grid-cols-2 md:grid-cols-2 gap-8 flex-1">
         <HightlightCard topic="Thai language" emotion="กขค" style />
         <HightlightCard
           topic="Free to learn"

@@ -1,8 +1,17 @@
-function ContentCard({ src, alt, description }) {
+function ContentCard({ src, alt, description, ontop }) {
+  let style = "rounded overflow-hidden cursor-pointer";
+  if (ontop) {
+    style += " z-10";
+  }
+
   return (
-    <div className="bg-gray-700 rounded overflow-hidden">
-      <img src={src} alt={alt} className="w-full h-60 object-cover" />
-      <p className="text-center py-2 text-white bg-gray-800">{description}</p>
+    <div className={style}>
+      <img
+        src={src}
+        alt={alt}
+        className="w-full h-60 object-cover rounded-lg"
+      />
+      <p className="text-center py-2 text-white">{description}</p>
     </div>
   );
 }

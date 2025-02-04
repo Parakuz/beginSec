@@ -12,7 +12,7 @@ function NavBtn({ children, des, customClass = "hover:text-purple-400" }) {
       href={des}
       className={`relative text-sm font-medium ${customClass} ${
         isActive
-          ? "before:absolute before:-bottom-1 before:left-0 before:w-full before:h-[2px] before:bg-purple-500 before:content-['']"
+          ? "before:absolute before:-bottom-1 before:left-0 before:w-full before:h-[2px] before:bg-white before:content-['']"
           : ""
       }`}
     >

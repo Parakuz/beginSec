@@ -27,6 +27,12 @@
   background-color: var(--tertiary);
 }
 
+body {
+  background-color: #161831;
+}
+
+
+
 /* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
