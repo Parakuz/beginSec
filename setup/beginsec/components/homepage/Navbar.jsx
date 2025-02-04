@@ -1,3 +1,5 @@
+"use client";
+import dynamic from "next/dynamic";
 import NavBtn from "./reuseable/Nav_btn";
 
 function Navbar() {
@@ -23,4 +25,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default dynamic(() => Promise.resolve(Navbar), { ssr: false });

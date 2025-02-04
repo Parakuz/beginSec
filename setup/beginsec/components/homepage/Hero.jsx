@@ -5,7 +5,7 @@ import Detail from "./reuseable/Detail";
 
 function Hero() {
   return (
-    <section className="text-white py-16 px-8 md:px-16 lg:px-24 flex flex-col lg:flex-row justify-center items-center gap-x-96">
+    <section className="text-white py-16 px-8 md:px-16 lg:px-24 flex flex-col lg:flex-row justify-center items-center gap-x-64 container mx-auto">
       <div className="max-w-lg mb-8 lg:mb-24">
         <Topic>Strong Security Starts with Smart Users</Topic>
         <Detail>
