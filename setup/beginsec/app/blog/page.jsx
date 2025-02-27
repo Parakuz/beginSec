@@ -10,11 +10,12 @@ import 'swiper/css';
 import 'swiper/css/navigation'; // if you use navigation
 import 'swiper/css/pagination'; // if you use pagination
 import 'swiper/css/scrollbar'; // if you use scrollbar
-import { Navigation } from 'swiper/modules'; // Correct import for Swiper modules
+import { Navigation, Autoplay } from 'swiper/modules'; // Correct import for Swiper modules
 
 const BlogPage = () => {
   const router = useRouter();
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [showAllBlogs, setShowAllBlogs] = useState(false); // State to toggle blog visibility
 
   const handleBlogClick = (id) => {
     router.push(`/blog/${id}`);
@@ -55,7 +56,7 @@ const BlogPage = () => {
       id: "6",
       title: "Tips for Secure Online Shopping",
       postTime: "Posted on September 1, 2023",
-      imageSrc: "/assets/blog6.png"
+      imageSrc: "/assets/blog6.webp"
     },
     {
       id: "7",
@@ -73,7 +74,7 @@ const BlogPage = () => {
       id: "9",
       title: "The Future of Cybersecurity",
       postTime: "Posted on August 20, 2023",
-      imageSrc: "/assets/blog9.webp"
+      imageSrc: "/assets/blog9.jpg"
     },
     {
       id: "10",
@@ -94,55 +95,55 @@ const BlogPage = () => {
       id: "main2",
       title: "Top Security Tips",
       description: "Learn the top tips to keep your data and devices secure.",
-      imageSrc: "/assets/MainBlog2.png"
+      imageSrc: "/assets/MainBlog3.webp"
     },
     {
       id: "main3",
       title: "Upcoming Events",
       description: "Don't miss out on important cybersecurity events and webinars.",
-      imageSrc: "/assets/blog9.webp"
+      imageSrc: "/assets/MainBlog3.webp"
     },
     {
       id: "main4",
       title: "Cybersecurity for Small Businesses",
       description: "Protect your small business from cyber threats.",
-      imageSrc: "/assets/main4.jpg"
+      imageSrc: "/assets/MainBlog3.webp"
     },
     {
       id: "main5",
       title: "Cloud Security Best Practices",
       description: "Learn how to secure your data in the cloud.",
-      imageSrc: "/assets/main5.jpg"
+      imageSrc: "/assets/MainBlog3.webp"
     },
     {
       id: "main6",
       title: "Mobile Security Tips",
       description: "Keep your mobile devices secure with these tips.",
-      imageSrc: "/assets/main6.jpg"
+      imageSrc: "/assets/MainBlog3.webp"
     },
     {
       id: "main7",
       title: "IoT Security Challenges",
       description: "Understand the security challenges of IoT devices.",
-      imageSrc: "/assets/main7.jpg"
+      imageSrc: "/assets/MainBlog3.webp"
     },
     {
       id: "main8",
       title: "Data Breach Response",
       description: "Learn how to respond to a data breach effectively.",
-      imageSrc: "/assets/main8.jpg"
+      imageSrc: "/assets/MainBlog3.webp"
     },
     {
       id: "main9",
       title: "Cybersecurity Certifications",
       description: "Explore the top cybersecurity certifications.",
-      imageSrc: "/assets/main9.jpg"
+      imageSrc: "/assets/MainBlog3.webp"
     },
     {
       id: "main10",
       title: "AI in Cybersecurity",
       description: "Discover how AI is transforming cybersecurity.",
-      imageSrc: "/assets/main10.jpg"
+      imageSrc: "/assets/MainBlog3.webp"
     }
   ];
 
@@ -155,7 +156,8 @@ const BlogPage = () => {
             spaceBetween={50}
             slidesPerView={3}
             className="mb-8"
-            modules={[Navigation]} // Ensure the Navigation module is included
+            modules={[Navigation, Autoplay]} // Ensure the Navigation and Autoplay modules are included
+            autoplay={{ delay: 3000 }} // Add autoplay with a delay of 3000ms (3 seconds)
           >
             {mainBlogData.map(blog => (
               <SwiperSlide key={blog.id}>
@@ -171,7 +173,7 @@ const BlogPage = () => {
           </Swiper>
           <h2 className="text-2xl font-bold mb-4">Recent Posts</h2>
           <div className="flex flex-wrap -mx-4">
-            {blogData.slice(0, 10).map(blog => (
+            {blogData.slice(0, showAllBlogs ? blogData.length : 8).map(blog => (
               <div key={blog.id} className="w-full sm:w-1/2 lg:w-1/4 px-4 mb-6">
                 <BlogCard
                   title={blog.title}
@@ -182,6 +184,16 @@ const BlogPage = () => {
               </div>
             ))}
           </div>
+          {!showAllBlogs && (
+            <div className="text-center mt-4">
+              <button
+                onClick={() => setShowAllBlogs(true)}
+                className=" text-white px-8 py-3 rounded-[10px] border border-white "
+              >
+                View All
+              </button>
+            </div>
+          )}
         </main>
       </div>
       <Footer />

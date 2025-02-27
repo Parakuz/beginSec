@@ -1,7 +1,7 @@
 import React from "react";
 import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 import Navbar from "../components/homepage/navbar";
-import Footer from "../components/homepage/Foooter";
+import Footer from "../components/homepage/Footer";
 import styles from "@/styles/Form.module.css";
 import Button from "../components/homepage/reuseable/Button";
 const ContactPage = () => {
