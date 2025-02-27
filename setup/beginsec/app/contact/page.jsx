@@ -4,59 +4,58 @@ import Navbar from "../components/homepage/navbar";
 import Footer from "../components/homepage/Footer";
 import styles from "@/styles/Form.module.css";
 import Button from "../components/homepage/reuseable/Button";
+
 const ContactPage = () => {
   return (
     <div className="bg-[#161831]">
       <Navbar />
-      <div className="w-full bg-[#252525]/40 p-16">
-        <h1 className="text-white text-[40px] font-bold  mb-4 text-center">
+      <div className="w-full bg-[#252525]/40 p-8 md:p-16">
+        <h1 className="text-white text-[32px] md:text-[40px] font-bold mb-4 text-center">
           Contact Us
         </h1>
       </div>
-      <div className="container mx-auto p-8">
-        <div className="flex justify-center items-center mt-8">
-          <div className="w-[958px] h-[276px] flex justify-between items-center">
-            <div className="w-[264px] h-[276px] bg-white rounded-xl shadow-md p-4 flex flex-col items-center">
-              <div className="bg-[#E5E8EA] text-white rounded-full p-6 mb-2">
-                <FaMapMarkerAlt className="text-4xl text-[#391A81]" />
-              </div>
-              <h2 className="text-xl font-bold mb-2">Location</h2>
-              <p className="text-center">
-                1234 Street Name, City, State, 12345
-              </p>
+      <div className="container mx-auto p-4 md:p-8">
+        <div className="flex flex-col md:flex-row justify-center items-center mt-8 gap-8">
+          <div className="w-full md:w-[264px] h-[276px] bg-white rounded-xl shadow-md p-4 flex flex-col items-center">
+            <div className="bg-[#E5E8EA] text-white rounded-full p-6 mb-2">
+              <FaMapMarkerAlt className="text-4xl text-[#391A81]" />
             </div>
-            <div className="w-[264px] h-[276px] bg-white rounded-xl shadow-md p-4 flex flex-col items-center">
-              <div className="bg-[#E5E8EA] text-white rounded-full p-6 mb-3">
-                <FaPhoneAlt className="text-4xl text-[#391A81]" />
-              </div>
-              <h2 className="text-xl font-bold mb-2">Contact</h2>
-              <p className="text-center">Phone: (123) 456-7890</p>
-              <p className="text-center">Fax: (123) 456-7891</p>
+            <h2 className="text-xl font-bold mb-2">Location</h2>
+            <p className="text-center">
+              1234 Street Name, City, State, 12345
+            </p>
+          </div>
+          <div className="w-full md:w-[264px] h-[276px] bg-white rounded-xl shadow-md p-4 flex flex-col items-center">
+            <div className="bg-[#E5E8EA] text-white rounded-full p-6 mb-3">
+              <FaPhoneAlt className="text-4xl text-[#391A81]" />
             </div>
-            <div className="w-[264px] h-[276px] bg-white rounded-xl shadow-md p-4 flex flex-col items-center">
-              <div className="bg-[#E5E8EA] text-white rounded-full p-6 mb-3">
-                <FaEnvelope className="text-4xl text-[#391A81]" />
-              </div>
-              <h2 className="text-xl font-bold mb-2">Email</h2>
-              <p className="text-center">info@example.com</p>
-              <p className="text-center">support@example.com</p>
+            <h2 className="text-xl font-bold mb-2">Contact</h2>
+            <p className="text-center">Phone: (123) 456-7890</p>
+            <p className="text-center">Fax: (123) 456-7891</p>
+          </div>
+          <div className="w-full md:w-[264px] h-[276px] bg-white rounded-xl shadow-md p-4 flex flex-col items-center">
+            <div className="bg-[#E5E8EA] text-white rounded-full p-6 mb-3">
+              <FaEnvelope className="text-4xl text-[#391A81]" />
             </div>
+            <h2 className="text-xl font-bold mb-2">Email</h2>
+            <p className="text-center">info@example.com</p>
+            <p className="text-center">support@example.com</p>
           </div>
         </div>
-        <div className="flex flex-col md:flex-row gap-10 mt-8 space-y-8">
+        <div className="flex flex-col md:flex-row gap-10 mt-8 space-y-8 md:space-y-0">
           <div className="w-full md:w-1/2 space-y-8">
-            <div className="flex-col justify-start items-start gap-3 inline-flex ">
-              <div className="self-stretch text-white text-[25px] font-bold ">
+            <div className="flex-col justify-start items-start gap-3 inline-flex">
+              <div className="self-stretch text-white text-[25px] font-bold">
                 Send Us A Message
               </div>
-              <div className="self-stretch text-white text-base font-normal ">
+              <div className="self-stretch text-white text-base font-normal">
                 Lorem ipsum dolor sit amet consectetur. Nunc vitae arcu facilisi
                 nisl cras
               </div>
             </div>
             <form className="space-y-4">
-              <div className="flex mb-4 gap-4">
-                <div className="w-1/2 ">
+              <div className="flex flex-col md:flex-row mb-4 gap-4">
+                <div className="w-full md:w-1/2">
                   <label className="block text-white text-base font-bold mb-2">
                     Name
                   </label>
@@ -67,7 +66,7 @@ const ContactPage = () => {
                     placeholder="Your name"
                   />
                 </div>
-                <div className="w-1/2">
+                <div className="w-full md:w-1/2">
                   <label
                     className="block text-white text-base font-bold mb-2"
                     htmlFor="confirm-email"
@@ -82,7 +81,7 @@ const ContactPage = () => {
                   />
                 </div>
               </div>
-              <div className="mb-4  ">
+              <div className="mb-4">
                 <label className="block text-white text-base font-bold mb-2">
                   Phone
                 </label>
