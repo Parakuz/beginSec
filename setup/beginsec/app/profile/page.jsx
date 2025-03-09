@@ -5,7 +5,6 @@ import { MdSensorDoor } from "react-icons/md";
 import { PiCertificateFill } from "react-icons/pi";
 import { TbBadgesFilled } from "react-icons/tb";
 import NavbarSection from "../components/homepage/navbar-section";
-import ProgressBar from "../components/homepage/progressbar";
 
 const ProfilePage = () => {
   return (
@@ -92,7 +91,6 @@ const ProfilePage = () => {
             <div className="text-white text-lg font-bold">
               Profile Learning 4
             </div>
-            <ProgressBar/>
           </div>
         </div>
       </div>
