@@ -7,9 +7,94 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model post {
-  id Int @id @default(autoincrement())
-  title String
-  content String?
-  createAt DateTime @default(now())
+model User {
+  id                     BigInt                      @id @default(autoincrement()) @map("UserId")
+  name                   String                   @map("Name")
+  email                  String                   @unique @map("Email")
+  password               String                   @map("Password")
+  dob                    DateTime?                 @map("DOB")
+  telephone              String?                   @map("Telephone")
+  username               String?                   @unique @map("Username")
+  imagePath              String?                   @map("ImagePath")
+  reports                Transaction_Report[]
+  Transaction_UserCourse Transaction_UserCourse[]
+}
+
+model Admin {
+  id       BigInt               @id @default(autoincrement()) @map("AdminId")
+  username String               @map("AdminUsername")
+  password String               @map("Password")
+  email    String               @map("Email")
+  name     String               @map("Name")
+  blogs    Blog[]
+  reports  Transaction_Report[]
+}
+
+model Blog {
+  id        BigInt @id @default(autoincrement()) @map("BlogId")
+  name      String @map("BlogName")
+  detail    String @map("BlogDetail")
+  adminId   BigInt @map("AdminId")
+  imagePath String @map("ImagePath")
+  admin     Admin  @relation(fields: [adminId], references: [id])
+}
+
+model Course {
+  id                     BigInt                   @id @default(autoincrement()) @map("CourseId")
+  name                   String                   @map("CourseName")
+  detail                 String                   @map("CourseDetail")
+  certificate            String?                   @map("Certificate")
+  imagePath              String                   @map("imagePath")
+  path                   String                   @map("path")
+  sections               Section[]
+  Transaction_UserCourse Transaction_UserCourse[]
+}
+
+model Section {
+  id                     BigInt                   @id @default(autoincrement()) @map("SectionId")
+  courseId               BigInt                   @map("CourseId")
+  detail                 String                   @map("SectionDetail")
+  name                   String                   @map("SectionName")
+  labName                String                   @map("LabName")
+  course                 Course                   @relation(fields: [courseId], references: [id])
+  Transaction_UserCourse Transaction_UserCourse[]
+  questions              Question[]
+}
+
+
+
+model Question {
+  id        BigInt   @id @default(autoincrement()) @map("QuestionId")
+  sectionId BigInt   @map("SectionId")
+  question  String   @map("QuestionText")
+  choices   String   
+  answer    String
+  section   Section  @relation(fields: [sectionId], references: [id])
+}
+
+
+model Transaction_Report {
+  id          BigInt   @id @default(autoincrement()) @map("ReportId")
+  title       String   @map("Title")
+  description String   @map("Description")
+  adminId     BigInt   @map("AdminId")
+  userId      BigInt   @map("UserId")
+  createdAt   DateTime @map("CreateAt")
+  admin       Admin    @relation(fields: [adminId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+model Transaction_UserCourse {
+  TransactionId     BigInt       @id @default(autoincrement())
+  UserId            BigInt
+  CourseId          BigInt
+  SectionId         BigInt
+  PretestScore      Int?         
+  SectionProgress   Boolean      @default(false)
+  PosttestScore     Int?         
+  PosttestAttempts  Int?         @default(0)
+  IsPreTestCompleted Boolean     @default(false)  
+  Course            Course       @relation(fields: [CourseId], references: [id])
+  Section           Section      @relation(fields: [SectionId], references: [id])
+  User              User         @relation(fields: [UserId], references: [id])
 }
