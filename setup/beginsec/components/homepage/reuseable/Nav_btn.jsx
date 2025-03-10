@@ -5,7 +5,9 @@ import { usePathname } from "next/navigation";
 
 function NavBtn({ children, des, customClass = "hover:text-purple-400" }) {
   const pathname = usePathname();
-  const isActive = pathname !== "/signup" && pathname === des;
+  const isActive =
+    (pathname !== "/signup" && pathname === des) ||
+    (des === "/learning-path" && pathname.startsWith("/learning-path"));
 
   return (
     <Link

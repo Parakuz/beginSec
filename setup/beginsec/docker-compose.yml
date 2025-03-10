@@ -22,7 +22,17 @@ services:
       PGADMIN_DEFAULT_PASSWORD: strong-password
     volumes:
       - pgadmin-data:/var/lib/pgadmin
+  redis:
+    image: redis
+    restart: always
+    container_name: redis
+    ports:
+      - "6379:6379"
+    command: redis-server
+    volumes:
+      - redisdata:/data
 
 volumes:
   local_pgdata:
   pgadmin-data:
+  redisdata:

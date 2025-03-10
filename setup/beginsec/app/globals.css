@@ -1,8 +1,15 @@
+@import url("https://fonts.cdnfonts.com/css/satoshi");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+body {
+  @apply font-satoshi;
+}
+
 :root {
+  overflow-x: clip;
   --primary: #212529;
   --secondary: hsla(269, 63%, 50%);
   --tertiary: rgba(31, 209, 253, 0.6);
@@ -31,7 +38,19 @@ body {
   background-color: #161831;
 }
 
+/* ซ่อนเส้นกรอบของ ReactQuill */
+.lesson-quill .ql-container {
+  border: none !important;
+}
 
+.ql-align-center {
+  text-align: center;
+}
+
+.ql-align-center img {
+  display: block;
+  margin: auto;
+}
 
 /* @media (prefers-color-scheme: dark) {
   :root {

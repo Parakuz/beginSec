@@ -7,7 +7,7 @@ import Detail from "./reuseable/Detail";
 
 function Footer() {
   return (
-    <footer className="relative md:px-16 text-white overflow-x-clip h-64">
+    <footer className="relative md:px-16 text-white h-64">
       <div className="border-t border-gray-700 mb-12 z-10"></div>
       <div className="absolute bg-gradient-to-br from-[#161831] via-[#391A81] to-[#8F6CE1] blur-3xl rounded-full w-96 h-96 -top-60 -right-20 -z-10"></div>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8 ml-40">

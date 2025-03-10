@@ -1,3 +1,4 @@
+import { SessionProvider } from "@/contexts/sessionContext";
 import "./globals.css";
 import Navbar from "@/components/homepage/Navbar";
 
@@ -10,8 +11,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Navbar />
-        {children}
+        <SessionProvider>
+          <Navbar />
+          {children}
+        </SessionProvider>
       </body>
     </html>
   );
