@@ -7,3 +7,7 @@
 body {
   @apply font-satoshi;
 }
+
+.lesson-quill .ql-container {
+  border: none !important;
+}

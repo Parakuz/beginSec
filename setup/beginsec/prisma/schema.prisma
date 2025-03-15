@@ -8,14 +8,14 @@ datasource db {
 }
 
 model User {
-  id                     BigInt                      @id @default(autoincrement()) @map("UserId")
+  id                     BigInt                   @id @default(autoincrement()) @map("UserId")
   name                   String                   @map("Name")
   email                  String                   @unique @map("Email")
   password               String                   @map("Password")
-  dob                    DateTime?                 @map("DOB")
-  telephone              String?                   @map("Telephone")
-  username               String?                   @unique @map("Username")
-  imagePath              String?                   @map("ImagePath")
+  dob                    DateTime?                @map("DOB")
+  telephone              String?                  @map("Telephone")
+  username               String?                  @unique @map("Username")
+  imagePath              String?                  @map("ImagePath")
   reports                Transaction_Report[]
   Transaction_UserCourse Transaction_UserCourse[]
 }
@@ -43,7 +43,7 @@ model Course {
   id                     BigInt                   @id @default(autoincrement()) @map("CourseId")
   name                   String                   @map("CourseName")
   detail                 String                   @map("CourseDetail")
-  certificate            String?                   @map("Certificate")
+  certificate            String?                  @map("Certificate")
   imagePath              String                   @map("imagePath")
   path                   String                   @map("path")
   sections               Section[]
@@ -56,22 +56,19 @@ model Section {
   detail                 String                   @map("SectionDetail")
   name                   String                   @map("SectionName")
   labName                String                   @map("LabName")
+  questions              Question[]
   course                 Course                   @relation(fields: [courseId], references: [id])
   Transaction_UserCourse Transaction_UserCourse[]
-  questions              Question[]
 }
-
-
 
 model Question {
-  id        BigInt   @id @default(autoincrement()) @map("QuestionId")
-  sectionId BigInt   @map("SectionId")
-  question  String   @map("QuestionText")
-  choices   String   
+  id        BigInt  @id @default(autoincrement()) @map("QuestionId")
+  sectionId BigInt  @map("SectionId")
+  question  String  @map("QuestionText")
+  choices   String
   answer    String
-  section   Section  @relation(fields: [sectionId], references: [id])
+  section   Section @relation(fields: [sectionId], references: [id])
 }
-
 
 model Transaction_Report {
   id          BigInt   @id @default(autoincrement()) @map("ReportId")
@@ -85,16 +82,16 @@ model Transaction_Report {
 }
 
 model Transaction_UserCourse {
-  TransactionId     BigInt       @id @default(autoincrement())
-  UserId            BigInt
-  CourseId          BigInt
-  SectionId         BigInt
-  PretestScore      Int?         
-  SectionProgress   Boolean      @default(false)
-  PosttestScore     Int?         
-  PosttestAttempts  Int?         @default(0)
-  IsPreTestCompleted Boolean     @default(false)  
-  Course            Course       @relation(fields: [CourseId], references: [id])
-  Section           Section      @relation(fields: [SectionId], references: [id])
-  User              User         @relation(fields: [UserId], references: [id])
+  TransactionId      BigInt  @id @default(autoincrement())
+  UserId             BigInt
+  CourseId           BigInt
+  SectionId          BigInt
+  PretestScore       Int?
+  SectionProgress    Boolean @default(false)
+  PosttestScore      Int?
+  PosttestAttempts   Int?    @default(0)
+  IsPreTestCompleted Boolean @default(false)
+  Course             Course  @relation(fields: [CourseId], references: [id])
+  Section            Section @relation(fields: [SectionId], references: [id])
+  User               User    @relation(fields: [UserId], references: [id])
 }
