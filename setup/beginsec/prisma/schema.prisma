@@ -1,83 +1,29 @@
-generator client {
-  provider = "prisma-client-js"
-}
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x"]
+}
+
 model User {
-  id           BigInt                   @id @map("UserId")
-  name         String                   @map("Name")
-  email        String                   @map("Email")
-  password     String                   @map("Password")
-  dob          DateTime                 @map("DOB")
-  telephone    String                   @map("Telephone")
-  username     String                   @map("Username")
-  imagePath    String                   @map("ImagePath")
-  reports      Transaction_Report[]
-  transactions Transaction_UserCourse[]
+  id       Int    @id @default(autoincrement())
+  username String @unique
+  password String // เก็บรหัสผ่านในรูปแบบ MD5 (ช่องโหว่ Cryptographic Failure)
 }
 
-model Course {
-  id           BigInt                   @id @map("CourseId")
-  name         String                   @map("CourseName")
-  detail       String                   @map("CourseDetail")
-  certificate  String                   @map("Certificate")
-  sections     Section[]
-  transactions Transaction_UserCourse[]
+model Product {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String
+  comments    Comment[]
 }
 
-model Section {
-  id           BigInt                   @id @map("SectionId")
-  courseId     BigInt                   @map("CourseId")
-  detail       String                   @map("SectionDetail")
-  name         String                   @map("SectionName")
-  labName      String                   @map("LabName")
-  question     String                   @map("Question")
-  choice       String                   @map("Choice")
-  course       Course                   @relation(fields: [courseId], references: [id])
-  transactions Transaction_UserCourse[]
-}
-
-model Admin {
-  id       BigInt               @id @map("AdminId")
-  username String               @map("AdminUsername")
-  password String               @map("Password")
-  email    String               @map("Email")
-  name     String               @map("Name")
-  blogs    Blog[]
-  reports  Transaction_Report[]
-}
-
-model Blog {
-  id        BigInt @id @map("BlogId")
-  name      String @map("BlogName")
-  detail    String @map("BlogDetail")
-  adminId   BigInt @map("AdminId")
-  imagePath String @map("ImagePath")
-  admin     Admin  @relation(fields: [adminId], references: [id])
-}
-
-model Transaction_Report {
-  id          BigInt   @id @map("ReportId")
-  title       String   @map("Title")
-  description String   @map("Description")
-  adminId     BigInt   @map("AdminId")
-  userId      BigInt   @map("UserId")
-  createdAt   DateTime @map("CreateAt")
-  admin       Admin    @relation(fields: [adminId], references: [id])
-  user        User     @relation(fields: [userId], references: [id])
-}
-
-model Transaction_UserCourse {
-  id        BigInt  @id @map("TransactionId")
-  userId    BigInt  @map("UserId")
-  courseId  BigInt  @map("CourseId")
-  sectionId BigInt  @map("SectionId")
-  progress  BigInt  @map("Progress")
-  course    Course  @relation(fields: [courseId], references: [id])
-  section   Section @relation(fields: [sectionId], references: [id])
-  user      User    @relation(fields: [userId], references: [id])
+model Comment {
+  id         Int      @id @default(autoincrement())
+  content    String   // ไม่มีการ sanitize ทำให้เกิด XSS ได้
+  product    Product  @relation(fields: [productId], references: [id])
+  productId  Int
 }

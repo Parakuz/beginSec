@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 🌟 ปรับสีหลักของธีม */
+:root {
+  --foreground-rgb: 17, 24, 39; /* เทาเข้ม */
+  --background-rgb: 243, 244, 246; /* เทาอ่อน */
+}
+
+body {
+  background: rgb(var(--background-rgb));
+  color: rgb(var(--foreground-rgb));
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 🌟 ปรับสไตล์ Card ให้มีความสวยงาม */
+.card {
+  @apply bg-white rounded-lg shadow-lg p-6 mb-6 transition transform hover:scale-105 hover:shadow-xl;
+}
+
+/* 🌟 ปรับปุ่มให้มีมาตรฐานเดียวกัน */
+.btn {
+  @apply px-4 py-2 rounded-lg font-medium transition-colors shadow-md;
+}
+
+.btn-primary {
+  @apply bg-blue-600 text-white hover:bg-blue-700;
+}
+
+.btn-danger {
+  @apply bg-red-600 text-white hover:bg-red-700;
+}
+
+.btn-secondary {
+  @apply bg-gray-200 text-gray-800 hover:bg-gray-300;
+}
+
+/* 🌟 ปรับ Input Fields */
+.form-input {
+  @apply w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400;
+}
+
+/* 🌟 ปรับ Labels ให้ชัดเจนขึ้น */
+.form-label {
+  @apply block mb-2 font-semibold text-gray-700;
+}

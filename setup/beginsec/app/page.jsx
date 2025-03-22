@@ -1,17 +1,12 @@
-import Hero from "@/components/homepage/Hero";
-import About from "@/components/homepage/About";
-import HightLight from "@/components/homepage/Hightlight";
-import Content from "@/components/homepage/Content";
-import Footer from "@/components/homepage/Footer";
-
 export default function Home() {
   return (
-    <>
-      <Hero />
-      <About />
-      <HightLight />
-      <Content />
-      <Footer />
-    </>
+    <div className="p-8 min-h-screen flex flex-col items-center justify-center text-center">
+      <h1 className="text-4xl font-bold text-blue-600 mb-6">Welcome to CPE Shop</h1>
+      <p className="text-lg text-gray-700 max-w-xl leading-relaxed">
+        นี่คือเว็บสำหรับฝึกโจมตีช่องโหว่ด้าน Cyber Security แบบ hands-on-lab คุณสามารถลองโจมตีช่องโหว่ 
+        <strong> XSS, SQL Injection, Cryptographic Failure และ Broken Access Control </strong> ได้ 
+        โดยเว็บนี้จะมี flag ซ่อนอยู่ให้คุณค้นหา
+      </p>
+    </div>
   );
 }
