@@ -1,28 +1,25 @@
-version: "3.8"
+version: '3.8'
 services:
-  db:
-    image: postgres
-    container_name: local_pgdb
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    environment:
+      - DATABASE_URL=postgresql://user:password@postgres:5432/ctf_shop
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:13
     restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: ctf_shop
     ports:
       - "5432:5432"
-    environment:
-      POSTGRES_USER: user-name
-      POSTGRES_PASSWORD: strong-password
     volumes:
-      - local_pgdata:/var/lib/postgresql/data
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin4_container
-    restart: always
-    ports:
-      - "8888:80"
-    environment:
-      PGADMIN_DEFAULT_EMAIL: user-name@domain-name.com
-      PGADMIN_DEFAULT_PASSWORD: strong-password
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
-
+      - pgdata:/var/lib/postgresql/data
 volumes:
-  local_pgdata:
-  pgadmin-data:
+  pgdata:
