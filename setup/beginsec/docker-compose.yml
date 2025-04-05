@@ -7,19 +7,4 @@ services:
     volumes:
       - .:/app
     environment:
-      - DATABASE_URL=postgresql://user:password@postgres:5432/ctf_shop
-    depends_on:
-      - postgres
-  postgres:
-    image: postgres:13
-    restart: always
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: ctf_shop
-    ports:
-      - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-volumes:
-  pgdata:
+      - DATABASE_URL=file:./dev.db
