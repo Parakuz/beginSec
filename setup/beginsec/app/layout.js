@@ -1,5 +1,6 @@
 import { SessionProvider } from "@/contexts/sessionContext";
 import "./globals.css";
+
 import Navbar from "@/components/homepage/Navbar";
 
 export const metadata = {
@@ -9,7 +10,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
         <SessionProvider>
           <Navbar />

@@ -81,7 +81,7 @@ export default function LessonTabs({
                 </span>
                 {lesson.name}
               </div>
-              {lesson.lab && (
+              {lesson.labName && (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"

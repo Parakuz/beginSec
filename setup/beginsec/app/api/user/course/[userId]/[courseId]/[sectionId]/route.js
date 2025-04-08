@@ -33,7 +33,6 @@ export async function GET(req, { params }) {
       );
     }
 
-    console.log(progress);
     return NextResponse.json(progress, { status: 200 });
   } catch (error) {
     console.error("Error fetching section progress:", error);

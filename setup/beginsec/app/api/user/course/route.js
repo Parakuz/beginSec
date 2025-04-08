@@ -13,7 +13,7 @@ export async function POST(req, { params }) {
       IsPreTestCompleted,
       SectionProgress,
     } = await req.json();
-    console.log(PosttestScore);
+
     const user = BigInt(userId);
     const section = BigInt(sectionId);
     const course = BigInt(courseId);
@@ -25,17 +25,20 @@ export async function POST(req, { params }) {
         CourseId: course,
       },
     });
-    console.log(existingProgress);
+
     if (existingProgress) {
       if (PosttestScore !== undefined) {
         if (PosttestScore > existingProgress.PosttestScore) {
-          const updatedPost = await prisma.transaction_UserCourse.update({
-            where: {
-              TransactionId: existingProgress.TransactionId,
-            },
+          const updatedPost = await prisma.transaction_UserCourse.create({
             data: {
-              PosttestScore: PosttestScore,
-              PosttestAttempts: existingProgress.PosttestAttempts + 1,
+              UserId: user,
+              SectionId: section,
+              CourseId: course,
+              PretestScore: PretestScore || 0,
+              PosttestScore: PosttestScore || 0,
+              PosttestAttempts: PosttestAttempts || 0,
+              IsPreTestCompleted: IsPreTestCompleted || false,
+              SectionProgress: SectionProgress || false,
             },
           });
 

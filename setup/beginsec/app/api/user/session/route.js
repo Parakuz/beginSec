@@ -1,9 +1,7 @@
-// /app/api/user/session/route.js
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { createClient } from "redis";
 
-// ใช้ global เพื่อให้ Redis ใช้ตัวเดียวกันตลอด
 const globalForRedis = globalThis;
 
 if (!globalForRedis.redis) {

@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useState, useMemo, useEffect } from "react";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
@@ -6,6 +7,10 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
   const [answers, setAnswers] = useState({});
   const [feedback, setFeedback] = useState(null);
   const [currentUserId, setCurrentUserId] = useState(null);
+  const [labStarted, setLabStarted] = useState(false);
+  const [remainingTime, setRemainingTime] = useState(60);
+  const [intervalId, setIntervalId] = useState(null);
+  const [port, setPort] = useState(null);
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -14,6 +19,9 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
         const data = await res.json();
         if (data.userId) {
           setCurrentUserId(data.userId);
+          if (lesson.labName?.startsWith("Lab")) {
+            fetchLabStatus(data.userId);
+          }
         } else {
           setFeedback("❌ User not authenticated.");
         }
@@ -26,6 +34,46 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
     fetchUserId();
   }, []);
 
+  useEffect(() => {
+    if (remainingTime > 0) {
+      const id = setInterval(() => {
+        setRemainingTime((prev) => {
+          if (prev <= 1) {
+            clearInterval(id);
+            terminateLab();
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+      setIntervalId(id);
+
+      return () => clearInterval(id);
+    }
+  }, [remainingTime]);
+
+  const fetchLabStatus = async (userId) => {
+    try {
+      const res = await fetch("/api/lab/status", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId }),
+      });
+
+      const data = await res.json();
+
+      if (data.remainingTime) {
+        setLabStarted(true);
+        setPort(data.port);
+        setRemainingTime(data.remainingTime);
+      }
+    } catch (error) {
+      console.error("Error fetching lab status:", error);
+    }
+  };
+
   const shuffleArray = (array) => {
     return [...array].sort(() => Math.random() - 0.5);
   };
@@ -33,7 +81,7 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
   const randomizedQuestions = useMemo(() => {
     return lesson.questions.map((q) => ({
       ...q,
-      choices: shuffleArray(q.choices.split(",")),
+      choices: q.choices ? shuffleArray(q.choices.split(",")) : null,
     }));
   }, [lesson.questions]);
 
@@ -44,7 +92,9 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
     }
 
     const correctAnswersCount = randomizedQuestions.reduce((count, q) => {
-      return answers[q.question] === q.answer ? count + 1 : count;
+      const userAnswer = answers[q.question]?.trim().toLowerCase();
+      const correctAnswer = q.answer.trim().toLowerCase();
+      return userAnswer === correctAnswer ? count + 1 : count;
     }, 0);
 
     try {
@@ -90,7 +140,6 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
         }
       }
 
-      // console.log(progressData);
       await fetch("/api/user/course", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -106,7 +155,7 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
       if (
         correctAnswersCount === totalQuestions ||
         lesson.name === "Pre Test" ||
-        lesson.name === "Post Test"
+        (lesson.name === "Post Test" && scorePercentage >= 80)
       ) {
         setCompletedLessons((prev) => ({ ...prev, [lesson.id]: true }));
       }
@@ -115,61 +164,230 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
     }
   };
 
+  const startLabEngine = async () => {
+    if (!currentUserId || !lesson.labName) {
+      setFeedback("❌ Cannot start lab. Missing user ID or lab name.");
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/lab/start", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: currentUserId,
+          labName: lesson.labName,
+        }),
+      });
+      let progressData = {
+        userId: currentUserId,
+        courseId: lesson.courseId,
+        sectionId: lesson.id,
+        SectionProgress: true,
+      };
+      const res2 = await fetch("/api/user/course", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(progressData),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && res2.ok) {
+        setCompletedLessons((prev) => ({ ...prev, [lesson.id]: true }));
+        setLabStarted(true);
+        setRemainingTime(data.remainingTime || 3600);
+        setPort(data.port);
+        setFeedback("✅ Lab started successfully!");
+
+        const id = setInterval(() => {
+          setRemainingTime((prev) => {
+            if (prev <= 1) {
+              clearInterval(id);
+              return 0;
+            }
+            return prev - 1;
+          });
+        }, 1000);
+
+        setIntervalId(id);
+      } else {
+        setFeedback(`❌ Failed to start lab: ${data.error}`);
+      }
+    } catch (error) {
+      console.error("Error starting lab:", error);
+      setFeedback("❌ Error starting the lab.");
+    }
+  };
+
+  const extendLabTime = async () => {
+    if (remainingTime + 1800 <= 7200) {
+      setRemainingTime((prev) => prev + 1800);
+      try {
+        const res = await fetch("/api/lab/extend", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: currentUserId,
+            labName: lesson.labName,
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          setFeedback(`❌ Failed to extend lab time: ${data.error}`);
+        }
+      } catch (error) {
+        console.error("Error extending lab time:", error);
+        setFeedback("❌ Error extending the lab time.");
+      }
+    } else {
+      setFeedback("❌ Cannot extend time. Maximum of 2 hours reached.");
+    }
+  };
+
+  const terminateLab = async () => {
+    setLabStarted(false);
+    setRemainingTime(60);
+    clearInterval(intervalId);
+    try {
+      const res = await fetch("/api/lab/terminate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: currentUserId,
+          labName: lesson.labName,
+        }),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        setFeedback("✅ Lab terminated.");
+      } else {
+        setFeedback(`❌ Failed to terminate lab: ${data.error}`);
+      }
+    } catch (error) {
+      console.error("Error terminating lab:", error);
+      setFeedback("❌ Error terminating the lab.");
+    }
+  };
+
+  const formatTime = (timeInSeconds) => {
+    const hours = Math.floor(timeInSeconds / 3600);
+    const minutes = Math.floor((timeInSeconds % 3600) / 60);
+    const seconds = timeInSeconds % 60;
+
+    return `${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+  };
+
   return (
     <div className="mt-4">
       <ReactQuill
-        value={
-          lesson.detail ||
-          "<p>This is a sample lesson content with <strong>bold</strong> text and an image below.</p><img src='image_url_here' alt='sample'/>"
-        }
+        value={lesson.detail || "<p>Lesson content here.</p>"}
         readOnly={true}
         theme="snow"
-        modules={{
-          toolbar: false,
-        }}
+        modules={{ toolbar: false }}
         className="lesson-quill border-none"
       />
+
+      {lesson.labName?.startsWith("Lab") && (
+        <button
+          onClick={
+            labStarted
+              ? () => window.open(`http://localhost:${port}`, "_blank")
+              : startLabEngine
+          }
+          className="w-full h-[50px] bg-[#FFA500] rounded-md text-white font-semibold mb-6 hover:bg-[#ff8c00] transition-colors"
+        >
+          {labStarted ? "Go to Lab" : "Start Engine"}
+        </button>
+      )}
+
+      {labStarted && (
+        <div className="flex flex-col gap-4 mt-4 p-6 bg-[#2E2E2E] rounded-lg shadow-md">
+          <p className="text-white text-xl font-semibold mb-4">
+            Remaining Time: {formatTime(remainingTime)}
+          </p>
+
+          <div className="flex flex-col gap-3">
+            <button
+              onClick={extendLabTime}
+              className="w-full h-[45px] bg-[#32CD32] rounded-md text-white font-semibold hover:bg-[#28a745] transition-colors"
+            >
+              Extend Time (+30 นาที)
+            </button>
+
+            <button
+              onClick={terminateLab}
+              className="w-full h-[45px] bg-[#FF4500] rounded-md text-white font-semibold hover:bg-[#e43b00] transition-colors"
+            >
+              Terminate Lab
+            </button>
+          </div>
+        </div>
+      )}
+
       {randomizedQuestions.map((q, index) => (
         <div key={index} className="my-2">
           <p className="text-gray-200">
             {index + 1}. {q.question}
           </p>
-          <div className="flex flex-col gap-2">
-            {q.choices.map((choice) => (
-              <label
-                key={choice}
-                className={`flex items-center gap-2 p-2 rounded-lg border-2 transition-all cursor-pointer ${
-                  answers[q.question] === choice
-                    ? "border-blue-100 bg-blue-500/55"
-                    : "bg-gray-500"
-                }`}
-              >
-                <input
-                  type="radio"
-                  name={q.question}
-                  value={choice}
-                  onChange={() =>
-                    setAnswers((prev) => ({ ...prev, [q.question]: choice }))
-                  }
-                  className="hidden"
-                />
-                {choice}
-              </label>
-            ))}
-          </div>
+
+          {lesson.labName ? (
+            <input
+              type="text"
+              className="w-full p-2 rounded-lg border-2 bg-gray-500 text-white"
+              value={answers[q.question] || ""}
+              onChange={(e) =>
+                setAnswers((prev) => ({
+                  ...prev,
+                  [q.question]: e.target.value,
+                }))
+              }
+            />
+          ) : (
+            <div className="flex flex-col gap-2">
+              {q.choices.map((choice) => (
+                <label
+                  key={choice}
+                  className={`flex items-center gap-2 p-2 rounded-lg border-2 transition-all cursor-pointer ${
+                    answers[q.question] === choice
+                      ? "border-blue-100 bg-blue-500/55"
+                      : "bg-gray-500"
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name={q.question}
+                    value={choice}
+                    onChange={() =>
+                      setAnswers((prev) => ({ ...prev, [q.question]: choice }))
+                    }
+                    className="hidden"
+                  />
+                  {choice}
+                </label>
+              ))}
+            </div>
+          )}
         </div>
       ))}
-
-      <div className="flex justify-end mt-4">
-        <button
-          onClick={checkAnswers}
-          className="w-[102px] h-[46px] bg-[#84D92F] rounded-md text-white font-semibold"
-        >
-          Submit
-        </button>
-      </div>
-
-      {feedback && <p className="mt-2 font-semibold text-center">{feedback}</p>}
+      {!lesson.labName?.startsWith("Lab") && (
+        <div className="flex justify-end mt-4">
+          <button
+            onClick={checkAnswers}
+            className="w-[162px] h-[46px] bg-[#84D92F] rounded-md text-white font-semibold"
+          >
+            Check Answers
+          </button>
+        </div>
+      )}
+      {feedback && (
+        <div className="mt-2 text-center text-xl text-green-600">
+          {feedback}
+        </div>
+      )}
     </div>
   );
 }

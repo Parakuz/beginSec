@@ -18,6 +18,7 @@ model User {
   imagePath              String?                   @map("ImagePath")
   reports                Transaction_Report[]
   Transaction_UserCourse Transaction_UserCourse[]
+  lab                    Lab? 
 }
 
 model Admin {
@@ -97,4 +98,18 @@ model Transaction_UserCourse {
   Course            Course       @relation(fields: [CourseId], references: [id])
   Section           Section      @relation(fields: [SectionId], references: [id])
   User              User         @relation(fields: [UserId], references: [id])
+}
+
+model Lab {
+  id            BigInt   @id @default(autoincrement()) @map("LabId")
+  userId        BigInt   @unique
+  labName       String                                @map("LabName")
+  port          Int      @unique                      @map("Port")
+  containerId   String                                @map("ContainerId")
+  createdAt     DateTime  @default(now())             @map("CreatedAt")
+  remainingTime Int                                   @map("RemainingTime")
+  timeExpand    Int                                   @map("TimeExpand")
+  expiresAt     DateTime                              @map("ExpiresAt")
+
+  user          User     @relation(fields: [userId], references: [id])
 }
