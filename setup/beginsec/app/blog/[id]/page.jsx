@@ -6,6 +6,7 @@ import Footer from "../../components/homepage/Footer";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 
+
 const BlogPostPage = () => {
   const router = useRouter();
   const { id } = useParams();
@@ -140,30 +141,84 @@ const BlogPostPage = () => {
   }
 
   return (
-    <div className="bg-[#161831]">
-      <div className="min-h-screen text-white">
+    <div className="bg-[#161831] relative overflow-hidden">
+      {/* Decorative background gradient */}
+      <div className="absolute -top-20 -left-20 z-0">
+        <div className="w-[686.76px] h-[686.76px] origin-top-left rotate-[-33.25deg] bg-[conic-gradient(from_133deg_at_55.07%_49.43%,_#161831_0deg,_#161831_79deg,_#391A81_166deg,_#6231D5_194deg,_#794EDB_267deg,_#8F6CE1_360deg)] blur-[101.80px]" />
+      </div>
+      
+      {/* Second decorative gradient for more depth */}
+      <div className="absolute bottom-0 right-0 z-0">
+        <div className="w-[500px] h-[500px] origin-bottom-right rotate-[15deg] bg-[conic-gradient(from_180deg_at_50%_50%,_#161831_0deg,_#161831_79deg,_#391A81_166deg,_#6231D5_194deg,_#794EDB_267deg,_#8F6CE1_360deg)] blur-[80px] opacity-70" />
+      </div>
+      
+      <div className="min-h-screen text-white relative z-10">
         <Navbar />
-        <main className="container mx-auto px-4 py-8">
-          <h1 className="text-3xl font-bold mb-4">{blogPost.name}</h1>
-          <p className="text-gray-400 mb-4">
-            {formatDate(blogPost.createdAt) || (blogPost.admin ? `Posted by ${blogPost.admin.name}` : '')}
-          </p>
-          <img
-            className="w-full h-[400px] object-cover"
-            src={blogPost.imagePath || null}
-            alt={blogPost.name}
-          />
-          <div className="text-lg mt-6">
+        <main className="container mx-auto px-4 py-8 max-w-4xl">
+          {/* Hero image with enhanced styling */}
+          <div className="mb-10 rounded-xl overflow-hidden shadow-[0_0_25px_rgba(99,49,213,0.2)]">
+            <img
+              className="w-full h-[350px] object-cover transform hover:scale-105 transition-transform duration-700"
+              src={blogPost.imagePath || null}
+              alt={blogPost.name}
+            />
+          </div>
+          
+          {/* Title and author section with improved styling - changed text color to white */}
+          <div className="mb-8 bg-[#1a1c3d]/70 p-6 rounded-lg backdrop-blur-sm">
+            <h1 className="text-3xl md:text-4xl font-bold mb-4 leading-tight text-white">{blogPost.name}</h1>
+            <div className="flex flex-wrap items-center text-sm text-white mb-2">
+              <p className="mr-2">Written By</p>
+              <p className="font-medium text-white mr-4">{blogPost.author || "Begin Sec"}</p>
+              <span className="text-white mx-2">•</span>
+              <p>{blogPost.postDate ? 
+                `${new Date(blogPost.postDate).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })} at ${new Date(blogPost.postDate).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}`
+                : blogPost.createdAt ? 
+                `${new Date(blogPost.createdAt).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })} at ${new Date(blogPost.createdAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}`
+                : ""}
+              </p>
+            </div>
+          </div>
+          
+          {/* Section divider */}
+          <div className="border-b border-gray-700 my-10"></div>
+          
+          {/* Section indicator with badge style - changed text color to white */}
+          <div className="mb-6">
+            <p className="text-white inline-block px-3 py-1 bg-[#2d1b4e]/70 rounded-full text-sm">Section {blogPost.section || "1.0.3"}</p>
+          </div>
+          
+          {/* Content with improved styling */}
+          <div className="p-6 md:p-8 rounded-xl bg-[#1a1c3d]/80 backdrop-blur-sm shadow-[0_5px_20px_rgba(0,0,0,0.3)] border border-[#2d2f5a]/50">
             <ReactQuill
-              value={blogPost.detail || "<p>No content available for this blog post.</p>"}
+              value={blogPost.detail ? 
+                // แปลงข้อความปกติให้เป็น HTML โดยแทนที่การขึ้นบรรทัดใหม่ด้วย <br>
+                blogPost.detail.replace(/\n/g, '<br>') 
+                : "<p>No content available for this blog post.</p>"
+              }
               readOnly={true}
               theme="snow"
               modules={{
                 toolbar: false,
               }}
-              className="lesson-quill border-none"
+              className="lesson-quill border-none blog-content text-white"
             />
           </div>
+          
+          {/* Tags section with improved styling - changed text color to white */}
+          {blogPost.tags && (
+            <div className="mt-10 bg-[#1a1c3d]/50 p-4 rounded-lg backdrop-blur-sm">
+              <h3 className="text-white mb-3 font-medium">Related Topics</h3>
+              <div className="flex flex-wrap gap-2">
+                {blogPost.tags.map((tag, index) => (
+                  <span key={index} className="px-3 py-1 bg-[#2d1b4e] rounded-full text-sm text-white hover:bg-[#391A81] transition-colors duration-300 cursor-pointer">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+          
         </main>
       </div>
       <Footer />

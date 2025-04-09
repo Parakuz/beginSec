@@ -10,7 +10,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-import { Navigation, Autoplay } from 'swiper/modules';
+import { Autoplay } from 'swiper/modules';
 
 const BlogPage = () => {
   const router = useRouter();
@@ -33,10 +33,16 @@ const BlogPage = () => {
         
         const data = await response.json();
         
-        // For now, we'll use the first 5 blogs as featured blogs
+        // For featured blogs, use the first 5 blogs
         // In a real application, you might have a featured flag in your database
-        setFeaturedBlogs(data.slice(0, 5));
-        setBlogs(data);
+        const featured = data.slice(0, 5);
+        setFeaturedBlogs(featured);
+        
+        // For regular blogs, use the remaining blogs (excluding featured ones)
+        // This ensures MainBlog and BlogCard don't show the same content
+        const regular = data.filter(blog => !featured.some(fb => fb.id === blog.id));
+        setBlogs(regular);
+        
         setLoading(false);
       } catch (error) {
         console.error('Error fetching blogs:', error);
@@ -99,7 +105,7 @@ const BlogPage = () => {
   const formatDate = (dateString) => {
     if (!dateString) return "";
     const date = new Date(dateString);
-    return `Posted on ${date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}`;
+    return `${date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}`;
   };
 
   if (loading && !blogs.length) {
@@ -127,36 +133,55 @@ const BlogPage = () => {
   }
 
   return (
-    <div className="bg-[#161831]">
-      <div className="min-h-screen text-white">
+    <div className="bg-[#161831] relative overflow-hidden">
+      {/* Navbar with higher z-index to ensure it's above the background effects */}
+      <div className="relative z-20">
         <Navbar />
-        <main className="container mx-auto px-4 py-8">
+      </div>
+      
+      {/* Decorative background elements */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden" style={{ zIndex: 0, pointerEvents: 'none' }}>
+        <div className="absolute -top-20 -left-20 w-[600px] h-[600px] bg-[#391A81]/20 rounded-full blur-[120px]"></div>
+        <div className="absolute bottom-40 right-20 w-[500px] h-[500px] bg-[#6231D5]/20 rounded-full blur-[100px]"></div>
+      </div>
+      
+      <div className="min-h-screen text-white">
+        <main className="container mx-auto px-4 py-12 max-w-7xl relative z-10">
+          <h1 className="text-4xl font-bold mb-8 text-center">Blog</h1>
+          
           <Swiper
-            spaceBetween={50}
-            slidesPerView={3}
-            className="mb-8"
-            modules={[Navigation, Autoplay]}
+            spaceBetween={30}
+            slidesPerView={1}
+            breakpoints={{
+              640: { slidesPerView: 2, spaceBetween: 20 },
+              1024: { slidesPerView: 3, spaceBetween: 30 }
+            }}
+            className="mb-12"
+            modules={[Autoplay]}
             autoplay={{ delay: 3000 }}
           >
             {featuredBlogs.map(blog => (
               <SwiperSlide key={blog.id}>
-                <div onClick={() => handleBlogClick(blog.id)} className="">
+                <div onClick={() => handleBlogClick(blog.id)} className="cursor-pointer transition-transform hover:scale-[1.02]">
                   <MainBlog
                     title={blog.name}
-                    description={blog.detail}
                     imageSrc={blog.imagePath}
+                    postTime={formatDate(blog.postDate || blog.createdAt)}
                   />
                 </div>
               </SwiperSlide>
             ))}
           </Swiper>
-          <h2 className="text-2xl font-bold mb-4">Recent Posts</h2>
+          
+          <div className="border-b border-gray-700 my-10"></div>
+          
+          <h2 className="text-3xl font-bold mb-6">Recent Posts</h2>
           <div className="flex flex-wrap -mx-4">
             {blogs.slice(0, showAllBlogs ? blogs.length : 8).map(blog => (
-              <div key={blog.id} className="w-full sm:w-1/2 lg:w-1/4 px-4 mb-6">
+              <div key={blog.id} className="w-full sm:w-1/2 lg:w-1/4 px-4 mb-8">
                 <BlogCard
                   title={blog.name}
-                  postTime={formatDate(blog.createdAt) || `Posted by ${blog.admin?.name || 'Admin'}`}
+                  postTime={formatDate(blog.postDate || blog.createdAt)}
                   onClick={() => handleBlogClick(blog.id)}
                   imageSrc={blog.imagePath}
                 />
@@ -164,12 +189,12 @@ const BlogPage = () => {
             ))}
           </div>
           {!showAllBlogs && blogs.length > 8 && (
-            <div className="text-center mt-4">
+            <div className="text-center mt-8 mb-4">
               <button
                 onClick={() => setShowAllBlogs(true)}
-                className=" text-white px-8 py-3 rounded-[10px] border border-white "
+                className="text-white px-8 py-3 rounded-[10px] border border-white hover:bg-white hover:text-[#161831] transition-colors"
               >
-                View All
+                View All Posts
               </button>
             </div>
           )}
