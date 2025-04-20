@@ -1,4 +1,4 @@
-@import url('https://fonts.cdnfonts.com/css/satoshi');
+@import url("https://fonts.cdnfonts.com/css/satoshi");
 
 @tailwind base;
 @tailwind components;
@@ -8,6 +8,143 @@ body {
   @apply font-satoshi;
 }
 
+.lesson-quill .ql-editor {
+  padding: 0;
+  color: white;
+  @apply font-satoshi text-base leading-relaxed;
+}
+
 .lesson-quill .ql-container {
   border: none !important;
+  @apply font-satoshi;
 }
+
+.lesson-quill .ql-snow {
+  background: transparent;
+  border: none;
+}
+
+/* Improve paragraph spacing */
+.lesson-quill .ql-editor p {
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
+  @apply font-satoshi text-lg tracking-wide;
+}
+
+/* Style headings */
+.lesson-quill .ql-editor h1 {
+  margin-top: 2.5rem;
+  margin-bottom: 1.25rem;
+  @apply font-satoshi font-bold text-3xl tracking-tight;
+}
+
+.lesson-quill .ql-editor h2 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  @apply font-satoshi font-bold text-2xl tracking-tight;
+}
+
+.lesson-quill .ql-editor h3 {
+  margin-top: 1.75rem;
+  margin-bottom: 0.75rem;
+  @apply font-satoshi font-semibold text-xl tracking-tight;
+}
+
+/* Add styles for other ReactQuill elements */
+@layer components {
+  .lesson-quill .ql-editor ul,
+  .lesson-quill .ql-editor ol {
+    @apply font-satoshi pl-6 mb-6;
+  }
+  
+  .lesson-quill .ql-editor li {
+    @apply font-satoshi mb-2;
+  }
+  
+  .lesson-quill .ql-editor blockquote {
+    @apply font-satoshi pl-4 border-l-4 border-blue-400 italic my-6;
+  }
+  
+  .lesson-quill .ql-editor pre {
+    @apply font-satoshi bg-gray-900 rounded-md p-4 my-4 overflow-x-auto;
+  }
+  
+  .lesson-quill .ql-editor a {
+    @apply text-blue-400 underline hover:text-blue-300;
+  }
+}
+
+/* Blog content specific styles */
+.blog-content .ql-editor {
+  @apply font-satoshi text-lg leading-relaxed text-gray-100;
+}
+
+.blog-content .ql-container.ql-snow {
+  border: none;
+}
+
+.blog-content .ql-editor p {
+  @apply mb-6 tracking-wide;
+}
+
+.blog-content .ql-editor h1,
+.blog-content .ql-editor h2,
+.blog-content .ql-editor h3 {
+  @apply text-purple-300 font-bold;
+}
+
+.blog-content .ql-editor h1 {
+  @apply text-3xl mt-8 mb-4;
+}
+
+.blog-content .ql-editor h2 {
+  @apply text-2xl mt-6 mb-3;
+}
+
+.blog-content .ql-editor h3 {
+  @apply text-xl mt-5 mb-2;
+}
+
+.blog-content .ql-editor ul,
+.blog-content .ql-editor ol {
+  @apply ml-6 mb-6;
+}
+
+.blog-content .ql-editor li {
+  @apply mb-2;
+}
+
+.blog-content .ql-editor a {
+  @apply text-purple-300 underline transition-colors duration-200 hover:text-purple-200;
+}
+
+.blog-content .ql-editor strong {
+  @apply text-white font-semibold;
+}
+
+.blog-content .ql-editor em {
+  @apply text-gray-300 italic;
+}
+
+.blog-content .ql-editor blockquote {
+  @apply border-l-4 border-purple-700 pl-4 my-6 italic text-gray-300;
+}
+
+.blog-content .ql-editor img {
+  @apply max-w-full rounded-lg my-6;
+}
+
+.blog-content .ql-editor pre {
+  @apply bg-gray-900 rounded-md p-4 my-4 overflow-x-auto;
+}
+
+.blog-content .ql-editor code {
+  @apply bg-gray-800 px-2 py-1 rounded-md text-sm font-mono text-gray-200;
+}
+
+/* Add styles for blog content container */
+.blog-content-container {
+  @apply p-6 md:p-8 rounded-xl bg-[#1a1c3d] shadow-lg border border-[#2d2f5a];
+}
+
+

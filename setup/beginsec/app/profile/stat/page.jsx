@@ -40,46 +40,69 @@ const StatisticsPage = () => {
     ],
   };
 
+  let userCourses = []
+  const userName = "Guest User";
+  
   return (
-    <div className="bg-[#161831]">
+    <div className="min-h-screen bg-gradient-to-b from-[#161831] to-[#0c0e1d]">
       <Navbar />
-      <div className="w-full h-[302px] bg-[#252525]/20 mx-auto p-20">
-        <div className="container mx-auto">
-          <div className="text-white text-[48px] font-bold mb-4 text-left">
-            Singchai Areepoonsawat
-          </div>
-          <div className="flex justify-start gap-6">
-            <div className="w-40 h-[70px] bg-[#242851] rounded-[5px] font-bold text-white px-3 py-2">
-              <div>Completed rooms</div>
-              <div className="text-white font-bold flex justify-start gap-x-3 pt-1">
-                <div className="text-2xl">
-                  <MdSensorDoor />
-                </div>
-                0
-              </div>
+      
+      {/* Profile Header Section */}
+      <div className="relative w-full bg-[#252525]/20 overflow-hidden">
+        {/* Removed gradient overlay divs */}
+        
+        <div className="container mx-auto px-4 py-16 relative z-10">
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-8">
+            <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center text-white text-4xl font-bold border-4 border-[#242851] shadow-lg shadow-purple-900/20">
+              {userName.charAt(0)}
             </div>
-            <div className="w-40 h-[70px] bg-[#242851] rounded-[5px] font-bold text-white px-3 py-2">
-              <div>Badges</div>
-              <div className="text-white font-bold flex justify-start gap-x-3 pt-1">
-                <div className="text-2xl">
-                  <TbBadgesFilled />
-                </div>
-                0
+
+            <div className="flex-1">
+              <div className="text-white text-3xl md:text-5xl font-bold mb-4 text-left">{userName}</div>
+
+              <div className="text-purple-300 text-sm md:text-base mb-6">
+                Cybersecurity Enthusiast • Learning Path: Beginner
               </div>
-            </div>
-            <div className="w-40 h-[70px] bg-[#242851] rounded-[5px] font-bold text-white px-3 py-2">
-              <div>Certificate</div>
-              <div className="text-white font-bold flex justify-start gap-x-3 pt-1">
-                <div className="text-2xl">
-                  <PiCertificateFill />
+
+              <div className="flex flex-wrap gap-4">
+                <div className="w-40 h-[80px] bg-[#242851] rounded-lg font-bold text-white px-4 py-3 shadow-lg shadow-black/20 hover:translate-y-[-5px] transition-all duration-300 border border-[#3a3f6a]">
+                  <div className="text-white text-sm">Completed rooms</div>
+                  <div className="text-white font-bold flex items-center gap-x-3 pt-1">
+                    <div className="text-2xl text-white">
+                      <MdSensorDoor />
+                    </div>
+                    <span className="text-xl">0</span>
+                  </div>
                 </div>
-                0
+                
+                {/* Rest of the stats boxes remain the same */}
+
+                <div className="w-40 h-[80px] bg-[#242851] rounded-lg font-bold text-white px-4 py-3 shadow-lg shadow-black/20 hover:translate-y-[-5px] transition-all duration-300 border border-[#3a3f6a]">
+                  <div className="text-white text-sm">Badges</div>
+                  <div className="text-white font-bold flex items-center gap-x-3 pt-1">
+                    <div className="text-2xl text-white">
+                      <TbBadgesFilled />
+                    </div>
+                    <span className="text-xl">0</span>
+                  </div>
+                </div>
+
+                <div className="w-40 h-[80px] bg-[#242851] rounded-lg font-bold text-white px-4 py-3 shadow-lg shadow-black/20 hover:translate-y-[-5px] transition-all duration-300 border border-[#3a3f6a]">
+                  <div className="text-white text-sm">Certificate</div>
+                  <div className="text-white font-bold flex items-center gap-x-3 pt-1">
+                    <div className="text-2xl text-white">
+                      <PiCertificateFill />
+                    </div>
+                    <span className="text-xl">0</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="container mx-auto">
+      
+      <div className="container mx-auto px-4 py-10">
         <NavbarSection/>
         
         <div className="text-white mt-8 mb-12">
