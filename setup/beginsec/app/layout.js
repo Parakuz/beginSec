@@ -2,6 +2,7 @@ import { SessionProvider } from "@/contexts/sessionContext";
 import "./globals.css";
 
 import Navbar from "@/components/homepage/Navbar";
+import Footer from "@/components/homepage/Footer";
 
 export const metadata = {
   title: "beginSec",
@@ -15,6 +16,7 @@ export default function RootLayout({ children }) {
         <SessionProvider>
           <Navbar />
           {children}
+          <Footer />
         </SessionProvider>
       </body>
     </html>

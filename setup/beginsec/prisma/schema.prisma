@@ -32,12 +32,13 @@ model Admin {
 }
 
 model Blog {
-  id        BigInt @id @default(autoincrement()) @map("BlogId")
-  name      String @map("BlogName")
-  detail    String @map("BlogDetail")
-  adminId   BigInt @map("AdminId")
-  imagePath String @map("ImagePath")
-  admin     Admin  @relation(fields: [adminId], references: [id])
+  id        BigInt    @id @default(autoincrement()) @map("BlogId")
+  name      String    @map("BlogName")
+  detail    String    @map("BlogDetail")
+  adminId   BigInt    @map("AdminId")
+  imagePath String    @map("ImagePath")
+  postDate  DateTime  @default(now()) @map("PostDate")
+  admin     Admin     @relation(fields: [adminId], references: [id])
 }
 
 model Course {

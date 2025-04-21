@@ -1,7 +1,13 @@
-docker-compose up -d
-npx prisma migrate dev --name @unique
-npx prisma studio ใช้ Check DB
-npm install
-npm run dev
+# Step to run
 
-<p><strong class='ql-size-huge'>Section 1.10.3</strong></p><p><br></p><p class='ql-align-center'>lorem ipsum dasdasddddddddddddddddddddwd qwweqweqweqw</p>
+- docker-compose up -d
+- npx prisma migrate dev --name @unique
+- npx prisma studio ใช้ Check DB
+- npm install
+- npm run dev
+
+# v 0.1.0
+
+#### This version best for User Test
+
+###### Fix issue profile page can't use in this version but another another function is avaliable
