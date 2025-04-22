@@ -69,7 +69,10 @@ function Navbar() {
               className="flex items-center space-x-2 hover:opacity-80 transition"
             >
               <img
-                src={user?.imagePath}
+                src={
+                  user?.imagePath ||
+                  "https://t3.ftcdn.net/jpg/07/24/59/76/360_F_724597608_pmo5BsVumFcFyHJKlASG2Y2KpkkfiYUU.jpg"
+                }
                 alt="avatar"
                 className="w-8 h-8 rounded-full"
               />

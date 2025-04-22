@@ -4,7 +4,7 @@ export function middleware(req) {
   const { cookies } = req;
   const token = cookies.get("sessionToken");
 
-  const protectedRoutes = ["/learning-path"];
+  const protectedRoutes = ["/learning-path", "/profile"];
 
   if (protectedRoutes.some((route) => req.nextUrl.pathname.startsWith(route))) {
     if (!token) {

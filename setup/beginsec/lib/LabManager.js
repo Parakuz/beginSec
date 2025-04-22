@@ -49,7 +49,7 @@ export async function startLabContainer(userId, labName) {
   setInterval(async () => {
     await checkAndTerminateExpiredLabs();
     await terminateAllInactiveLabs();
-  }, 30000);
+  }, 10 * 60 * 1000);
 
   try {
     const container = await docker.createContainer({

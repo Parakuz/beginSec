@@ -1,39 +1,59 @@
+"use client";
+import { useEffect, useState } from "react";
 import { MdSensorDoor } from "react-icons/md";
 import { PiCertificateFill } from "react-icons/pi";
 import { TbBadgesFilled } from "react-icons/tb";
 import { FaGraduationCap } from "react-icons/fa";
-// import Navbar from "../components/homepage/Navbar"
-// import Footer from "../components/homepage/Footer"
+// import Navbar from "../components/homepage/Navbar";
+// import Footer from "../components/homepage/Footer";
 import NavbarSection from "@/components/homepage/navbar-section";
 // ปิด import เหล่านี้ไว้ชั่วคราวจนกว่าจะติดตั้ง next-auth
 // import { getServerSession } from "next-auth"
 // import { authOptions } from "@/app/api/auth/[...nextauth]/route"
-import prisma from "@/lib/auth/prisma";
+import { useSession } from "@/contexts/sessionContext";
 
-export default async function ProfilePage() {
+export default function ProfilePage() {
+  const [userCourses, setUserCourses] = useState([]);
+  const [currentUserId, setCurrentUserId] = useState(null);
+
   // ใช้ข้อมูลจำลองชั่วคราวจนกว่าจะตั้งค่า next-auth เสร็จ
   // const session = await getServerSession(authOptions);
   // const userId = session?.user?.id;
+  useEffect(() => {
+    const fetchUserId = async () => {
+      try {
+        const res = await fetch("/api/user/session");
+        const data = await res.json();
+        setCurrentUserId(data.userId);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        setFeedback("❌ Error fetching user data.");
+      }
+    };
+
+    fetchUserId();
+  }, []);
 
   // ข้อมูลผู้ใช้จำลองสำหรับการพัฒนา
-  let userCourses = [];
-  const userName = "Guest User";
+  const { user } = useSession();
+  console.log(user);
+  const userName = user?.name;
+  const userId = currentUserId;
 
-  try {
-    // พยายามดึงข้อมูลคอร์สจากฐานข้อมูลโดยตรง
-    userCourses = await prisma.course
-      .findMany({
-        take: 4, // จำกัดที่ 4 คอร์ส
-      })
-      .catch((e) => {
-        console.error("Prisma query error:", e);
-        return [];
-      });
-  } catch (error) {
-    console.error("Error fetching courses:", error);
-    // กลับไปใช้อาร์เรย์คอร์สว่างเปล่าที่กำหนดไว้แล้ว
-  }
+  useEffect(() => {
+    const fetchUserCourses = async () => {
+      try {
+        const res = await fetch(`/api/user/course/${currentUserId}`);
+        if (!res.ok) throw new Error("Failed to fetch user courses");
+        const data = await res.json();
+        setUserCourses(data);
+      } catch (error) {
+        console.error("Error fetching user courses:", error);
+      }
+    };
 
+    fetchUserCourses();
+  }, [userId]);
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#161831] to-[#0c0e1d]">
       {/* <Navbar /> */}
@@ -129,12 +149,12 @@ export default async function ProfilePage() {
                   </div>
 
                   <div className="text-gray-300 text-sm mb-4 line-clamp-2">
-                    {course.description?.substring(0, 100)}...
+                    {course.detail?.substring(0, 100)}...
                   </div>
 
                   <div className="flex items-center justify-between">
                     <div className="bg-purple-900/30 text-purple-300 text-xs px-3 py-1 rounded-full">
-                      0% Complete
+                      Beginner
                     </div>
 
                     <a
@@ -152,163 +172,9 @@ export default async function ProfilePage() {
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="group relative bg-gradient-to-br from-[#242851] to-[#1e2142] p-5 rounded-xl hover:shadow-xl hover:shadow-purple-900/20 transition-all duration-300 border border-[#3a3f6a]/50 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-600/5 to-blue-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-              <div className="relative">
-                <div className="overflow-hidden rounded-lg mb-4">
-                  <img
-                    src="/assets/Profile-Lerning.png"
-                    alt="Fundamental for Cyber"
-                    className="w-full h-48 object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-
-                <div className="text-white text-lg font-bold mb-2">
-                  Fundamental for Cyber
-                </div>
-
-                <div className="text-gray-300 text-sm mb-4 line-clamp-2">
-                  Learn the essential fundamentals of cybersecurity to build a
-                  strong foundation.
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div className="bg-purple-900/30 text-purple-300 text-xs px-3 py-1 rounded-full">
-                    Beginner
-                  </div>
-
-                  <a
-                    href="/courses/fundamental"
-                    className="text-purple-400 hover:text-purple-300 font-medium flex items-center gap-1 group-hover:gap-2 transition-all duration-300"
-                  >
-                    Start Learning{" "}
-                    <span className="transform group-hover:translate-x-1 transition-transform duration-300">
-                      →
-                    </span>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div className="group relative bg-gradient-to-br from-[#242851] to-[#1e2142] p-5 rounded-xl hover:shadow-xl hover:shadow-purple-900/20 transition-all duration-300 border border-[#3a3f6a]/50 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-600/5 to-blue-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-              <div className="relative">
-                <div className="overflow-hidden rounded-lg mb-4">
-                  <img
-                    src="/assets/Profile-Lerning2.png"
-                    alt="Web Exploit Basic"
-                    className="w-full h-48 object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-
-                <div className="text-white text-lg font-bold mb-2">
-                  Web Exploit Basic
-                </div>
-
-                <div className="text-gray-300 text-sm mb-4 line-clamp-2">
-                  Discover common web vulnerabilities and how to exploit them
-                  safely in a controlled environment.
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div className="bg-purple-900/30 text-purple-300 text-xs px-3 py-1 rounded-full">
-                    Intermediate
-                  </div>
-
-                  <a
-                    href="/courses/web-exploit"
-                    className="text-purple-400 hover:text-purple-300 font-medium flex items-center gap-1 group-hover:gap-2 transition-all duration-300"
-                  >
-                    Start Learning{" "}
-                    <span className="transform group-hover:translate-x-1 transition-transform duration-300">
-                      →
-                    </span>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div className="group relative bg-gradient-to-br from-[#242851] to-[#1e2142] p-5 rounded-xl hover:shadow-xl hover:shadow-purple-900/20 transition-all duration-300 border border-[#3a3f6a]/50 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-600/5 to-blue-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-              <div className="relative">
-                <div className="overflow-hidden rounded-lg mb-4">
-                  <img
-                    src="/assets/Profile-Lerning2.png"
-                    alt="Basic of cyber threat prevention"
-                    className="w-full h-48 object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-
-                <div className="text-white text-lg font-bold mb-2">
-                  Basic of cyber threat prevention
-                </div>
-
-                <div className="text-gray-300 text-sm mb-4 line-clamp-2">
-                  Learn how to identify and prevent common cyber threats before
-                  they become a problem.
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div className="bg-purple-900/30 text-purple-300 text-xs px-3 py-1 rounded-full">
-                    Intermediate
-                  </div>
-
-                  <a
-                    href="/courses/threat-prevention"
-                    className="text-purple-400 hover:text-purple-300 font-medium flex items-center gap-1 group-hover:gap-2 transition-all duration-300"
-                  >
-                    Start Learning{" "}
-                    <span className="transform group-hover:translate-x-1 transition-transform duration-300">
-                      →
-                    </span>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div className="group relative bg-gradient-to-br from-[#242851] to-[#1e2142] p-5 rounded-xl hover:shadow-xl hover:shadow-purple-900/20 transition-all duration-300 border border-[#3a3f6a]/50 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-600/5 to-blue-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-              <div className="relative">
-                <div className="overflow-hidden rounded-lg mb-4">
-                  <img
-                    src="/assets/Profile-Lerning2.png"
-                    alt="Advanced Security Techniques"
-                    className="w-full h-48 object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-
-                <div className="text-white text-lg font-bold mb-2">
-                  Advanced Security Techniques
-                </div>
-
-                <div className="text-gray-300 text-sm mb-4 line-clamp-2">
-                  Master advanced cybersecurity techniques used by professionals
-                  in the field.
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div className="bg-purple-900/30 text-purple-300 text-xs px-3 py-1 rounded-full">
-                    Advanced
-                  </div>
-
-                  <a
-                    href="/courses/advanced-security"
-                    className="text-purple-400 hover:text-purple-300 font-medium flex items-center gap-1 group-hover:gap-2 transition-all duration-300"
-                  >
-                    Start Learning{" "}
-                    <span className="transform group-hover:translate-x-1 transition-transform duration-300">
-                      →
-                    </span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+          <h2 className="text-white text-2xl font-bold">
+            You not enroll any course yet.
+          </h2>
         )}
 
         {/* Recommended Path Section */}
