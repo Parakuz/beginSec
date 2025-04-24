@@ -10,7 +10,7 @@ import NavbarSection from "../components/homepage/navbar-section"
 // import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 import prisma from "@/lib/prisma"
 
-export default async function ProfilePage() {
+export default function ProfilePage() {
   // ใช้ข้อมูลจำลองชั่วคราวจนกว่าจะตั้งค่า next-auth เสร็จ
   // const session = await getServerSession(authOptions);
   // const userId = session?.user?.id;
@@ -19,18 +19,6 @@ export default async function ProfilePage() {
   let userCourses = []
   const userName = "Guest User"
 
-  try {
-    // พยายามดึงข้อมูลคอร์สจากฐานข้อมูลโดยตรง
-    userCourses = await prisma.course.findMany({
-      take: 4, // จำกัดที่ 4 คอร์ส
-    }).catch(e => {
-      console.error("Prisma query error:", e)
-      return []
-    })
-  } catch (error) {
-    console.error("Error fetching courses:", error)
-    // กลับไปใช้อาร์เรย์คอร์สว่างเปล่าที่กำหนดไว้แล้ว
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#161831] to-[#0c0e1d]">

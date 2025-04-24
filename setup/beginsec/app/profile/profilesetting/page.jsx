@@ -215,13 +215,13 @@ export default function ProfileSettingsPage() {
               {activeTab === "personal" && (
                 <div className="bg-[#242851]/80 rounded-xl p-6 backdrop-blur-sm border border-[#3a3f6a]/50 shadow-lg shadow-black/10">
                   <h3 className="text-xl font-bold mb-6 pb-4 border-b border-[#3a3f6a]/50 flex items-center gap-2">
-                    <FaUser className="text-white" /> Personal Information
+                    <FaUser className="text-purple-400" /> Personal Information
                   </h3>
 
                   <form className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <label className="block text-sm font-medium mb-2 text-white">First Name</label>
+                        <label className="block text-sm font-medium mb-2 text-purple-200">First Name</label>
                         <input
                           type="text"
                           className="w-full bg-[#161831] rounded-lg py-3 px-4 text-white border border-[#3a3f6a] focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none transition-all"
@@ -230,7 +230,7 @@ export default function ProfileSettingsPage() {
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium mb-2 text-white">Last Name</label>
+                        <label className="block text-sm font-medium mb-2 text-purple-200">Last Name</label>
                         <input
                           type="text"
                           className="w-full bg-[#161831] rounded-lg py-3 px-4 text-white border border-[#3a3f6a] focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none transition-all"
@@ -239,7 +239,7 @@ export default function ProfileSettingsPage() {
                       </div>
 
                       <div>
-                        <label className="text-sm font-medium mb-2 flex items-center gap-2 text-white">
+                        <label className="text-sm font-medium mb-2 flex items-center gap-2 text-purple-200">
                           <FaPhone /> Phone Number
                         </label>
                         <input
@@ -250,7 +250,7 @@ export default function ProfileSettingsPage() {
                       </div>
 
                       <div>
-                        <label className="text-sm font-medium mb-2 flex items-center gap-2 text-white">
+                        <label className="text-sm font-medium mb-2 flex items-center gap-2 text-purple-200">
                           <FaEnvelope /> Email Address
                         </label>
                         <input
@@ -261,7 +261,7 @@ export default function ProfileSettingsPage() {
                       </div>
 
                       <div>
-                        <label className="text-sm font-medium mb-2 flex items-center gap-2 text-white">
+                        <label className="text-sm font-medium mb-2 flex items-center gap-2 text-purple-200">
                           <FaCalendarAlt /> Date of Birth
                         </label>
                         <input
@@ -271,7 +271,7 @@ export default function ProfileSettingsPage() {
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium mb-2 text-white">Country</label>
+                        <label className="block text-sm font-medium mb-2 text-purple-200">Country</label>
                         <select className="w-full bg-[#161831] rounded-lg py-3 px-4 text-white border border-[#3a3f6a] focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none transition-all">
                           <option>Thailand</option>
                           <option>United States</option>
@@ -291,14 +291,14 @@ export default function ProfileSettingsPage() {
               {activeTab === "security" && (
                 <div className="bg-[#242851]/80 rounded-xl p-6 backdrop-blur-sm border border-[#3a3f6a]/50 shadow-lg shadow-black/10">
                   <h3 className="text-xl font-bold mb-6 pb-4 border-b border-[#3a3f6a]/50 flex items-center gap-2">
-                    <FaLock className="text-white" /> Security Settings
+                    <FaLock className="text-purple-400" /> Security Settings
                   </h3>
 
                   <div className="mb-8">
-                    <h4 className="text-lg font-semibold mb-4 text-white">Change Password</h4>
+                    <h4 className="text-lg font-semibold mb-4 text-purple-200">Change Password</h4>
                     <form className="space-y-4">
                       <div>
-                        <label className="block text-sm font-medium mb-2 text-white">Current Password</label>
+                        <label className="block text-sm font-medium mb-2 text-purple-200">Current Password</label>
                         <input
                           type="password"
                           className="w-full bg-[#161831] rounded-lg py-3 px-4 text-white border border-[#3a3f6a] focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none transition-all"
@@ -308,7 +308,7 @@ export default function ProfileSettingsPage() {
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                          <label className="block text-sm font-medium mb-2 text-white">New Password</label>
+                          <label className="block text-sm font-medium mb-2 text-purple-200">New Password</label>
                           <input
                             type="password"
                             className="w-full bg-[#161831] rounded-lg py-3 px-4 text-white border border-[#3a3f6a] focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none transition-all"
@@ -317,7 +317,7 @@ export default function ProfileSettingsPage() {
                         </div>
 
                         <div>
-                          <label className="block text-sm font-medium mb-2 text-white">Confirm New Password</label>
+                          <label className="block text-sm font-medium mb-2 text-purple-200">Confirm New Password</label>
                           <input
                             type="password"
                             className="w-full bg-[#161831] rounded-lg py-3 px-4 text-white border border-[#3a3f6a] focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none transition-all"
@@ -402,6 +402,49 @@ export default function ProfileSettingsPage() {
                     </form>
                   </div>
 
+                  <div className="mb-8">
+                    <h4 className="text-lg font-semibold mb-4 text-purple-200">Two-Factor Authentication</h4>
+                    <div className="bg-[#1e2142] rounded-lg p-4 border border-[#3a3f6a]/50 flex items-center justify-between">
+                      <div>
+                        <p className="font-medium text-white">Enhance your account security</p>
+                        <p className="text-sm text-gray-300 mt-1">
+                          Two-factor authentication adds an extra layer of security to your account
+                        </p>
+                      </div>
+                      <button className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors">
+                        Enable 2FA
+                      </button>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="text-lg font-semibold mb-4 text-purple-200">Login Sessions</h4>
+                    <div className="space-y-4">
+                      <div className="bg-[#1e2142] rounded-lg p-4 border border-[#3a3f6a]/50">
+                        <div className="flex justify-between items-center">
+                          <div>
+                            <p className="font-medium text-white">Current Session</p>
+                            <p className="text-sm text-gray-300 mt-1">Bangkok, Thailand • Chrome on Windows</p>
+                          </div>
+                          <span className="px-3 py-1 bg-green-600/20 text-green-400 rounded-full text-xs">
+                            Active Now
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="bg-[#1e2142] rounded-lg p-4 border border-[#3a3f6a]/50">
+                        <div className="flex justify-between items-center">
+                          <div>
+                            <p className="font-medium text-white">Previous Session</p>
+                            <p className="text-sm text-gray-300 mt-1">Bangkok, Thailand • Safari on iPhone</p>
+                          </div>
+                          <span className="px-3 py-1 bg-gray-600/20 text-gray-400 rounded-full text-xs">
+                            2 days ago
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               )}
 
@@ -627,3 +670,4 @@ export default function ProfileSettingsPage() {
     </div>
   )
 }
+ไ
