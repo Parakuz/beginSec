@@ -65,7 +65,7 @@ export default function ProfilePage() {
         <div className="container mx-auto px-4 py-16 relative z-10">
           <div className="flex flex-col md:flex-row items-start md:items-center gap-8">
             <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center text-white text-4xl font-bold border-4 border-[#242851] shadow-lg shadow-purple-900/20">
-              {userName.charAt(0)}
+              {userName?.charAt(0)}
             </div>
 
             <div className="flex-1">

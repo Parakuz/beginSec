@@ -28,35 +28,78 @@ import {
 } from "react-icons/fa";
 import NavbarSection from "@/components/homepage/navbar-section";
 
-const getFirstAndLastName = (fullName) => {
-  if (!fullName) return { firstName: "", lastName: "" };
-  const parts = fullName.trim().split(" ");
-  const firstName = parts[0];
-  const lastName = parts.slice(1).join(" ");
-  return { firstName, lastName };
-};
-
 export default function ProfileSettingsPage() {
   const [currentUserId, setCurrentUserId] = useState(null);
   const [activeTab, setActiveTab] = useState("personal");
-  const [firstName, setFirstName] = useState();
-  const [lastName, setLastName] = useState("");
+  const [fullName, setFullName] = useState("");
   const [telephone, setTelephone] = useState("");
   const [dob, setDob] = useState("");
+  const [email, setEmail] = useState("");
+  const [country, setCountry] = useState("");
   const [saveStatus, setSaveStatus] = useState(null);
+
+  // เพิ่ม state สำหรับการเปลี่ยนรหัสผ่าน
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [passwordSuccess, setPasswordSuccess] = useState(false);
+  const [passwordLoading, setPasswordLoading] = useState(false);
+
+  // เพิ่ม state เพื่อเก็บค่าเริ่มต้นและตรวจสอบการเปลี่ยนแปลง
+  const [initialValues, setInitialValues] = useState({
+    fullName: "",
+    telephone: "",
+    dob: "",
+    email: "",
+    country: "",
+  });
+  const [isFormChanged, setIsFormChanged] = useState(false);
 
   const { user } = useSession();
   const userName = user?.name;
 
   useEffect(() => {
     if (user) {
-      const { firstName, lastName } = getFirstAndLastName(user.name);
-      setFirstName(firstName);
-      setLastName(lastName);
-      setTelephone(user.telephone || "");
-      setDob(user.dob ? new Date(user.dob).toISOString().split("T")[0] : "");
+      const name = user.name || "";
+      const phone = user.telephone || "";
+      const birthDate = user.dob
+        ? new Date(user.dob).toISOString().split("T")[0]
+        : "";
+      const userEmail = user.email || "";
+
+      // ตั้งค่าข้อมูลปัจจุบัน
+      setFullName(name);
+      setTelephone(phone);
+      setDob(birthDate);
+      setEmail(userEmail);
+      setCountry("Thailand"); // ตั้งค่าเป็น Thailand เสมอ
+
+      // บันทึกค่าเริ่มต้น
+      setInitialValues({
+        fullName: name,
+        telephone: phone,
+        dob: birthDate,
+        email: userEmail,
+        country: "Thailand", // ตั้งค่าเริ่มต้นเป็น Thailand เสมอ
+      });
     }
   }, [user]);
+
+  // ตรวจสอบการเปลี่ยนแปลงของฟอร์ม
+  useEffect(() => {
+    if (
+      fullName !== initialValues.fullName ||
+      telephone !== initialValues.telephone ||
+      dob !== initialValues.dob ||
+      email !== initialValues.email ||
+      country !== initialValues.country
+    ) {
+      setIsFormChanged(true);
+    } else {
+      setIsFormChanged(false);
+    }
+  }, [fullName, telephone, dob, email, country, initialValues]);
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -81,10 +124,11 @@ export default function ProfileSettingsPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           userId: currentUserId.toString(),
-          firstName,
-          lastName,
+          fullName,
           telephone,
           dob,
+          email,
+          country,
         }),
       });
 
@@ -94,12 +138,87 @@ export default function ProfileSettingsPage() {
         throw new Error(data.error || "Failed to update");
       }
 
+      // อัปเดตค่าเริ่มต้นหลังจากบันทึกสำเร็จ
+      setInitialValues({
+        fullName,
+        telephone,
+        dob,
+        email,
+        country,
+      });
+      setIsFormChanged(false);
+
       setSaveStatus("saved");
       setTimeout(() => setSaveStatus(null), 3000);
     } catch (error) {
-      console.error(error.message);
+      console.error(error?.message || "An error occurred during save");
       setSaveStatus("error");
       setTimeout(() => setSaveStatus(null), 3000);
+    }
+  };
+
+  // เพิ่มฟังก์ชันสำหรับการยกเลิกการแก้ไข
+  const handleCancel = () => {
+    setFullName(initialValues.fullName);
+    setTelephone(initialValues.telephone);
+    setDob(initialValues.dob);
+    setEmail(initialValues.email);
+    setCountry("Thailand"); // ตั้งค่าเป็น Thailand เสมอ
+    setIsFormChanged(false);
+  };
+
+  // เพิ่มฟังก์ชันสำหรับการเปลี่ยนรหัสผ่าน
+  const handleChangePassword = async (e) => {
+    e.preventDefault();
+
+    // รีเซ็ตข้อความแจ้งเตือน
+    setPasswordError("");
+    setPasswordSuccess(false);
+
+    // ตรวจสอบว่ารหัสผ่านใหม่และยืนยันรหัสผ่านตรงกันหรือไม่
+    if (newPassword !== confirmPassword) {
+      setPasswordError("New password and confirm password do not match");
+      return;
+    }
+
+    // ตรวจสอบความยาวของรหัสผ่าน
+    if (newPassword.length < 6) {
+      setPasswordError("New password must be at least 6 characters long");
+      return;
+    }
+
+    setPasswordLoading(true);
+
+    try {
+      const response = await fetch("/api/user/changePassword", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: currentUserId.toString(),
+          currentPassword,
+          newPassword,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to change password");
+      }
+
+      // รีเซ็ตฟอร์ม
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+      setPasswordSuccess(true);
+
+      // ซ่อนข้อความสำเร็จหลังจาก 3 วินาที
+      setTimeout(() => setPasswordSuccess(false), 3000);
+    } catch (error) {
+      console.error("Error changing password:", error);
+      setPasswordError(error.message || "An error occurred while changing password");
+    } finally {
+      setPasswordLoading(false);
     }
   };
 
@@ -275,7 +394,7 @@ export default function ProfileSettingsPage() {
                       <span>Security Status</span>
                       <span className="text-yellow-400">Medium</span>
                     </div>
-                    <div className="w-full bg-[#161831] rounded-full h-2">
+                    <div className="w-full bg-[#161831] rounded-lg py-3 px-4 text-white border border-[#3a3f6a] focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none transition-all">
                       <div className="bg-gradient-to-r from-yellow-500 to-yellow-400 h-2 rounded-full w-[60%]"></div>
                     </div>
                     <p className="mt-2 text-gray-400 text-xs">
@@ -295,55 +414,92 @@ export default function ProfileSettingsPage() {
                     <FaUser className="text-white" /> Personal Information
                   </h3>
                   <form className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 gap-6">
                       <div>
                         <label className="block text-sm font-medium mb-2 text-white">
-                          First Name
+                          Full Name
                         </label>
                         <input
                           type="text"
-                          value={firstName}
-                          onChange={(e) => setFirstName(e.target.value)}
-                          className="w-full bg-[#161831] rounded-lg py-3 px-4 text-white border"
+                          value={fullName}
+                          onChange={(e) => setFullName(e.target.value)}
+                          className="w-full bg-[#161831] rounded-lg py-3 px-4 text-white border border-[#3a3f6a] focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none transition-all"
                         />
                       </div>
 
-                      <div>
-                        <label className="block text-sm font-medium mb-2 text-white">
-                          Last Name
-                        </label>
-                        <input
-                          type="text"
-                          value={lastName}
-                          onChange={(e) => setLastName(e.target.value)}
-                          className="w-full bg-[#161831] rounded-lg py-3 px-4 text-white border"
-                        />
+                      {/* เพิ่มแถวใหม่สำหรับ Email และ Country */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                          <label className="text-sm font-medium mb-2 flex items-center gap-2 text-white">
+                            <FaEnvelope /> Email Address
+                          </label>
+                          <input
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="w-full bg-[#161831] rounded-lg py-3 px-4 text-white border border-[#3a3f6a] focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none transition-all"
+                            placeholder="your.email@example.com"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-sm font-medium mb-2 flex items-center gap-2 text-white">
+                            <FaPhone /> Phone Number
+                          </label>
+                          <input
+                            type="tel"
+                            value={telephone}
+                            onChange={(e) => setTelephone(e.target.value)}
+                            className="w-full bg-[#161831] rounded-lg py-3 px-4 text-white border border-[#3a3f6a] focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none transition-all"
+                            placeholder="+1 (123) 456-7890"
+                          />
+                        </div>
                       </div>
 
-                      <div>
-                        <label className="text-sm font-medium mb-2 flex items-center gap-2 text-white">
-                          Phone Number
-                        </label>
-                        <input
-                          type="tel"
-                          value={telephone}
-                          onChange={(e) => setTelephone(e.target.value)}
-                          className="w-full bg-[#161831] rounded-lg py-3 px-4 text-white border"
-                          placeholder="+1 (123) 456-7890"
-                        />
+                      {/* จัดให้ Phone Number และ Date of Birth อยู่ในแถวเดียวกัน */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                          <label className="text-sm font-medium mb-2 flex items-center gap-2 text-white">
+                            <FaCalendarAlt /> Date of Birth
+                          </label>
+                          <input
+                            type="date"
+                            value={dob}
+                            onChange={(e) => setDob(e.target.value)}
+                            className="w-full bg-[#161831] rounded-lg py-3 px-4 text-white border border-[#3a3f6a] focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none transition-all"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-sm font-medium mb-2 flex items-center gap-2 text-white">
+                            Country
+                          </label>
+                          <input
+                            type="text"
+                            value="Thailand"
+                            disabled
+                            className="w-full bg-[#161831] rounded-lg py-3 px-4 text-white border border-[#3a3f6a] focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none transition-all opacity-80 cursor-not-allowed"
+                          />
+                        </div>
                       </div>
+                    </div>
 
-                      <div>
-                        <label className="text-sm font-medium mb-2 flex items-center gap-2 text-white">
-                          Date of Birth
-                        </label>
-                        <input
-                          type="date"
-                          value={dob}
-                          onChange={(e) => setDob(e.target.value)}
-                          className="w-full bg-[#161831] rounded-lg py-3 px-4 text-white border"
-                        />
-                      </div>
+                    <div className="flex justify-end gap-3">
+                      {/* แสดงปุ่ม Cancel เฉพาะเมื่อมีการเปลี่ยนแปลง */}
+                      {isFormChanged && (
+                        <button
+                          type="button"
+                          onClick={handleCancel}
+                          className="bg-gray-600 hover:bg-gray-700 text-white font-medium py-2 px-6 rounded-lg transition-all duration-300 flex items-center gap-2"
+                        >
+                          Cancel
+                        </button>
+                      )}
+                      <button
+                        type="button"
+                        onClick={handleSave}
+                        className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-6 rounded-lg transition-all duration-300 flex items-center gap-2"
+                      >
+                        Save Changes
+                      </button>
                     </div>
                   </form>
                 </div>
@@ -360,15 +516,18 @@ export default function ProfileSettingsPage() {
                     <h4 className="text-lg font-semibold mb-4 text-white">
                       Change Password
                     </h4>
-                    <form className="space-y-4">
+                    <form className="space-y-4" onSubmit={handleChangePassword}>
                       <div>
                         <label className="block text-sm font-medium mb-2 text-white">
                           Current Password
                         </label>
                         <input
                           type="password"
+                          value={currentPassword}
+                          onChange={(e) => setCurrentPassword(e.target.value)}
                           className="w-full bg-[#161831] rounded-lg py-3 px-4 text-white border border-[#3a3f6a] focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none transition-all"
                           placeholder="••••••••"
+                          required
                         />
                       </div>
 
@@ -379,97 +538,73 @@ export default function ProfileSettingsPage() {
                           </label>
                           <input
                             type="password"
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
                             className="w-full bg-[#161831] rounded-lg py-3 px-4 text-white border border-[#3a3f6a] focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none transition-all"
                             placeholder="••••••••"
+                            required
                           />
                         </div>
-
                         <div>
                           <label className="block text-sm font-medium mb-2 text-white">
                             Confirm New Password
                           </label>
                           <input
                             type="password"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
                             className="w-full bg-[#161831] rounded-lg py-3 px-4 text-white border border-[#3a3f6a] focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none transition-all"
                             placeholder="••••••••"
+                            required
                           />
                         </div>
                       </div>
 
-                      <div className="bg-[#1e2142] rounded-lg p-4 text-sm border border-[#3a3f6a]/50">
-                        <h5 className="font-semibold mb-2 text-purple-200">
-                          Password Requirements:
-                        </h5>
-                        <ul className="space-y-1 text-gray-300">
-                          <li className="flex items-center gap-2">
-                            <svg
-                              className="w-4 h-4 text-green-400"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M5 13l4 4L19 7"
-                              ></path>
-                            </svg>
-                            Minimum 8 characters
-                          </li>
-                          <li className="flex items-center gap-2">
-                            <svg
-                              className="w-4 h-4 text-green-400"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M5 13l4 4L19 7"
-                              ></path>
-                            </svg>
-                            At least one uppercase letter
-                          </li>
-                          <li className="flex items-center gap-2">
-                            <svg
-                              className="w-4 h-4 text-green-400"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M5 13l4 4L19 7"
-                              ></path>
-                            </svg>
-                            At least one number
-                          </li>
-                          <li className="flex items-center gap-2">
-                            <svg
-                              className="w-4 h-4 text-green-400"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M5 13l4 4L19 7"
-                              ></path>
-                            </svg>
-                            At least one special character
-                          </li>
-                        </ul>
+                      {passwordError && (
+                        <div className="text-red-500 text-sm">{passwordError}</div>
+                      )}
+                      
+                      {passwordSuccess && (
+                        <div className="text-green-500 text-sm flex items-center gap-2">
+                          <MdOutlineCheckCircle />
+                          Password changed successfully!
+                        </div>
+                      )}
+
+                      <div className="flex justify-end">
+                        <button
+                          type="submit"
+                          disabled={passwordLoading}
+                          className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-6 rounded-lg transition-all duration-300 flex items-center gap-2"
+                        >
+                          {passwordLoading ? (
+                            <>
+                              <svg
+                                className="animate-spin h-4 w-4"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                              >
+                                <circle
+                                  className="opacity-25"
+                                  cx="12"
+                                  cy="12"
+                                  r="10"
+                                  stroke="currentColor"
+                                  strokeWidth="4"
+                                ></circle>
+                                <path
+                                  className="opacity-75"
+                                  fill="currentColor"
+                                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                ></path>
+                              </svg>
+                              Changing password...
+                            </>
+                          ) : (
+                            "Save Changes"
+                          )}
+                        </button>
                       </div>
                     </form>
                   </div>
@@ -737,23 +872,6 @@ export default function ProfileSettingsPage() {
               )}
 
               {/* Save Button - Fixed at bottom for all tabs */}
-              <div className="mt-6 flex justify-end space-x-4">
-                <button
-                  onClick={handleSave}
-                  className="px-6 py-3 bg-[#1e2142] text-white rounded-lg hover:bg-[#282d57] transition-colors border border-[#3a3f6a]"
-                >
-                  {saveStatus === "saving" ? "Saving..." : "Save Changes"}
-                </button>
-
-                {saveStatus === "saved" && (
-                  <div className="text-green-400">
-                    Changes saved successfully!
-                  </div>
-                )}
-                {saveStatus === "error" && (
-                  <div className="text-red-400">Failed to save changes.</div>
-                )}
-              </div>
             </div>
           </div>
         </div>
