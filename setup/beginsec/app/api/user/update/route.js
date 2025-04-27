@@ -4,9 +4,9 @@ import { NextResponse } from "next/server";
 export async function POST(req) {
   try {
     const body = await req.json();
-    const { userId, firstName, lastName, telephone, dob } = body;
+    const { userId, fullName, telephone, dob } = body;
 
-    if (!userId || !firstName || !lastName) {
+    if (!userId || !fullName) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
@@ -16,7 +16,7 @@ export async function POST(req) {
     const updatedUser = await prisma.user.update({
       where: { id: BigInt(userId) },
       data: {
-        name: `${firstName} ${lastName}`,
+        name: fullName,
         telephone,
         dob: dob ? new Date(dob) : null,
       },
