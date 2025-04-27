@@ -9,6 +9,7 @@ import {
 import Footer from "@/components/homepage/Footer";
 import styles from "@/styles/Form.module.css";
 import Button from "@/components/homepage/reuseable/Button";
+import { toast } from "react-toastify";
 
 const ContactPage = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -31,16 +32,43 @@ const ContactPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Form submission logic would go here
-    alert("Thank you for your message! We'll get back to you soon.");
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      message: "",
-    });
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        toast.success(
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <span>ส่งข้อมูลเรียบร้อยแล้ว!</span>
+          </div>,
+          {
+            icon: false,
+            style: {
+              fontFamily: "Prompt, sans-serif",
+              fontSize: "1rem",
+              borderRadius: "8px",
+              padding: "12px 16px",
+              backgroundColor: "#4CAF50",
+              color: "white",
+            },
+          }
+        );
+        setFormData({ name: "", email: "", phone: "", message: "" });
+      } else {
+        toast.error("ส่งข้อความไม่สำเร็จ กรุณาลองใหม่");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("เกิดข้อผิดพลาด");
+    }
   };
 
   return (

@@ -2,7 +2,7 @@ import Hero from "@/components/homepage/Hero";
 import About from "@/components/homepage/About";
 import HightLight from "@/components/homepage/Hightlight";
 import Content from "@/components/homepage/Content";
-import Footer from "@/components/homepage/Footer";
+import SocialToggle from "@/components/homepage/SocialToggle";
 
 export default function Home() {
   return (
@@ -11,6 +11,7 @@ export default function Home() {
       <About />
       <HightLight />
       <Content />
+      <SocialToggle />
     </>
   );
 }

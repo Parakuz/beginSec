@@ -1,3 +1,6 @@
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { SessionProvider } from "@/contexts/sessionContext";
 import "./globals.css";
 
@@ -16,6 +19,17 @@ export default function RootLayout({ children }) {
         <SessionProvider>
           <Navbar />
           {children}
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark" // หรือ dark ได้
+          />
           <Footer />
         </SessionProvider>
       </body>

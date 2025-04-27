@@ -14,7 +14,7 @@ model User {
   password               String                   @map("Password")
   dob                    DateTime?                 @map("DOB")
   telephone              String?                   @map("Telephone")
-  username               String?                   @unique @map("Username")
+  tokenResetPassword     String?                   @unique @map("tokenRePass")
   imagePath              String?                   @map("ImagePath")
   reports                Transaction_Report[]
   Transaction_UserCourse Transaction_UserCourse[]

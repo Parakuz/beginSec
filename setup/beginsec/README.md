@@ -10,4 +10,12 @@
 
 #### This version best for User Test
 
-###### Fix issue profile page can't use in this version but another another function is avaliable
+###### Fix issue profile page can't use in this version but another another function is avaliable.
+
+# v 0.1.1
+
+###### Add dynamic /profile path done.
+
+# v 0.1.2
+
+###### Add profile page can update user profile

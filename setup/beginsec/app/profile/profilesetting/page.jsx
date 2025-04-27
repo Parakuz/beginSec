@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSession } from "@/contexts/sessionContext";
+
 import {
   MdSensorDoor,
   MdOutlinePhotoCamera,
@@ -24,22 +26,81 @@ import {
   FaLinkedin,
   FaTwitter,
 } from "react-icons/fa";
-// import Navbar from "../../components/homepage/navbar"
-// import Footer from "../../components/homepage/Footer"
 import NavbarSection from "@/components/homepage/navbar-section";
 
+const getFirstAndLastName = (fullName) => {
+  if (!fullName) return { firstName: "", lastName: "" };
+  const parts = fullName.trim().split(" ");
+  const firstName = parts[0];
+  const lastName = parts.slice(1).join(" ");
+  return { firstName, lastName };
+};
+
 export default function ProfileSettingsPage() {
-  const userName = "Singchai Areepoonsawat";
+  const [currentUserId, setCurrentUserId] = useState(null);
   const [activeTab, setActiveTab] = useState("personal");
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState("");
+  const [telephone, setTelephone] = useState("");
+  const [dob, setDob] = useState("");
   const [saveStatus, setSaveStatus] = useState(null);
 
-  const handleSave = () => {
+  const { user } = useSession();
+  const userName = user?.name;
+
+  useEffect(() => {
+    if (user) {
+      const { firstName, lastName } = getFirstAndLastName(user.name);
+      setFirstName(firstName);
+      setLastName(lastName);
+      setTelephone(user.telephone || "");
+      setDob(user.dob ? new Date(user.dob).toISOString().split("T")[0] : "");
+    }
+  }, [user]);
+
+  useEffect(() => {
+    const fetchUserId = async () => {
+      try {
+        const res = await fetch("/api/user/session");
+        const data = await res.json();
+        setCurrentUserId(data.userId);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        setFeedback("❌ Error fetching user data.");
+      }
+    };
+
+    fetchUserId();
+  }, []);
+
+  const handleSave = async () => {
     setSaveStatus("saving");
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      const response = await fetch("/api/user/update", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: currentUserId.toString(),
+          firstName,
+          lastName,
+          telephone,
+          dob,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to update");
+      }
+
       setSaveStatus("saved");
       setTimeout(() => setSaveStatus(null), 3000);
-    }, 1000);
+    } catch (error) {
+      console.error(error.message);
+      setSaveStatus("error");
+      setTimeout(() => setSaveStatus(null), 3000);
+    }
   };
 
   return (
@@ -53,7 +114,7 @@ export default function ProfileSettingsPage() {
         <div className="container mx-auto px-4 py-16 relative z-10">
           <div className="flex flex-col md:flex-row items-start md:items-center gap-8">
             <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center text-white text-4xl font-bold border-4 border-[#242851] shadow-lg shadow-purple-900/20">
-              {userName.charAt(0)}
+              {userName?.charAt(0)}
             </div>
 
             <div className="flex-1">
@@ -233,7 +294,6 @@ export default function ProfileSettingsPage() {
                   <h3 className="text-xl font-bold mb-6 pb-4 border-b border-[#3a3f6a]/50 flex items-center gap-2">
                     <FaUser className="text-white" /> Personal Information
                   </h3>
-
                   <form className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
@@ -242,8 +302,9 @@ export default function ProfileSettingsPage() {
                         </label>
                         <input
                           type="text"
-                          className="w-full bg-[#161831] rounded-lg py-3 px-4 text-white border border-[#3a3f6a] focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none transition-all"
-                          defaultValue="Singchai"
+                          value={firstName}
+                          onChange={(e) => setFirstName(e.target.value)}
+                          className="w-full bg-[#161831] rounded-lg py-3 px-4 text-white border"
                         />
                       </div>
 
@@ -253,56 +314,35 @@ export default function ProfileSettingsPage() {
                         </label>
                         <input
                           type="text"
-                          className="w-full bg-[#161831] rounded-lg py-3 px-4 text-white border border-[#3a3f6a] focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none transition-all"
-                          defaultValue="Areepoonsawat"
+                          value={lastName}
+                          onChange={(e) => setLastName(e.target.value)}
+                          className="w-full bg-[#161831] rounded-lg py-3 px-4 text-white border"
                         />
                       </div>
 
                       <div>
                         <label className="text-sm font-medium mb-2 flex items-center gap-2 text-white">
-                          <FaPhone /> Phone Number
+                          Phone Number
                         </label>
                         <input
                           type="tel"
-                          className="w-full bg-[#161831] rounded-lg py-3 px-4 text-white border border-[#3a3f6a] focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none transition-all"
+                          value={telephone}
+                          onChange={(e) => setTelephone(e.target.value)}
+                          className="w-full bg-[#161831] rounded-lg py-3 px-4 text-white border"
                           placeholder="+1 (123) 456-7890"
                         />
                       </div>
 
                       <div>
                         <label className="text-sm font-medium mb-2 flex items-center gap-2 text-white">
-                          <FaEnvelope /> Email Address
-                        </label>
-                        <input
-                          type="email"
-                          className="w-full bg-[#161831] rounded-lg py-3 px-4 text-white border border-[#3a3f6a] focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none transition-all"
-                          placeholder="your.email@example.com"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="text-sm font-medium mb-2 flex items-center gap-2 text-white">
-                          <FaCalendarAlt /> Date of Birth
+                          Date of Birth
                         </label>
                         <input
                           type="date"
-                          className="w-full bg-[#161831] rounded-lg py-3 px-4 text-white border border-[#3a3f6a] focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none transition-all"
+                          value={dob}
+                          onChange={(e) => setDob(e.target.value)}
+                          className="w-full bg-[#161831] rounded-lg py-3 px-4 text-white border"
                         />
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-medium mb-2 text-white">
-                          Country
-                        </label>
-                        <select className="w-full bg-[#161831] rounded-lg py-3 px-4 text-white border border-[#3a3f6a] focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none transition-all">
-                          <option>Thailand</option>
-                          <option>United States</option>
-                          <option>United Kingdom</option>
-                          <option>Canada</option>
-                          <option>Australia</option>
-                          <option>Japan</option>
-                          <option>Singapore</option>
-                        </select>
                       </div>
                     </div>
                   </form>
@@ -698,15 +738,21 @@ export default function ProfileSettingsPage() {
 
               {/* Save Button - Fixed at bottom for all tabs */}
               <div className="mt-6 flex justify-end space-x-4">
-                <button className="px-6 py-3 bg-[#1e2142] text-white rounded-lg hover:bg-[#282d57] transition-colors border border-[#3a3f6a]">
-                  Cancel
-                </button>
                 <button
                   onClick={handleSave}
-                  className="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all shadow-lg shadow-purple-900/20"
+                  className="px-6 py-3 bg-[#1e2142] text-white rounded-lg hover:bg-[#282d57] transition-colors border border-[#3a3f6a]"
                 >
-                  Save Changes
+                  {saveStatus === "saving" ? "Saving..." : "Save Changes"}
                 </button>
+
+                {saveStatus === "saved" && (
+                  <div className="text-green-400">
+                    Changes saved successfully!
+                  </div>
+                )}
+                {saveStatus === "error" && (
+                  <div className="text-red-400">Failed to save changes.</div>
+                )}
               </div>
             </div>
           </div>

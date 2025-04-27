@@ -42,14 +42,13 @@ function Navbar() {
   };
 
   const handleSetting = () => {
-    router.push("/setting");
+    router.push("/profile/profilesetting");
   };
-
-  if (loading) {
-    return (
-      <nav className="bg-[#252525]/60 text-white px-6 py-4">Loading...</nav>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <nav className="bg-[#252525]/60 text-white px-6 py-4">Loading...</nav>
+  //   );
+  // }
 
   return (
     <nav className="bg-[#252525]/60 text-white px-6 py-4 flex justify-between items-center z-10">

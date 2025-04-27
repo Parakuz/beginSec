@@ -1,0 +1,45 @@
+"use client";
+
+import { useState } from "react";
+import { FaUsers, FaFacebook, FaDiscord } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
+import { BiLink } from "react-icons/bi";
+import Link from "next/link";
+
+export default function SocialToggle() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const links = [
+    { icon: <FaUsers />, href: "/community", label: "Community" },
+    { icon: <FaFacebook />, href: "https://facebook.com", label: "Facebook" },
+    { icon: <FaDiscord />, href: "https://discord.com", label: "Discord" },
+  ];
+
+  return (
+    <div className="fixed bottom-6 left-6 flex flex-col items-center space-y-2 z-50">
+      {isOpen &&
+        links.map((link, index) => (
+          <Link
+            key={index}
+            href={link.href}
+            target="_blank"
+            className="bg-purple-700 text-white p-3 rounded-full shadow-lg hover:bg-purple-800 transition"
+            title={link.label}
+          >
+            {link.icon}
+          </Link>
+        ))}
+
+      <button
+        onClick={toggleMenu}
+        className="bg-purple-700 text-white p-4 rounded-full shadow-lg hover:bg-purple-800 transition"
+      >
+        {isOpen ? <IoClose size={24} /> : <BiLink size={24} />}
+      </button>
+    </div>
+  );
+}

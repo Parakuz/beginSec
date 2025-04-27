@@ -8,6 +8,8 @@ export async function getUser(userId) {
         name: true,
         email: true,
         imagePath: true,
+        dob: true,
+        telephone: true,
       },
     });
 
