@@ -15,10 +15,8 @@ import { useSession } from "@/contexts/sessionContext";
 export default function ProfilePage() {
   const [userCourses, setUserCourses] = useState([]);
   const [currentUserId, setCurrentUserId] = useState(null);
+  const [count, setCount] = useState(0);
 
-  // ใช้ข้อมูลจำลองชั่วคราวจนกว่าจะตั้งค่า next-auth เสร็จ
-  // const session = await getServerSession(authOptions);
-  // const userId = session?.user?.id;
   useEffect(() => {
     const fetchUserId = async () => {
       try {
@@ -34,11 +32,29 @@ export default function ProfilePage() {
     fetchUserId();
   }, []);
 
-  // ข้อมูลผู้ใช้จำลองสำหรับการพัฒนา
   const { user } = useSession();
-  console.log(user);
   const userName = user?.name;
   const userId = currentUserId;
+
+  useEffect(() => {
+    if (!currentUserId) return;
+
+    async function fetchPosttestScores() {
+      try {
+        const response = await fetch(`/api/user/posttest/${currentUserId}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch scores");
+        }
+        const data = await response.json();
+        setCount(data.count);
+      } catch (err) {
+        console.error("Error fetching scores:", err);
+        setError(err.message);
+      }
+    }
+
+    fetchPosttestScores();
+  }, [currentUserId]);
 
   useEffect(() => {
     const fetchUserCourses = async () => {
@@ -84,7 +100,7 @@ export default function ProfilePage() {
                     <div className="text-2xl text-white">
                       <MdSensorDoor />
                     </div>
-                    <span className="text-xl">0</span>
+                    <span className="text-xl">{count}</span>
                   </div>
                 </div>
 
@@ -96,7 +112,7 @@ export default function ProfilePage() {
                     <div className="text-2xl text-white">
                       <TbBadgesFilled />
                     </div>
-                    <span className="text-xl">0</span>
+                    <span className="text-xl">{count}</span>
                   </div>
                 </div>
 

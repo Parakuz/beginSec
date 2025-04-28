@@ -1,6 +1,8 @@
-import React from "react";
+"use client";
+import { useEffect, useState } from "react";
 // import Navbar from "../../components/homepage/navbar";
 // import Footer from "../../components/homepage/Footer";
+
 import { MdSensorDoor } from "react-icons/md";
 import { PiCertificateFill } from "react-icons/pi";
 import { TbBadgesFilled } from "react-icons/tb";
@@ -14,9 +16,85 @@ import {
   FaCheckCircle,
 } from "react-icons/fa";
 import NavbarSection from "@/components/homepage/navbar-section";
+import { useSession } from "@/contexts/sessionContext";
 
 const BadgesAndCertificationsPage = () => {
-  const userName = "Singchai Areepoonsawat";
+  const [currentUserId, setCurrentUserId] = useState(null);
+  const [scores, setScores] = useState([]);
+  const [courses, setCourses] = useState([]);
+  const [count, setCount] = useState(0);
+  const { user } = useSession();
+  const userName = user?.name;
+  const scoreMap = scores.reduce((acc, entry) => {
+    acc[entry.CourseId] = entry.PosttestScore;
+    return acc;
+  }, {});
+
+  const icons = [
+    <FaMedal className="text-5xl text-gray-500" />,
+    <FaTrophy className="text-5xl text-gray-500" />,
+    <FaStar className="text-5xl text-gray-500" />,
+    <FaAward className="text-5xl text-gray-500" />,
+  ];
+
+  const iconsCompletes = [
+    <FaMedal className="text-5xl text-white" />,
+    <FaTrophy className="text-5xl text-white" />,
+    <FaStar className="text-5xl text-white" />,
+    <FaAward className="text-5xl text-white" />,
+  ];
+
+  useEffect(() => {
+    if (!currentUserId) return;
+
+    async function fetchPosttestScores() {
+      try {
+        const response = await fetch(`/api/user/posttest/${currentUserId}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch scores");
+        }
+        const data = await response.json();
+        setScores(data.score);
+        setCount(data.count);
+      } catch (err) {
+        console.error("Error fetching scores:", err);
+        setError(err.message);
+      }
+    }
+
+    fetchPosttestScores();
+  }, [currentUserId]);
+
+  useEffect(() => {
+    async function fetchCourses() {
+      try {
+        const response = await fetch("/api/course");
+        const data = await response.json();
+        const sortedCourses = data.sort((a, b) => a.id - b.id);
+        setCourses(sortedCourses);
+        setCount;
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+      }
+    }
+
+    fetchCourses();
+  }, []);
+
+  useEffect(() => {
+    const fetchUserId = async () => {
+      try {
+        const res = await fetch("/api/user/session");
+        const data = await res.json();
+        setCurrentUserId(data.userId);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        setFeedback("❌ Error fetching user data.");
+      }
+    };
+
+    fetchUserId();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#161831] to-[#0c0e1d]">
@@ -29,7 +107,7 @@ const BadgesAndCertificationsPage = () => {
         <div className="container mx-auto px-4 py-16 relative z-10">
           <div className="flex flex-col md:flex-row items-start md:items-center gap-8">
             <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center text-white text-4xl font-bold border-4 border-[#242851] shadow-lg shadow-purple-900/20">
-              {userName.charAt(0)}
+              {userName?.charAt(0)}
             </div>
 
             <div className="flex-1">
@@ -48,7 +126,7 @@ const BadgesAndCertificationsPage = () => {
                     <div className="text-2xl text-white">
                       <MdSensorDoor />
                     </div>
-                    <span className="text-xl">0</span>
+                    <span className="text-xl">{count}</span>
                   </div>
                 </div>
 
@@ -58,7 +136,7 @@ const BadgesAndCertificationsPage = () => {
                     <div className="text-2xl text-white">
                       <TbBadgesFilled />
                     </div>
-                    <span className="text-xl">0</span>
+                    <span className="text-xl">{count}</span>
                   </div>
                 </div>
 
@@ -90,59 +168,53 @@ const BadgesAndCertificationsPage = () => {
             {/* Rest of the badges section remains the same */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {/* Badge Card - Unlocked */}
-              <div className="bg-[#242851] rounded-lg p-6 flex flex-col items-center border-2 border-purple-500/50 shadow-lg shadow-purple-500/10">
-                <div className="w-24 h-24 bg-gradient-to-br from-purple-600 to-blue-600 rounded-full flex items-center justify-center mb-4 border-2 border-purple-400">
-                  <FaMedal className="text-5xl text-white" />
-                </div>
-                <h3 className="text-xl font-bold mb-2">Beginner Hacker</h3>
-                <p className="text-gray-300 text-center mb-4">
-                  Complete your first room
-                </p>
-                <div className="text-sm text-green-400 flex items-center">
-                  <FaCheckCircle className="mr-1" /> Earned 
-                </div>
-              </div>
-              {/* Badge Card - Locked */}
-              <div className="bg-[#242851] rounded-lg p-6 flex flex-col items-center opacity-50">
-                <div className="w-24 h-24 bg-[#161831] rounded-full flex items-center justify-center mb-4 border-2 border-gray-600">
-                  <FaTrophy className="text-5xl text-gray-500" />
-                </div>
-                <h3 className="text-xl font-bold mb-2">Web Warrior</h3>
-                <p className="text-gray-400 text-center mb-4">
-                  Complete 5 web security rooms
-                </p>
-                <div className="text-sm text-gray-500 flex items-center">
-                  <FaCalendarAlt className="mr-1" /> Locked
-                </div>
-              </div>
 
-              {/* Badge Card - Locked */}
-              <div className="bg-[#242851] rounded-lg p-6 flex flex-col items-center opacity-50">
-                <div className="w-24 h-24 bg-[#161831] rounded-full flex items-center justify-center mb-4 border-2 border-gray-600">
-                  <FaStar className="text-5xl text-gray-500" />
-                </div>
-                <h3 className="text-xl font-bold mb-2">Crypto Master</h3>
-                <p className="text-gray-400 text-center mb-4">
-                  Complete all cryptography challenges
-                </p>
-                <div className="text-sm text-gray-500 flex items-center">
-                  <FaCalendarAlt className="mr-1" /> Locked
-                </div>
-              </div>
+              {courses
+                .sort((a, b) => a.id - b.id)
+                .map((data, i) => {
+                  const score = scoreMap[data.id] || 0; // ถ้าไม่เจอให้ถือว่า 0
 
-              {/* Badge Card - Locked */}
-              <div className="bg-[#242851] rounded-lg p-6 flex flex-col items-center opacity-50">
-                <div className="w-24 h-24 bg-[#161831] rounded-full flex items-center justify-center mb-4 border-2 border-gray-600">
-                  <FaAward className="text-5xl text-gray-500" />
-                </div>
-                <h3 className="text-xl font-bold mb-2">Network Ninja</h3>
-                <p className="text-gray-400 text-center mb-4">
-                  Complete all network security rooms
-                </p>
-                <div className="text-sm text-gray-500 flex items-center">
-                  <FaCalendarAlt className="mr-1" /> Locked
-                </div>
-              </div>
+                  const isPassed = score >= 80;
+
+                  return (
+                    <div
+                      key={data.id}
+                      className={`bg-[#242851] rounded-lg p-6 flex flex-col items-center ${
+                        isPassed
+                          ? "border-2 border-purple-500/50 shadow-lg shadow-purple-500/10"
+                          : "opacity-50"
+                      }`}
+                    >
+                      <div
+                        className={`w-24 h-24 rounded-full flex items-center justify-center mb-4 border-2 ${
+                          isPassed
+                            ? "bg-gradient-to-br from-purple-600 to-blue-600 border-purple-400"
+                            : "bg-[#161831] border-gray-600"
+                        }`}
+                      >
+                        {isPassed
+                          ? iconsCompletes[i % iconsCompletes.length]
+                          : icons[i % icons.length]}
+                      </div>
+
+                      <h3 className="text-xl font-bold mb-2">{data.name}</h3>
+
+                      <p className="text-gray-300 text-center mb-4">
+                        {data.detail}
+                      </p>
+
+                      {isPassed ? (
+                        <div className="text-sm text-green-400 flex items-center">
+                          <FaCheckCircle className="mr-1" /> Earned
+                        </div>
+                      ) : (
+                        <div className="text-sm text-gray-500 flex items-center">
+                          <FaCalendarAlt className="mr-1" /> Locked
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
             </div>
           </div>
 
@@ -220,15 +292,3 @@ const BadgesAndCertificationsPage = () => {
 };
 
 export default BadgesAndCertificationsPage;
-
-// /การแก้ไขหน้า Badge เพื่อปลดล็อค Badge
-
-// ผมจะแก้ไขหน้า Badge ให้มีการปลดล็อค Badge หนึ่งรายการตามที่คุณต้องการครับ
-
-// ## การเปลี่ยนแปลงที่จะทำ
-
-// ผมจะแก้ไขไฟล์ `c:\beginSec\setup\beginsec\app\profile\badge\page.jsx` โดยเปลี่ยนสถานของ Badge แรก (Beginner Hacker) จากล็อคเป็นปลดล็อคแล้ว โดยมีการเปลี่ยนแปลงดังนี้:
-
-// 1. ลบ opacity ที่ทำให้ Badge ดูจาง
-// 2. เปลี่ยนสีและสถานของ Badge
-// 3. เพิ่มวันที่ได้รับ Badge

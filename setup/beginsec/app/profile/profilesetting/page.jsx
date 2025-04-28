@@ -59,6 +59,28 @@ export default function ProfileSettingsPage() {
   const { user } = useSession();
   const userName = user?.name;
 
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!currentUserId) return;
+
+    async function fetchPosttestScores() {
+      try {
+        const response = await fetch(`/api/user/posttest/${currentUserId}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch scores");
+        }
+        const data = await response.json();
+        setCount(data.count);
+      } catch (err) {
+        console.error("Error fetching scores:", err);
+        setError(err.message);
+      }
+    }
+
+    fetchPosttestScores();
+  }, [currentUserId]);
+
   useEffect(() => {
     if (user) {
       const name = user.name || "";
@@ -216,7 +238,9 @@ export default function ProfileSettingsPage() {
       setTimeout(() => setPasswordSuccess(false), 3000);
     } catch (error) {
       console.error("Error changing password:", error);
-      setPasswordError(error.message || "An error occurred while changing password");
+      setPasswordError(
+        error.message || "An error occurred while changing password"
+      );
     } finally {
       setPasswordLoading(false);
     }
@@ -252,7 +276,7 @@ export default function ProfileSettingsPage() {
                     <div className="text-2xl text-white">
                       <MdSensorDoor />
                     </div>
-                    <span className="text-xl">0</span>
+                    <span className="text-xl">{count}</span>
                   </div>
                 </div>
 
@@ -262,7 +286,7 @@ export default function ProfileSettingsPage() {
                     <div className="text-2xl text-purple">
                       <TbBadgesFilled />
                     </div>
-                    <span className="text-xl">0</span>
+                    <span className="text-xl">{count}</span>
                   </div>
                 </div>
 
@@ -561,9 +585,11 @@ export default function ProfileSettingsPage() {
                       </div>
 
                       {passwordError && (
-                        <div className="text-red-500 text-sm">{passwordError}</div>
+                        <div className="text-red-500 text-sm">
+                          {passwordError}
+                        </div>
                       )}
-                      
+
                       {passwordSuccess && (
                         <div className="text-green-500 text-sm flex items-center gap-2">
                           <MdOutlineCheckCircle />
