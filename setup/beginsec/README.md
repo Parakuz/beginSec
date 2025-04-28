@@ -19,3 +19,7 @@
 # v 0.1.2
 
 ###### Add profile page can update user profile
+
+# v 0.1.2
+
+###### Add profile page badge function
