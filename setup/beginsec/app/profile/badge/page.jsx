@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 // import Navbar from "../../components/homepage/navbar";
 // import Footer from "../../components/homepage/Footer";
 
@@ -19,6 +19,9 @@ import NavbarSection from "@/components/homepage/navbar-section";
 import { useSession } from "@/contexts/sessionContext";
 
 const BadgesAndCertificationsPage = () => {
+  const canvasRef = useRef(null);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const image = useRef(null);
   const [currentUserId, setCurrentUserId] = useState(null);
   const [scores, setScores] = useState([]);
   const [courses, setCourses] = useState([]);
@@ -43,6 +46,16 @@ const BadgesAndCertificationsPage = () => {
     <FaStar className="text-5xl text-white" />,
     <FaAward className="text-5xl text-white" />,
   ];
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = "/Cert.png";
+    img.onload = () => {
+      image.current = img;
+      setImageLoaded(true);
+      drawCanvas();
+    };
+  }, []);
 
   useEffect(() => {
     if (!currentUserId) return;
@@ -96,6 +109,37 @@ const BadgesAndCertificationsPage = () => {
     fetchUserId();
   }, []);
 
+  const drawCanvas = () => {
+    const canvas = canvasRef.current;
+    if (!canvas || !image.current) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(image.current, 0, 0, canvas.width, canvas.height);
+
+    if (userName) {
+      ctx.font = 'bold 64px "Brush Script MT", cursive';
+      ctx.fillStyle = "#0c2340";
+      ctx.textAlign = "center";
+      ctx.fillText(userName, canvas.width / 2, 400);
+    }
+  };
+
+  useEffect(() => {
+    if (imageLoaded) drawCanvas();
+  }, [userName]);
+
+  const downloadImage = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const link = document.createElement("a");
+    link.download = `certificate-${userName}.png`;
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#161831] to-[#0c0e1d]">
       {/* <Navbar /> */}
@@ -140,7 +184,7 @@ const BadgesAndCertificationsPage = () => {
                   </div>
                 </div>
 
-                <div className="w-40 h-[80px] bg-[#242851] rounded-lg font-bold text-white px-4 py-3 shadow-lg shadow-black/20 hover:translate-y-[-5px] transition-all duration-300 border border-[#3a3f6a]">
+                {/* <div className="w-40 h-[80px] bg-[#242851] rounded-lg font-bold text-white px-4 py-3 shadow-lg shadow-black/20 hover:translate-y-[-5px] transition-all duration-300 border border-[#3a3f6a]">
                   <div className="text-white text-sm">Certificate</div>
                   <div className="text-white font-bold flex items-center gap-x-3 pt-1">
                     <div className="text-2xl text-white">
@@ -148,7 +192,7 @@ const BadgesAndCertificationsPage = () => {
                     </div>
                     <span className="text-xl">0</span>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -224,61 +268,54 @@ const BadgesAndCertificationsPage = () => {
               <PiCertificateFill className="mr-2 text-3xl" /> Certificates
             </h2>
 
-            <div className="grid grid-cols-1 gap-4">
-              {/* Certificate Card - Locked */}
-              <div className="bg-[#242851] rounded-lg p-6 opacity-50">
-                <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-                  <div className="w-48 h-36 bg-[#161831] rounded-md flex items-center justify-center border-2 border-gray-600">
-                    <PiCertificateFill className="text-6xl text-gray-500" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold mb-2">
-                      Fundamentals of Cybersecurity
-                    </h3>
-                    <p className="text-gray-400 mb-4">
-                      Complete the Fundamentals learning path to earn this
-                      certificate
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <div className="text-sm text-gray-500 flex items-center">
-                        <FaCalendarAlt className="mr-1" /> Not completed
-                      </div>
-                      <button
-                        disabled
-                        className="px-4 py-2 bg-gray-700 text-gray-400 rounded-md flex items-center cursor-not-allowed"
-                      >
-                        <FaDownload className="mr-2" /> Download
-                      </button>
-                    </div>
-                  </div>
+            {/* Certificate Card - Locked */}
+            <div
+              className={`bg-[#242851] rounded-lg p-6 ${
+                count !== courses.length ? "opacity-50" : ""
+              }`}
+            >
+              <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
+                <div className="w-48 h-36 bg-[#161831] rounded-md flex items-center justify-center border-2 border-gray-600">
+                  <canvas
+                    ref={canvasRef}
+                    width={1000}
+                    height={700}
+                    className="w-full h-full rounded-s"
+                  />
                 </div>
-              </div>
-
-              {/* Certificate Card - Locked */}
-              <div className="bg-[#242851] rounded-lg p-6 opacity-50">
-                <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-                  <div className="w-48 h-36 bg-[#161831] rounded-md flex items-center justify-center border-2 border-gray-600">
-                    <PiCertificateFill className="text-6xl text-gray-500" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold mb-2">
-                      Web Security Expert
-                    </h3>
-                    <p className="text-gray-400 mb-4">
-                      Complete the Web Security learning path to earn this
-                      certificate
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <div className="text-sm text-gray-500 flex items-center">
-                        <FaCalendarAlt className="mr-1" /> Not completed
-                      </div>
-                      <button
-                        disabled
-                        className="px-4 py-2 bg-gray-700 text-gray-400 rounded-md flex items-center cursor-not-allowed"
-                      >
-                        <FaDownload className="mr-2" /> Download
-                      </button>
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold mb-2">
+                    Web Security Expert
+                  </h3>
+                  <p className="text-gray-400 mb-4">
+                    Complete the Web Security learning path to earn this
+                    certificate
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <div className="text-sm text-gray-500 flex items-center">
+                      {count === courses.length ? (
+                        <>
+                          <FaCheckCircle className="mr-1 text-green-400" />{" "}
+                          Earned
+                        </>
+                      ) : (
+                        <>
+                          <FaCalendarAlt className="mr-1" /> Not completed
+                        </>
+                      )}
                     </div>
+
+                    <button
+                      onClick={downloadImage}
+                      disabled={count !== courses.length}
+                      className={`px-4 py-2 rounded-md flex items-center transition ${
+                        count === courses.length
+                          ? "bg-green-600 text-white hover:bg-green-700"
+                          : "bg-gray-700 text-gray-400 cursor-not-allowed"
+                      }`}
+                    >
+                      <FaDownload className="mr-2" /> Download
+                    </button>
                   </div>
                 </div>
               </div>

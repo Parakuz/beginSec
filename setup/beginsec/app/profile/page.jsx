@@ -34,7 +34,6 @@ export default function ProfilePage() {
 
   const { user } = useSession();
   const userName = user?.name;
-  const userId = currentUserId;
 
   useEffect(() => {
     if (!currentUserId) return;
@@ -60,7 +59,9 @@ export default function ProfilePage() {
     const fetchUserCourses = async () => {
       try {
         const res = await fetch(`/api/user/course/${currentUserId}`);
-        if (!res.ok) throw new Error("Failed to fetch user courses");
+        if (!res.ok) {
+          throw new Error("Failed to fetch user courses");
+        }
         const data = await res.json();
         setUserCourses(data);
       } catch (error) {
@@ -69,7 +70,7 @@ export default function ProfilePage() {
     };
 
     fetchUserCourses();
-  }, [userId]);
+  }, [currentUserId]);
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#161831] to-[#0c0e1d]">
       {/* <Navbar /> */}
