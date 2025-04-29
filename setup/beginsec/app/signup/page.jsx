@@ -55,7 +55,7 @@ export default function Register() {
 
       router.push("/login");
     } catch (err) {
-      setError(err.message);
+      setError("Has some problem please try again.");
     }
 
     setLoading(false);

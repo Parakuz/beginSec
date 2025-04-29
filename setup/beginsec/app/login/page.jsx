@@ -32,7 +32,7 @@ export default function Login() {
       await checkSession();
       router.push("/");
     } catch (err) {
-      setError(err.message);
+      setError("Some thing wrong please try again.");
     }
   };
 
