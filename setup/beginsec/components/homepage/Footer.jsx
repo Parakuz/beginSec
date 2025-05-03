@@ -13,33 +13,42 @@ function Footer() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8 ml-40">
         <div>
           <FooterTopic>Begin Sec</FooterTopic>
-          <Detail>
-            Lorem ipsum dolor sit amet consectetur. Amet vel a sit ac a lectus
-            auctor. Bibendum dolor.
+          <Detail className="font-ibmthai">
+            © 2025 Begin Sec.สงวนลิขสิทธิ์ทั้งหมด.
           </Detail>
           <div className="flex space-x-4 mt-4">
-            <FooterPath href="#" className="text-gray-400 hover:text-white">
+            <FooterPath href="https://facebook.com" className="text-gray-400 hover:text-white">
               Facebook
             </FooterPath>
-            <FooterPath href="#" className="text-gray-400 hover:text-white">
+            <FooterPath href="https://twitter.com" className="text-gray-400 hover:text-white">
               Twitter
             </FooterPath>
-            <FooterPath href="#" className="text-gray-400 hover:text-white">
+            <FooterPath href="https://instagram.com" className="text-gray-400 hover:text-white">
               Instagram
             </FooterPath>
           </div>
         </div>
         <div>
           <FooterTopic>Home</FooterTopic>
-          <FooterList list={["Learning Path", "Blog", "Contact", "Profile"]} />
+          <FooterList list={[
+            { label: "Learning Path", href: "/learning-path" },
+            { label: "Blog", href: "/blog" },
+            { label: "Contact", href: "/contact" },
+            { label: "Profile", href: "/profile" }
+          ]} />
         </div>
         <div>
           <FooterTopic>Term & Conditions</FooterTopic>
-          <FooterList list={["Privacy & Policy"]} />
+          <FooterList list={[
+            { label: "Privacy & Policy", href: "/privacy-policy" }
+          ]} />
         </div>
         <div className="z-10">
           <FooterTopic className="font-bold text-lg mb-4">Support</FooterTopic>
-          <FooterList list={["Help", "FAQ"]} />
+          <FooterList list={[
+            { label: "Help", href: "/help" },
+            { label: "FAQ", href: "/faq" }
+          ]} />
         </div>
       </div>
     </footer>
