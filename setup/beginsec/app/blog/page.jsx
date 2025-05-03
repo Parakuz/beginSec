@@ -190,7 +190,7 @@ const BlogPage = () => {
             {blogs.slice(0, showAllBlogs ? blogs.length : 8).map((blog) => (
               <div key={blog.id} className="w-full sm:w-1/2 lg:w-1/4 px-4 mb-8">
                 <BlogCard
-                  title={blog.name}
+                  title={blog.name}  
                   postTime={formatDate(blog.postDate || blog.createdAt)}
                   onClick={() => handleBlogClick(blog.id)}
                   imageSrc={blog.imagePath}
