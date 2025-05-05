@@ -172,7 +172,11 @@ const BlogPostPage = () => {
 
           {/* Title and author section with improved styling - changed text color to white */}
           <div className="mb-8 bg-[#1a1c3d]/70 p-6 rounded-lg backdrop-blur-sm">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4 leading-tight text-white">
+            <h1
+              className={`text-3xl md:text-4xl font-bold mb-4 leading-tight text-white ${
+                /[\u0E00-\u0E7F]/.test(blogPost.name) ? "font-ibmthai" : "font-satoshi"
+              }`}
+            >
               {blogPost.name}
             </h1>
             <div className="flex flex-wrap items-center text-sm text-white mb-2">

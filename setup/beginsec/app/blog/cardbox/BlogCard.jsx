@@ -13,7 +13,9 @@ const BlogCard = ({ title, postTime, onClick, imageSrc }) => {
         src={imageSrc || null}
         alt={title}
       />
-      <div className="w-[calc(100%-30px)] left-[15px] top-[256px] absolute text-white text-xl font-bold font-['Satoshi']">
+      <div className={`w-[calc(100%-30px)] left-[15px] top-[256px] absolute text-white text-xl font-medium ${
+        /[\u0E00-\u0E7F]/.test(title) ? "font-ibmthai" : "font-['Satoshi']"
+      }`}>
         {title}
       </div>
       <div className="left-[15px] top-[392px] absolute text-[#929ba4] text-base font-normal font-['Satoshi']">

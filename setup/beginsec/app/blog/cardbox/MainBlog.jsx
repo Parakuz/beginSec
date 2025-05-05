@@ -14,7 +14,7 @@ const MainBlog = ({ title, description, imageSrc, topic }) => {
       <div className="p-4 h-32 overflow-hidden">
         {" "}
         {/* Reduced padding for the content */}
-        <div className="text-lg font-bold text-black mb-0.5">{title}</div>{" "}
+        <div className="text-lg font-medium text-black mb-0.5 font-ibmthai">{title}</div>{" "}
         {/* Reduced margin-bottom */}
         <p className="text-gray-600">{description}</p>
         {topic && <p className="text-gray-500 mt-0.5">{topic}</p>}{" "}
