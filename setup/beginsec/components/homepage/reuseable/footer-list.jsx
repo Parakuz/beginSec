@@ -1,15 +1,13 @@
 function FooterList({ list }) {
   return (
     <ul className="space-y-2">
-      {list.map((data, i) => {
-        return (
-          <li key={i}>
-            <a href="#" className="text-gray-400 hover:text-white">
-              {data}
-            </a>
-          </li>
-        );
-      })}
+      {list.map((item, i) => (
+        <li key={i}>
+          <a href={item.href} className="text-gray-400 hover:text-white">
+            {item.label}
+          </a>
+        </li>
+      ))}
     </ul>
   );
 }

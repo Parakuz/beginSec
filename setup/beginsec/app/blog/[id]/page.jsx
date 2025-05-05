@@ -210,7 +210,7 @@ const BlogPostPage = () => {
           {/* Section indicator with badge style - changed text color to white */}
           <div className="mb-6">
             <p className="text-white inline-block px-3 py-1 bg-[#2d1b4e]/70 rounded-full text-sm">
-              Section {blogPost.section || "1.0.3"}
+              Section {blogPost.section || "Cybernews"}
             </p>
           </div>
 

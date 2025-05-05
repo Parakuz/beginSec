@@ -36,7 +36,7 @@ export async function POST(req) {
     },
   });
 
-  const resetLink = `http://localhost:3000/reset-password/${token}`;
+  const resetLink = `https://3.104.224.60/reset-password/${token}`;
 
   await transporter.sendMail({
     from: process.env.GMAIL_USER,

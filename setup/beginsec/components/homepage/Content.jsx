@@ -1,5 +1,5 @@
 import Topic from "./reuseable/Topic";
-import ContentCard from "./reuseable/content-card";
+import ContentCard from "./reuseable/Content-card";
 
 function Content() {
   return (

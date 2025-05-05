@@ -11,6 +11,9 @@ export async function GET() {
           },
         },
       },
+      orderBy: {
+        postDate: "desc", // เรียงลำดับตามวันที่โพสต์จากใหม่ไปเก่า
+      },
     });
     // Convert BigInt values to strings to make them serializable
     const serializableBlogs = blogs.map((blog) => ({

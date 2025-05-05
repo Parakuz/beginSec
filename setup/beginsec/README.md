@@ -23,3 +23,7 @@
 # v 0.1.2
 
 ###### Add profile page badge function
+
+# v 1.0.0
+
+###### Ready to deploy

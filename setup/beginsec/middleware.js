@@ -8,7 +8,6 @@ export function middleware(req) {
 
   if (protectedRoutes.some((route) => req.nextUrl.pathname.startsWith(route))) {
     if (!token) {
-      console.log("test");
       return NextResponse.redirect(new URL("/login", req.url));
     }
   }

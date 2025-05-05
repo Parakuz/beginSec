@@ -117,7 +117,7 @@ export default function ProfilePage() {
                   </div>
                 </div>
 
-                <div className="w-40 h-[80px] bg-[#242851] rounded-lg font-bold text-white px-4 py-3 shadow-lg shadow-black/20 hover:translate-y-[-5px] transition-all duration-300 border border-[#3a3f6a]">
+                {/* <div className="w-40 h-[80px] bg-[#242851] rounded-lg font-bold text-white px-4 py-3 shadow-lg shadow-black/20 hover:translate-y-[-5px] transition-all duration-300 border border-[#3a3f6a]">
                   <div className="text-white text-sm">Certificate</div>
                   <div className="text-white font-bold flex items-center gap-x-3 pt-1">
                     <div className="text-2xl text-white">
@@ -125,7 +125,7 @@ export default function ProfilePage() {
                     </div>
                     <span className="text-xl">0</span>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

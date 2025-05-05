@@ -30,7 +30,7 @@ export default function Login() {
     try {
       await loginUser({ email, password });
       await checkSession();
-      router.push("/");
+      window.location.href = "/";
     } catch (err) {
       setError("Some thing wrong please try again.");
     }
