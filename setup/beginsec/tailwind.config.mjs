@@ -10,7 +10,7 @@ export default {
     extend: {
       fontFamily: {
         satoshi: ["Satoshi", "sans-serif"],
-        ibmthai: ['"IBM Plex Sans Thai"', 'sans-serif'],
+        ibmthai: ['"IBM Plex Sans Thai"', "sans-serif"],
       },
       colors: {
         background: "var(--background)",

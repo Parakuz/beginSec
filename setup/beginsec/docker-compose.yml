@@ -1,5 +1,23 @@
 version: "3.8"
+
 services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nextjs_app
+    restart: always
+    ports:
+      - "3000:3000"
+      - "5555:5555"
+    env_file:
+      - .env
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - db
+      - redis
+
   db:
     image: postgres
     container_name: local_pgdb
@@ -11,6 +29,7 @@ services:
       POSTGRES_PASSWORD: strong-password
     volumes:
       - local_pgdata:/var/lib/postgresql/data
+
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin4_container
@@ -22,6 +41,7 @@ services:
       PGADMIN_DEFAULT_PASSWORD: strong-password
     volumes:
       - pgadmin-data:/var/lib/pgadmin
+
   redis:
     image: redis
     restart: always

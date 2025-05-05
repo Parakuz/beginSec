@@ -14,9 +14,21 @@ export default function SocialToggle() {
   };
 
   const links = [
-    { icon: <FaUsers />, href: "/community", label: "Community" },
-    { icon: <FaFacebook />, href: "https://facebook.com", label: "Facebook" },
-    { icon: <FaDiscord />, href: "https://discord.com", label: "Discord" },
+    {
+      icon: <FaUsers />,
+      href: "https://www.facebook.com/groups/beginseccommunity",
+      label: "Community",
+    },
+    {
+      icon: <FaFacebook />,
+      href: "https://www.facebook.com/BeginSec/",
+      label: "Facebook",
+    },
+    {
+      icon: <FaDiscord />,
+      href: "https://discord.gg/AzPkXpgzcq",
+      label: "Discord",
+    },
   ];
 
   return (

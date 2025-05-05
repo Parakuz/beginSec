@@ -17,38 +17,51 @@ function Footer() {
             © 2025 Begin Sec.สงวนลิขสิทธิ์ทั้งหมด.
           </Detail>
           <div className="flex space-x-4 mt-4">
-            <FooterPath href="https://facebook.com" className="text-gray-400 hover:text-white">
+            <FooterPath
+              href="https://www.facebook.com/BeginSec/"
+              className="text-gray-400 hover:text-white"
+            >
               Facebook
             </FooterPath>
-            <FooterPath href="https://twitter.com" className="text-gray-400 hover:text-white">
-              Twitter
+            <FooterPath
+              href="https://www.facebook.com/groups/beginseccommunity"
+              className="text-gray-400 hover:text-white"
+            >
+              Community
             </FooterPath>
-            <FooterPath href="https://instagram.com" className="text-gray-400 hover:text-white">
-              Instagram
+            <FooterPath
+              href="https://discord.gg/AzPkXpgzcq"
+              className="text-gray-400 hover:text-white"
+            >
+              Discord
             </FooterPath>
           </div>
         </div>
         <div>
           <FooterTopic>Home</FooterTopic>
-          <FooterList list={[
-            { label: "Learning Path", href: "/learning-path" },
-            { label: "Blog", href: "/blog" },
-            { label: "Contact", href: "/contact" },
-            { label: "Profile", href: "/profile" }
-          ]} />
+          <FooterList
+            list={[
+              { label: "Learning Path", href: "/learning-path" },
+              { label: "Blog", href: "/blog" },
+              { label: "Contact", href: "/contact" },
+              { label: "Profile", href: "/profile" },
+            ]}
+          />
         </div>
         <div>
           <FooterTopic>Term & Conditions</FooterTopic>
-          <FooterList list={[
-            { label: "Privacy & Policy", href: "/privacy-policy" }
-          ]} />
+          <FooterList
+            list={[{ label: "Privacy & Policy", href: "/privacy-policy" }]}
+          />
         </div>
         <div className="z-10">
           <FooterTopic className="font-bold text-lg mb-4">Support</FooterTopic>
-          <FooterList list={[
-            { label: "Help", href: "/help" },
-            { label: "FAQ", href: "/faq" }
-          ]} />
+          <FooterList
+            list={[
+              { label: "Help", href: "/help" },
+              { label: "FAQ", href: "/faq" },
+            ]}
+          />
         </div>
       </div>
     </footer>

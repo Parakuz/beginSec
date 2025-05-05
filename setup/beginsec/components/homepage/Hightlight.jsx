@@ -9,7 +9,10 @@ function HightLight() {
       <div className="mb-12 lg:mb-0 flex-1 text-center lg:text-left">
         <Topic>Highlights</Topic>
         <Detail className="font-ibmthai">
-        ไม่ว่าคุณจะเป็นนักเรียน นักศึกษา หรือคนทำงานที่อยากเริ่มต้นเส้นทางไซเบอร์ Begin Sec พร้อมเป็นพื้นที่ปลอดภัยให้คุณเรียนรู้ เติบโต และสนุกไปกับโลกของความปลอดภัยทางดิจิทัล
+          ไม่ว่าคุณจะเป็นนักเรียน นักศึกษา
+          หรือคนทำงานที่อยากเริ่มต้นเส้นทางไซเบอร์ Begin Sec
+          พร้อมเป็นพื้นที่ปลอดภัยให้คุณเรียนรู้ เติบโต
+          และสนุกไปกับโลกของความปลอดภัยทางดิจิทัล
         </Detail>
         <div className="flex justify-center lg:justify-start space-x-4">
           <ButtonPrimary>Learn More</ButtonPrimary>

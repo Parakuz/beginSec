@@ -1,5 +1,5 @@
 @import url("https://fonts.cdnfonts.com/css/satoshi");
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@100;200;300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@100;200;300;400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -12,6 +12,11 @@ body {
 [lang="th"] {
   @apply font-ibmthai;
 }
+
+.ql-editor {
+  @apply font-ibmthai;
+}
+
 :root {
   overflow-x: clip;
   --primary: #212529;
@@ -45,6 +50,11 @@ body {
 /* ซ่อนเส้นกรอบของ ReactQuill */
 .lesson-quill .ql-container {
   border: none !important;
+}
+
+.lesson-quill .ql-editor {
+  font-size: 18px;
+  line-height: 1.6;
 }
 
 .ql-align-center {

@@ -8,7 +8,7 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
   const [feedback, setFeedback] = useState(null);
   const [currentUserId, setCurrentUserId] = useState(null);
   const [labStarted, setLabStarted] = useState(false);
-  const [remainingTime, setRemainingTime] = useState(60);
+  const [remainingTime, setRemainingTime] = useState(0);
   const [intervalId, setIntervalId] = useState(null);
   const [port, setPort] = useState(null);
 
@@ -247,7 +247,6 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
 
   const terminateLab = async () => {
     setLabStarted(false);
-    setRemainingTime(60);
     clearInterval(intervalId);
     try {
       const res = await fetch("/api/lab/terminate", {
@@ -261,13 +260,14 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
 
       const data = await res.json();
       if (res.ok) {
+        setRemainingTime(0);
         setFeedback("✅ Lab terminated.");
       } else {
-        setFeedback(`❌ Failed to terminate lab: ${data.error}`);
+        console.error(`❌ Failed to terminate lab: ${data.error}`);
       }
     } catch (error) {
       console.error("Error terminating lab:", error);
-      setFeedback("❌ Error terminating the lab.");
+      console.error("❌ Error terminating the lab.");
     }
   };
 
@@ -283,19 +283,23 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
 
   return (
     <div className="mt-4">
-      <ReactQuill
-        value={lesson.detail || "<p>Lesson content here.</p>"}
-        readOnly={true}
-        theme="snow"
-        modules={{ toolbar: false }}
-        className="lesson-quill border-none"
-      />
-
+      <div className="lesson-quill text-base sm:text-lg md:text-xl leading-relaxed">
+        <ReactQuill
+          value={lesson.detail || "<p>Lesson content here.</p>"}
+          readOnly={true}
+          theme="snow"
+          modules={{ toolbar: false }}
+          onFocus={(e) => {
+            e.preventDefault();
+          }}
+          className="lesson-quill border-none font-ibmthai"
+        />
+      </div>
       {lesson.labName?.startsWith("Lab") && (
         <button
           onClick={
             labStarted
-              ? () => window.open(`http://localhost:${port}`, "_blank")
+              ? () => window.open(`http://3.104.224.60:${port}`, "_blank")
               : startLabEngine
           }
           className="w-full h-[50px] bg-[#FFA500] rounded-md text-white font-semibold mb-6 hover:bg-[#ff8c00] transition-colors"
@@ -379,10 +383,13 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
             onClick={checkAnswers}
             className="w-[162px] h-[46px] bg-[#84D92F] rounded-md text-white font-semibold"
           >
-            Check Answers
+            {randomizedQuestions.length === 0
+              ? "Next Session"
+              : "Check Answers"}
           </button>
         </div>
       )}
+
       {feedback && (
         <div className="mt-2 text-center text-xl text-green-600">
           {feedback}

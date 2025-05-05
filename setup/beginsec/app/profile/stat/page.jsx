@@ -20,7 +20,10 @@ import { useSession } from "@/contexts/sessionContext";
 
 const StatPage = () => {
   const [currentUserId, setCurrentUserId] = useState(null);
-  const [testScores, setTestScores] = useState({ pretest: { score: [] }, posttest: { score: [] } });
+  const [testScores, setTestScores] = useState({
+    pretest: { score: [] },
+    posttest: { score: [] },
+  });
   const [courses, setCourses] = useState([]);
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -44,7 +47,9 @@ const StatPage = () => {
 
     async function fetchTestScores() {
       try {
-        const response = await fetch(`/api/user/combined-test/${currentUserId}`);
+        const response = await fetch(
+          `/api/user/combined-test/${currentUserId}`
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch test scores");
         }
@@ -132,7 +137,7 @@ const StatPage = () => {
                   </div>
                 </div>
 
-                <div className="w-40 h-[80px] bg-[#242851] rounded-lg font-bold text-white px-4 py-3 shadow-lg shadow-black/20 hover:translate-y-[-5px] transition-all duration-300 border border-[#3a3f6a]">
+                {/* <div className="w-40 h-[80px] bg-[#242851] rounded-lg font-bold text-white px-4 py-3 shadow-lg shadow-black/20 hover:translate-y-[-5px] transition-all duration-300 border border-[#3a3f6a]">
                   <div className="text-white text-sm">Certificate</div>
                   <div className="text-white font-bold flex items-center gap-x-3 pt-1">
                     <div className="text-2xl text-white">
@@ -140,7 +145,7 @@ const StatPage = () => {
                     </div>
                     <span className="text-xl">0</span>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -179,7 +184,7 @@ const StatPage = () => {
                       <h3 className="text-xl font-bold mb-4 border-b border-[#3a3f6a] pb-3">
                         {course.name}
                       </h3>
-                      
+
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
                         <div className="bg-[#1a1c3d] p-4 rounded-lg">
                           <h4 className="text-lg font-semibold mb-2 text-purple-300">
@@ -188,14 +193,19 @@ const StatPage = () => {
                           <div className="flex items-center">
                             {pretestScore !== undefined ? (
                               <div className="text-3xl font-bold">
-                                {pretestScore} <span className="text-lg text-gray-400">/ 100</span>
+                                {pretestScore}{" "}
+                                <span className="text-lg text-gray-400">
+                                  / 100
+                                </span>
                               </div>
                             ) : (
-                              <div className="text-xl text-gray-400">No score yet</div>
+                              <div className="text-xl text-gray-400">
+                                No score yet
+                              </div>
                             )}
                           </div>
                         </div>
-                        
+
                         <div className="bg-[#1a1c3d] p-4 rounded-lg">
                           <h4 className="text-lg font-semibold mb-2 text-purple-300">
                             Posttest Score
@@ -203,19 +213,21 @@ const StatPage = () => {
                           <div className="flex items-center">
                             {posttestScore !== undefined ? (
                               <div className="text-3xl font-bold">
-                                {posttestScore} <span className="text-lg text-gray-400">/ 100</span>
+                                {posttestScore}{" "}
+                                <span className="text-lg text-gray-400">
+                                  / 100
+                                </span>
                               </div>
                             ) : (
-                              <div className="text-xl text-gray-400">No score yet</div>
+                              <div className="text-xl text-gray-400">
+                                No score yet
+                              </div>
                             )}
                           </div>
                         </div>
                       </div>
-                      
-                      {/* แสดงความก้าวหน้า (ถ้ามีทั้งคะแนน pretest และ posttest) */}
-                    
-                      
 
+                      {/* แสดงความก้าวหน้า (ถ้ามีทั้งคะแนน pretest และ posttest) */}
                     </div>
                   );
                 })}

@@ -48,6 +48,16 @@ const BadgesAndCertificationsPage = () => {
   ];
 
   useEffect(() => {
+    const canvas = canvasRef.current;
+    const handleContextMenu = (e) => e.preventDefault();
+    canvas?.addEventListener("contextmenu", handleContextMenu);
+
+    return () => {
+      canvas?.removeEventListener("contextmenu", handleContextMenu);
+    };
+  }, []);
+
+  useEffect(() => {
     const img = new Image();
     img.src = "/Cert.png";
     img.onload = () => {
@@ -275,12 +285,16 @@ const BadgesAndCertificationsPage = () => {
               }`}
             >
               <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-                <div className="w-48 h-36 bg-[#161831] rounded-md flex items-center justify-center border-2 border-gray-600">
+                <div className="w-48 h-36 bg-[#161831] rounded-md flex items-center justify-center border-2 border-gray-600 overflow-hidden">
                   <canvas
                     ref={canvasRef}
                     width={1000}
                     height={700}
-                    className="w-full h-full rounded-s"
+                    className={`w-full h-full rounded-s pointer-events-none ${
+                      count !== courses.length
+                        ? "blur-sm md:blur-md lg:blur-lg"
+                        : ""
+                    }`}
                   />
                 </div>
                 <div className="flex-1">
