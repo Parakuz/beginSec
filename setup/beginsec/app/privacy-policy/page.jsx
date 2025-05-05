@@ -25,6 +25,7 @@ export default function PrivacyPolicy() {
             </Section>
   
             <Section title="How We Use Your Information">
+            
               <ul className="space-y-2">
                 <ListItem>To provide and maintain our service</ListItem>
                 <ListItem>To notify you about changes to our service</ListItem>
