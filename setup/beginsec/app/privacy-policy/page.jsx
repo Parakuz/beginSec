@@ -4,18 +4,16 @@ export default function PrivacyPolicy() {
       <div className="max-w-4xl mx-auto px-6 py-16">
         {/* Header with decorative element */}
         <div className="relative mb-12">
-          <div className="absolute -left-4 top-0 h-16 w-1 bg-blue-500 rounded-full" />
+
           <h1 className="text-5xl font-bold tracking-tight">
             Privacy & Policy
           </h1>
-          <div className="h-1 w-20 bg-blue-500 mt-4 rounded-full" />
         </div>
 
         {/* Introduction */}
-        <p className="text-lg text-gray-300 leading-relaxed mb-10">
-          Your privacy is important to us. This Privacy Policy explains how
-          Begin Sec collects, uses, and protects your personal information when
-          you use our website and services.
+        <p className="text-lg text-gray-300 leading-relaxed mb-10 font-ibmthai">
+          ความเป็นส่วนตัวของคุณมีความสำคัญสำหรับเรา นโยบายความเป็นส่วนตัวนี้อธิบายวิธีที่ Begin Sec 
+          เก็บรวบรวม ใช้ และปกป้องข้อมูลส่วนบุคคลของคุณเมื่อคุณใช้เว็บไซต์และบริการของเรา
         </p>
 
         {/* Policy sections */}
@@ -23,55 +21,52 @@ export default function PrivacyPolicy() {
           <Section title="Information We Collect">
             <ul className="space-y-2">
               <ListItem>
-                Personal identification information (Name, email address, etc.)
+                ข้อมูลระบุตัวตนส่วนบุคคล (ชื่อ, อีเมล, ฯลฯ)
               </ListItem>
-              <ListItem>Usage data and cookies</ListItem>
+              <ListItem>ข้อมูลการใช้งานและคุกกี้</ListItem>
             </ul>
           </Section>
 
           <Section title="How We Use Your Information">
             <ul className="space-y-2">
-              <ListItem>To provide and maintain our service</ListItem>
-              <ListItem>To notify you about changes to our service</ListItem>
-              <ListItem>To provide customer support</ListItem>
-              <ListItem>To monitor usage of the service</ListItem>
+              <ListItem>เพื่อให้บริการและรักษาบริการของเรา</ListItem>
+              <ListItem>เพื่อแจ้งให้คุณทราบเกี่ยวกับการเปลี่ยนแปลงบริการของเรา</ListItem>
+              <ListItem>เพื่อให้การสนับสนุนลูกค้า</ListItem>
+              <ListItem>เพื่อติดตามการใช้งานบริการ</ListItem>
             </ul>
           </Section>
 
           <Section title="Cookies">
-            <p className="text-gray-300 leading-relaxed">
-              We use cookies to improve your experience on our site. You can
-              choose to disable cookies through your browser settings.
+            <p className="text-gray-300 leading-relaxed font-ibmthai">
+              เราใช้คุกกี้เพื่อปรับปรุงประสบการณ์ของคุณบนเว็บไซต์ของเรา คุณสามารถเลือกที่จะปิดการใช้งานคุกกี้
+              ผ่านการตั้งค่าเบราว์เซอร์ของคุณได้
             </p>
           </Section>
 
           <Section title="Third-Party Services">
-            <p className="text-gray-300 leading-relaxed">
-              We may employ third-party companies to facilitate our service.
-              These third parties have access to your personal information only
-              to perform tasks on our behalf and are obligated not to disclose
-              or use it for any other purpose.
+            <p className="text-gray-300 leading-relaxed font-ibmthai">
+              เราอาจว่าจ้างบริษัทบุคคลที่สามเพื่ออำนวยความสะดวกในการให้บริการของเรา
+              บุคคลที่สามเหล่านี้สามารถเข้าถึงข้อมูลส่วนบุคคลของคุณเพื่อปฏิบัติงานในนามของเราเท่านั้น
+              และมีหน้าที่ไม่เปิดเผยหรือใช้ข้อมูลเพื่อวัตถุประสงค์อื่นใด
             </p>
           </Section>
 
           <Section title="Changes to This Policy">
-            <p className="text-gray-300 leading-relaxed">
-              We may update our Privacy Policy from time to time. We will notify
-              you of any changes by posting the new Privacy Policy on this page.
+            <p className="text-gray-300 leading-relaxed font-ibmthai">
+              เราอาจปรับปรุงนโยบายความเป็นส่วนตัวของเราเป็นครั้งคราว เราจะแจ้งให้คุณทราบถึงการเปลี่ยนแปลงใดๆ
+              โดยการโพสต์นโยบายความเป็นส่วนตัวฉบับใหม่บนหน้านี้
             </p>
           </Section>
 
           <Section title="Contact Us">
-            <p className="text-gray-300 leading-relaxed">
-              If you have any questions about this Privacy Policy, please
-              contact us at{" "}
+            <p className="text-gray-300 leading-relaxed font-ibmthai">
+              หากคุณมีคำถามใดๆ เกี่ยวกับนโยบายความเป็นส่วนตัวนี้ โปรดติดต่อเราที่{" "}
               <a
-                href="mailto:support@beginsec.com"
-                className="text-blue-400 hover:text-blue-300 underline transition-colors"
+                href="mailto:beginsec35@gmail.com"
+                className="text-white hover:text-gray-300 underline transition-colors"
               >
-                support@beginsec.com
+                beginsec35@gmail.com
               </a>
-              .
             </p>
           </Section>
         </div>
@@ -97,7 +92,7 @@ function ListItem({ children }) {
   return (
     <li className="flex items-start">
       <span className="text-[#8F6CE1] mr-2">•</span>
-      <span className="text-gray-300">{children}</span>
+      <span className="text-gray-300 font-ibmthai">{children}</span>
     </li>
   );
 }
