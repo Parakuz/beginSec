@@ -11,6 +11,7 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
   const [remainingTime, setRemainingTime] = useState(0);
   const [intervalId, setIntervalId] = useState(null);
   const [port, setPort] = useState(null);
+  const [checked, setChecked] = useState(false);
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -96,6 +97,8 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
       const correctAnswer = q.answer.trim().toLowerCase();
       return userAnswer === correctAnswer ? count + 1 : count;
     }, 0);
+
+    setChecked(true);
 
     try {
       const response = await fetch(
@@ -352,27 +355,42 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
             />
           ) : (
             <div className="flex flex-col gap-2">
-              {q.choices.map((choice) => (
-                <label
-                  key={choice}
-                  className={`flex items-center gap-2 p-2 rounded-lg border-2 transition-all cursor-pointer ${
-                    answers[q.question] === choice
-                      ? "border-blue-100 bg-blue-500/55"
-                      : "bg-gray-500"
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name={q.question}
-                    value={choice}
-                    onChange={() =>
-                      setAnswers((prev) => ({ ...prev, [q.question]: choice }))
-                    }
-                    className="hidden"
-                  />
-                  {choice}
-                </label>
-              ))}
+              {q.choices.map((choice) => {
+                const isCorrect =
+                  checked &&
+                  answers[q.question]?.trim().toLowerCase() ===
+                    q.answer.trim().toLowerCase();
+                const isWrong = checked && answers[q.question] !== q.answer;
+                return (
+                  <label
+                    key={choice}
+                    className={`flex items-center gap-2 p-2 rounded-lg border-2 transition-all cursor-pointer ${
+                      answers[q.question] === choice
+                        ? isCorrect
+                          ? "border-green-500 bg-green-500/50"
+                          : isWrong
+                          ? "border-red-500 bg-red-500/50"
+                          : "border-blue-100 bg-blue-500/55"
+                        : "bg-gray-500"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name={q.question}
+                      value={choice}
+                      onChange={() => {
+                        setAnswers((prev) => ({
+                          ...prev,
+                          [q.question]: choice,
+                        }));
+                        setChecked(false);
+                      }}
+                      className="hidden"
+                    />
+                    {choice}
+                  </label>
+                );
+              })}
             </div>
           )}
         </div>

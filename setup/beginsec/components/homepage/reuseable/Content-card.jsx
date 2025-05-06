@@ -1,11 +1,16 @@
+"use client"; // ต้องมี เพื่อให้ใช้ useRouter ได้ใน app directory
+
+import { useRouter } from "next/navigation";
+
 function ContentCard({ src, alt, description, ontop }) {
+  const router = useRouter();
   let style = "rounded overflow-hidden cursor-pointer";
   if (ontop) {
     style += " z-10";
   }
 
   return (
-    <div className={style}>
+    <div className={style} onClick={() => router.push("/learning-path")}>
       <img
         src={src}
         alt={alt}
