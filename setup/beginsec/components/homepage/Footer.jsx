@@ -59,7 +59,7 @@ function Footer() {
           <FooterList
             list={[
               { label: "Help", href: "/help" },
-              { label: "FAQ", href: "/faq" },
+              { label: "FAQ", href: "/help#faq" },
             ]}
           />
         </div>
