@@ -408,24 +408,6 @@ export default function ProfileSettingsPage() {
                   </button>
                 </nav>
 
-                <div className="p-4 mt-4 border-t border-[#3a3f6a]/50">
-                  <div className="flex items-center gap-2 text-purple-300 mb-2">
-                    <MdOutlineShield />
-                    <span className="font-semibold">Account Security</span>
-                  </div>
-                  <div className="bg-[#1e2142] rounded-lg p-3 text-sm">
-                    <div className="flex items-center justify-between mb-2">
-                      <span>Security Status</span>
-                      <span className="text-yellow-400">Medium</span>
-                    </div>
-                    <div className="w-full bg-[#161831] rounded-lg py-3 px-4 text-white border border-[#3a3f6a] focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none transition-all">
-                      <div className="bg-gradient-to-r from-yellow-500 to-yellow-400 h-2 rounded-full w-[60%]"></div>
-                    </div>
-                    <p className="mt-2 text-gray-400 text-xs">
-                      Enable 2FA to increase your account security.
-                    </p>
-                  </div>
-                </div>
               </div>
             </div>
 
