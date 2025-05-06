@@ -336,7 +336,7 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
       )}
 
       {randomizedQuestions.map((q, index) => (
-        <div key={index} className="my-2">
+        <div key={index} className="my-2 mb-6">
           <p className="text-gray-200">
             {index + 1}. {q.question}
           </p>
@@ -398,7 +398,12 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
       {!lesson.labName?.startsWith("Lab") && (
         <div className="flex justify-end mt-4">
           <button
-            onClick={checkAnswers}
+            onClick={() => {
+              if (randomizedQuestions.length === 0) {
+                terminateLab();
+              }
+              checkAnswers();
+            }}
             className="w-[162px] h-[46px] bg-[#84D92F] rounded-md text-white font-semibold"
           >
             {randomizedQuestions.length === 0
