@@ -28,7 +28,7 @@ function About() {
           เป้าหมายของเราคือการปลูกฝังทักษะความปลอดภัยตั้งแต่พื้นฐาน
           จนคุณสามารถนำไปใช้ได้จริง ทั้งในชีวิตประจำวันและในสายอาชีพด้านไซเบอร์
         </Detail>
-        <ButtonPrimary>Read More</ButtonPrimary>
+        <ButtonPrimary href={"/help#faq"}>Read More</ButtonPrimary>
       </div>
     </section>
   );

@@ -15,7 +15,7 @@ function HightLight() {
           และสนุกไปกับโลกของความปลอดภัยทางดิจิทัล
         </Detail>
         <div className="flex justify-center lg:justify-start space-x-4">
-          <ButtonPrimary>Learn More</ButtonPrimary>
+          <ButtonPrimary href={"/help"}>Learn More</ButtonPrimary>
         </div>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-2 gap-8 flex-1">

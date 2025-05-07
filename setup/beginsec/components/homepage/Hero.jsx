@@ -16,8 +16,8 @@ function Hero() {
           การรู้เท่าทันภัยคุกคามไซเบอร์และเข้าใจพฤติกรรมดิจิทัลที่ปลอดภัยคือกุญแจสำคัญในการปกป้องตัวคุณเอง
         </Detail>
         <div className="flex space-x-4">
-          <ButtonPrimary>Get Started</ButtonPrimary>
-          <ButtonSecondary>Learn More</ButtonSecondary>
+          <ButtonPrimary href={"/learning-path"}>Get Started</ButtonPrimary>
+          <ButtonSecondary href={"/help"}>Learn More</ButtonSecondary>
         </div>
       </div>
       <div className="relative flex-shrink-0">
