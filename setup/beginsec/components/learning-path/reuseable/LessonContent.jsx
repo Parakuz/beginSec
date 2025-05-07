@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useState, useMemo, useEffect } from "react";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
+import { toast } from "react-toastify";
 
 export default function LessonContent({ lesson, setCompletedLessons }) {
   const [answers, setAnswers] = useState({});
@@ -114,7 +115,6 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
 
       const totalQuestions = randomizedQuestions.length;
       const scorePercentage = (correctAnswersCount / totalQuestions) * 100;
-
       if (lesson.name === "Pre Test") {
         if (data.IsPreTestCompleted) {
           setFeedback("✅ You have already completed the Pre Test!");
@@ -151,7 +151,9 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
 
       setFeedback(
         correctAnswersCount === totalQuestions
-          ? "✅ All answers are correct!"
+          ? randomizedQuestions.length === 0
+            ? "✅ Go to next session"
+            : "✅ All answers are correct!"
           : `❌ You got ${correctAnswersCount} / ${totalQuestions} correct.`
       );
 
@@ -160,6 +162,27 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
         lesson.name === "Pre Test" ||
         (lesson.name === "Post Test" && scorePercentage >= 80)
       ) {
+        if (lesson.name === "Post Test" && scorePercentage >= 80) {
+          toast.success(
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <span>
+                คุณได้รับ Badge ของบทเรียนนี้สามารถ check ได้ที่หน้า Profile
+                หากเรียนครบทุกบทสามารถรับ Certificate ได้
+              </span>
+            </div>,
+            {
+              icon: false,
+              style: {
+                fontFamily: "Prompt, sans-serif",
+                fontSize: "1rem",
+                borderRadius: "8px",
+                padding: "12px 16px",
+                backgroundColor: "#4CAF50",
+                color: "white",
+              },
+            }
+          );
+        }
         setCompletedLessons((prev) => ({ ...prev, [lesson.id]: true }));
       }
     } catch (error) {
@@ -346,6 +369,7 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
               type="text"
               className="w-full p-2 rounded-lg border-2 bg-gray-500 text-white"
               value={answers[q.question] || ""}
+              placeholder="FLAG{XXX_XxXXxx_xXxX}"
               onChange={(e) =>
                 setAnswers((prev) => ({
                   ...prev,

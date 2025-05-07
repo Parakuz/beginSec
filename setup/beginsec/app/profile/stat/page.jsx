@@ -200,7 +200,7 @@ const StatPage = () => {
                               </div>
                             ) : (
                               <div className="text-xl text-gray-400">
-                                No score yet
+                                ยังไม่ทำบทเรียนนี้
                               </div>
                             )}
                           </div>
@@ -220,7 +220,7 @@ const StatPage = () => {
                               </div>
                             ) : (
                               <div className="text-xl text-gray-400">
-                                No score yet
+                                ยังไม่ทำบทเรียนนี้
                               </div>
                             )}
                           </div>

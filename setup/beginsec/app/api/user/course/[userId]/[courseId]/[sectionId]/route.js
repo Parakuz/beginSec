@@ -18,6 +18,9 @@ export async function GET(req, { params }) {
         SectionId: BigInt(sectionId),
         CourseId: BigInt(courseId),
       },
+      orderBy: {
+        TransactionId: "desc",
+      },
       select: {
         PretestScore: true,
         SectionProgress: true,

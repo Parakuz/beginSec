@@ -7,7 +7,7 @@ export default function LessonTabs({
   setCompletedLessons,
   completedLessons,
 }) {
-  const [activeLesson, setActiveLesson] = useState(null);
+  const [activeLessons, setActiveLessons] = useState([]);
 
   const sortedData = lessons.sort((a, b) => parseInt(a.id) - parseInt(b.id));
 
@@ -40,9 +40,15 @@ export default function LessonTabs({
                     ? "text-gray-500 opacity-50 cursor-not-allowed"
                     : "text-gray-200"
                 }`}
-              onClick={() =>
-                setActiveLesson(activeLesson === lesson.id ? null : lesson.id)
-              }
+              onClick={() => {
+                if (activeLessons.includes(lesson.id)) {
+                  setActiveLessons(
+                    activeLessons.filter((id) => id !== lesson.id)
+                  );
+                } else {
+                  setActiveLessons([...activeLessons, lesson.id]);
+                }
+              }}
               disabled={!isUnlocked(Number(lesson.id), sortedData)}
             >
               <div className="flex items-center">
@@ -96,7 +102,7 @@ export default function LessonTabs({
                 </svg>
               )}
             </button>
-            {activeLesson === lesson.id && (
+            {activeLessons.includes(lesson.id) && (
               <LessonContent
                 lesson={lesson}
                 setCompletedLessons={setCompletedLessons}

@@ -153,11 +153,21 @@ export default function LearningPathPage() {
               <BoxForLesson title="Completed" count={completedCount} />
             </div>
 
-            <div className="w-[474px] h-[32px] bg-[#D9D9D9] rounded-[41px] overflow-hidden">
-              <div
-                className="bg-blue-500 h-full rounded-[41px] transition-all"
-                style={{ width: `${progress}%` }}
-              ></div>
+            <div className="flex items-center gap-4">
+              <div className="w-[474px] h-[32px] bg-[#D9D9D9] rounded-[41px] overflow-hidden relative">
+                <div
+                  className="bg-blue-500 h-full rounded-[41px] transition-all flex items-center justify-center"
+                  style={{ width: `${progress}%` }}
+                >
+                  <span className="text-white text-sm font-semibold z-10">
+                    {`${Math.round(progress)} %`}
+                  </span>
+                </div>
+              </div>
+
+              <span className="text-sm font-semibold text-white">
+                {`${completedCount}/${totalLessons}`}
+              </span>
             </div>
           </div>
         </div>
@@ -168,8 +178,6 @@ export default function LearningPathPage() {
         setCompletedLessons={setCompletedLessons}
         completedLessons={completedLessons}
       />
-
-      {/* {showPostTest && <PostTestModal onClose={() => setShowPostTest(false)} />} */}
     </div>
   );
 }
