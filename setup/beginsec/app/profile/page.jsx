@@ -91,7 +91,7 @@ export default function ProfilePage() {
               </div>
 
               <div className="text-purple-300 text-sm md:text-base mb-6">
-                Cybersecurity Enthusiast • Learning Path: Beginner
+                Cybersecurity • Learning Path: Beginner
               </div>
 
               <div className="flex flex-wrap gap-4">
@@ -175,7 +175,7 @@ export default function ProfilePage() {
                     </div>
 
                     <a
-                      href={`/courses/${course.id}`}
+                      href={`/learning-path/${course.id}`}
                       className="text-purple-400 hover:text-purple-300 font-medium flex items-center gap-1 group-hover:gap-2 transition-all duration-300"
                     >
                       Continue{" "}
@@ -234,7 +234,7 @@ export default function ProfilePage() {
                   </p>
                   <div className="mt-3">
                     <a
-                      href="/courses/fundamental"
+                      href="/learning-path/1"
                       className="inline-flex items-center gap-1 text-purple-400 hover:text-purple-300 text-sm font-medium"
                     >
                       Start this course <span>→</span>
@@ -257,7 +257,7 @@ export default function ProfilePage() {
                   </p>
                   <div className="mt-3">
                     <a
-                      href="/courses/web-exploit"
+                      href="/learning-path/2"
                       className="inline-flex items-center gap-1 text-purple-400 hover:text-purple-300 text-sm font-medium"
                     >
                       Continue to this course <span>→</span>
@@ -280,7 +280,7 @@ export default function ProfilePage() {
                   </p>
                   <div className="mt-3">
                     <a
-                      href="/courses/threat-prevention"
+                      href="/learning-path/3"
                       className="inline-flex items-center gap-1 text-purple-400 hover:text-purple-300 text-sm font-medium"
                     >
                       Continue to this course <span>→</span>
