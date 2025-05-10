@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState, useMemo, useEffect } from "react";
 import ReactQuill from "react-quill-new";
@@ -369,7 +370,7 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
               type="text"
               className="w-full p-2 rounded-lg border-2 bg-gray-500 text-white"
               value={answers[q.question] || ""}
-              placeholder="FLAG{XXX_XxXXxx_xXxX}"
+              placeholder="คำตอบที่ได้จาก Lab คือ ......"
               onChange={(e) =>
                 setAnswers((prev) => ({
                   ...prev,
@@ -420,7 +421,15 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
         </div>
       ))}
       {!lesson.labName?.startsWith("Lab") && (
-        <div className="flex justify-end mt-4">
+        <div className="flex justify-end mt-4 space-x-8">
+          {lesson.name === "Post Test" && (
+            <Link
+              href="/learning-path"
+              className="w-[162px] h-[46px] bg-indigo-600 hover:bg-indigo-700 rounded-md text-white font-semibold flex items-center justify-center"
+            >
+              Learning Path
+            </Link>
+          )}
           <button
             onClick={() => {
               if (randomizedQuestions.length === 0) {
