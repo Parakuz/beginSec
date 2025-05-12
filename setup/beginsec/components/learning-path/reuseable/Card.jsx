@@ -22,7 +22,7 @@ export default function Card({ href, src, title, content }) {
           <h3 className="text-lg font-semibold text-white line-clamp-1">
             {truncatedTitle}
           </h3>
-          <p className="text-gray-400 text-sm line-clamp-2">
+          <p className="text-gray-400 text-sm line-clamp-2 font-ibmthai ">
             {truncatedContent}
           </p>
         </div>
