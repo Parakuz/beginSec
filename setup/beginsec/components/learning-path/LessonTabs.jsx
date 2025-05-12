@@ -1,6 +1,7 @@
 "use client";
 import LessonContent from "./reuseable/LessonContent";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function LessonTabs({
   lessons,
@@ -28,27 +29,36 @@ export default function LessonTabs({
     <div className="mt-6 w-[1120px] mx-auto">
       {sortedData.map((lesson) => {
         const isCompleted = completedLessons[lesson.id];
+        const lessonRef = useRef(null);
+
+        const toggleLesson = () => {
+          const isActive = activeLessons.includes(lesson.id);
+          if (isActive) {
+            setActiveLessons(activeLessons.filter((id) => id !== lesson.id));
+          } else {
+            setActiveLessons([...activeLessons, lesson.id]);
+            setTimeout(() => {
+              lessonRef.current?.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+            }, 100);
+          }
+        };
         return (
           <div
             key={lesson.id}
+            ref={lessonRef}
             className="p-4 my-2 rounded-lg shadow bg-gray-800 flex flex-col"
           >
             <button
               className={`text-xl font-semibold flex items-center justify-between w-full 
-                ${
-                  !isUnlocked(Number(lesson.id), sortedData)
-                    ? "text-gray-500 opacity-50 cursor-not-allowed"
-                    : "text-gray-200"
-                }`}
-              onClick={() => {
-                if (activeLessons.includes(lesson.id)) {
-                  setActiveLessons(
-                    activeLessons.filter((id) => id !== lesson.id)
-                  );
-                } else {
-                  setActiveLessons([...activeLessons, lesson.id]);
-                }
-              }}
+          ${
+            !isUnlocked(Number(lesson.id), sortedData)
+              ? "text-gray-500 opacity-50 cursor-not-allowed"
+              : "text-gray-200"
+          }`}
+              onClick={toggleLesson}
               disabled={!isUnlocked(Number(lesson.id), sortedData)}
             >
               <div className="flex items-center">
@@ -102,12 +112,23 @@ export default function LessonTabs({
                 </svg>
               )}
             </button>
-            {activeLessons.includes(lesson.id) && (
-              <LessonContent
-                lesson={lesson}
-                setCompletedLessons={setCompletedLessons}
-              />
-            )}
+            <AnimatePresence>
+              {activeLessons.includes(lesson.id) && (
+                <motion.div
+                  key="content"
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="overflow-hidden"
+                >
+                  <LessonContent
+                    lesson={lesson}
+                    setCompletedLessons={setCompletedLessons}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         );
       })}
