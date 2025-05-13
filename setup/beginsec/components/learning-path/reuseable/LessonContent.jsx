@@ -94,6 +94,14 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
       return;
     }
 
+    if (randomizedQuestions.length > 0) {
+      const unanswered = randomizedQuestions.some((q) => !answers[q.question]);
+      if (unanswered) {
+        setFeedback("❌ กรุณาตอบคำถามให้ครบทุกข้อก่อนตรวจคำตอบ");
+        return;
+      }
+    }
+
     const correctAnswersCount = randomizedQuestions.reduce((count, q) => {
       const userAnswer = answers[q.question]?.trim().toLowerCase();
       const correctAnswer = q.answer.trim().toLowerCase();
@@ -399,15 +407,17 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
                         : "border-gray-700 bg-[#1A1C36] hover:border-gray-500 text-white"
                     }`}
                   >
-                    <div className={`w-6 h-6 flex-shrink-0 rounded-full border-2 flex items-center justify-center ${
-                      answers[q.question] === choice
-                        ? isCorrect
-                          ? "border-green-500 bg-green-500"
-                          : isWrong
-                          ? "border-red-500 bg-red-500"
-                          : "border-blue-500 bg-blue-500"
-                        : "border-gray-500"
-                    }`}>
+                    <div
+                      className={`w-6 h-6 flex-shrink-0 rounded-full border-2 flex items-center justify-center ${
+                        answers[q.question] === choice
+                          ? isCorrect
+                            ? "border-green-500 bg-green-500"
+                            : isWrong
+                            ? "border-red-500 bg-red-500"
+                            : "border-blue-500 bg-blue-500"
+                          : "border-gray-500"
+                      }`}
+                    >
                       {answers[q.question] === choice && (
                         <div className="w-2 h-2 rounded-full bg-white"></div>
                       )}
