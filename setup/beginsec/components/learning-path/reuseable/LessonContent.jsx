@@ -346,7 +346,7 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
               onClick={extendLabTime}
               className="w-full h-[45px] bg-[#32CD32] rounded-md text-white font-semibold hover:bg-[#28a745] transition-colors"
             >
-              Extend Time (+30 นาที)
+              Extend Time (+30 minutes)
             </button>
 
             <button
@@ -370,7 +370,7 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
               type="text"
               className="w-full p-2 rounded-lg border-2 bg-gray-500 text-white"
               value={answers[q.question] || ""}
-              placeholder="คำตอบที่ได้จาก Lab คือ ......"
+              placeholder="Answer from the lab is ......"
               onChange={(e) =>
                 setAnswers((prev) => ({
                   ...prev,
@@ -379,7 +379,7 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
               }
             />
           ) : (
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-3 mt-3">
               {q.choices.map((choice) => {
                 const isCorrect =
                   checked &&
@@ -389,16 +389,29 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
                 return (
                   <label
                     key={choice}
-                    className={`flex items-center gap-2 p-2 rounded-lg border-2 transition-all cursor-pointer ${
+                    className={`flex items-center gap-3 p-3 rounded-lg border-2 transition-all duration-300 cursor-pointer ${
                       answers[q.question] === choice
                         ? isCorrect
-                          ? "border-green-500 bg-green-500/50"
+                          ? "border-green-500 bg-green-500/20 text-green-300"
                           : isWrong
-                          ? "border-red-500 bg-red-500/50"
-                          : "border-blue-100 bg-blue-500/55"
-                        : "bg-gray-500"
+                          ? "border-red-500 bg-red-500/20 text-red-300"
+                          : "border-blue-500 bg-blue-500/20 text-blue-300"
+                        : "border-gray-700 bg-[#1A1C36] hover:border-gray-500 text-white"
                     }`}
                   >
+                    <div className={`w-6 h-6 flex-shrink-0 rounded-full border-2 flex items-center justify-center ${
+                      answers[q.question] === choice
+                        ? isCorrect
+                          ? "border-green-500 bg-green-500"
+                          : isWrong
+                          ? "border-red-500 bg-red-500"
+                          : "border-blue-500 bg-blue-500"
+                        : "border-gray-500"
+                    }`}>
+                      {answers[q.question] === choice && (
+                        <div className="w-2 h-2 rounded-full bg-white"></div>
+                      )}
+                    </div>
                     <input
                       type="radio"
                       name={q.question}
@@ -412,7 +425,7 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
                       }}
                       className="hidden"
                     />
-                    {choice}
+                    <span className="font-ibmthai">{choice}</span>
                   </label>
                 );
               })}

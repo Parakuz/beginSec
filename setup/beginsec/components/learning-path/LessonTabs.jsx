@@ -26,112 +26,166 @@ export default function LessonTabs({
   };
 
   return (
-    <div className="mt-6 w-[1120px] mx-auto">
-      {sortedData.map((lesson) => {
-        const isCompleted = completedLessons[lesson.id];
-        const lessonRef = useRef(null);
-
-        const toggleLesson = () => {
+    <div className="mt-10 mb-20 max-w-[1200px] mx-auto font-ibmthai">
+      
+      <div className="space-y-4">
+        {sortedData.map((lesson, index) => {
+          const isCompleted = completedLessons[lesson.id];
+          const lessonRef = useRef(null);
           const isActive = activeLessons.includes(lesson.id);
-          if (isActive) {
-            setActiveLessons(activeLessons.filter((id) => id !== lesson.id));
-          } else {
-            setActiveLessons([...activeLessons, lesson.id]);
-            setTimeout(() => {
-              lessonRef.current?.scrollIntoView({
-                behavior: "smooth",
-                block: "start",
-              });
-            }, 100);
-          }
-        };
-        return (
-          <div
-            key={lesson.id}
-            ref={lessonRef}
-            className="p-4 my-2 rounded-lg shadow bg-gray-800 flex flex-col"
-          >
-            <button
-              className={`text-xl font-semibold flex items-center justify-between w-full 
-          ${
-            !isUnlocked(Number(lesson.id), sortedData)
-              ? "text-gray-500 opacity-50 cursor-not-allowed"
-              : "text-gray-200"
-          }`}
-              onClick={toggleLesson}
-              disabled={!isUnlocked(Number(lesson.id), sortedData)}
+          const isLocked = !isUnlocked(Number(lesson.id), sortedData);
+
+          const toggleLesson = () => {
+            if (isActive) {
+              setActiveLessons(activeLessons.filter((id) => id !== lesson.id));
+            } else {
+              setActiveLessons([...activeLessons, lesson.id]);
+              setTimeout(() => {
+                lessonRef.current?.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                });
+              }, 100);
+            }
+          };
+          
+          return (
+            <motion.div
+              key={lesson.id}
+              ref={lessonRef}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
+              className={`rounded-xl overflow-hidden shadow-lg ${
+                isActive ? "bg-[#1E2040]" : "bg-[#1A1C36]"
+              } transition-all duration-300 border border-[#2A2E57]`}
             >
-              <div className="flex items-center">
-                <span className="mr-3">
-                  {isCompleted ? (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M12 21C13.1819 21 14.3522 20.7672 15.4442 20.3149C16.5361 19.8626 17.5282 19.1997 18.364 18.364C19.1997 17.5282 19.8626 16.5361 20.3149 15.4442C20.7672 14.3522 21 13.1819 21 12C21 10.8181 20.7672 9.64778 20.3149 8.55585C19.8626 7.46392 19.1997 6.47177 18.364 5.63604C17.5282 4.80031 16.5361 4.13738 15.4442 3.68508C14.3522 3.23279 13.1819 3 12 3C9.61305 3 7.32387 3.94821 5.63604 5.63604C3.94821 7.32387 3 9.61305 3 12C3 14.3869 3.94821 16.6761 5.63604 18.364C7.32387 20.0518 9.61305 21 12 21ZM11.768 15.64L16.768 9.64L15.232 8.36L10.932 13.519L8.707 11.293L7.293 12.707L10.293 15.707L11.067 16.481L11.768 15.64Z"
-                        fill="#84D92F"
-                      />
-                    </svg>
-                  ) : (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M12 21C13.1819 21 14.3522 20.7672 15.4442 20.3149C16.5361 19.8626 17.5282 19.1997 18.364 18.364C19.1997 17.5282 19.8626 16.5361 20.3149 15.4442C20.7672 14.3522 21 13.1819 21 12C21 10.8181 20.7672 9.64778 20.3149 8.55585C19.8626 7.46392 19.1997 6.47177 18.364 5.63604C17.5282 4.80031 16.5361 4.13738 15.4442 3.68508C14.3522 3.23279 13.1819 3 12 3C9.61305 3 7.32387 3.94821 5.63604 5.63604C3.94821 7.32387 3 9.61305 3 12C3 14.3869 3.94821 16.6761 5.63604 18.364C7.32387 20.0518 9.61305 21 12 21ZM11.768 15.64L16.768 9.64L15.232 8.36L10.932 13.519L8.707 11.293L7.293 12.707L10.293 15.707L11.067 16.481L11.768 15.64Z"
-                        fill="#929BA4"
-                      />
-                    </svg>
+              <button
+                className={`w-full p-5 flex items-center justify-between transition-all duration-300 ${
+                  isLocked
+                    ? "text-gray-500 opacity-50 cursor-not-allowed"
+                    : isCompleted
+                    ? "text-green-300 hover:bg-[#242851]"
+                    : "text-white hover:bg-[#242851]"
+                }`}
+                onClick={toggleLesson}
+                disabled={isLocked}
+              >
+                <div className="flex items-center">
+                  <span className="mr-4 flex-shrink-0">
+                    {isCompleted ? (
+                      <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="text-green-400"
+                        >
+                          <path d="M20 6L9 17l-5-5" />
+                        </svg>
+                      </div>
+                    ) : isLocked ? (
+                      <div className="w-8 h-8 rounded-full bg-gray-700/30 flex items-center justify-center">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="text-gray-500"
+                        >
+                          <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                        </svg>
+                      </div>
+                    ) : (
+                      <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
+                        <span className="text-blue-400 text-sm font-medium">{index + 1}</span>
+                      </div>
+                    )}
+                  </span>
+                  <div className="text-left">
+                    <h3 className="text-lg font-semibold">{lesson.name}</h3>
+                    {lesson.description && (
+                      <p className="text-sm text-gray-400 mt-1">{lesson.description}</p>
+                    )}
+                  </div>
+                </div>
+                
+                <div className="flex items-center gap-3">
+                  {lesson.labName && (
+                    <div className="flex items-center gap-1 bg-indigo-900/30 px-3 py-1 rounded-full">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="text-indigo-400"
+                      >
+                        <rect width="18" height="12" x="3" y="6" rx="2" />
+                        <path d="M3 10h18" />
+                      </svg>
+                      <span className="text-xs text-indigo-300">แล็บ</span>
+                    </div>
                   )}
-                </span>
-                {lesson.name}
-              </div>
-              {lesson.labName && (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  <path
-                    d="M1 21V19H23V21H1ZM4 18C3.45 18 2.97933 17.8043 2.588 17.413C2.19667 17.0217 2.00067 16.5507 2 16V5C2 4.45 2.196 3.97933 2.588 3.588C2.98 3.19667 3.45067 3.00067 4 3H20C20.55 3 21.021 3.196 21.413 3.588C21.805 3.98 22.0007 4.45067 22 5V16C22 16.55 21.8043 17.021 21.413 17.413C21.0217 17.805 20.5507 18.0007 20 18H4ZM4 16H20V5H4V16Z"
-                    fill="white"
-                  />
-                </svg>
-              )}
-            </button>
-            <AnimatePresence>
-              {activeLessons.includes(lesson.id) && (
-                <motion.div
-                  key="content"
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="overflow-hidden"
-                >
-                  <LessonContent
-                    lesson={lesson}
-                    setCompletedLessons={setCompletedLessons}
-                  />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        );
-      })}
+                  
+                  <div className="w-6 h-6 flex items-center justify-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className={`transition-transform duration-300 ${isActive ? "rotate-180" : ""}`}
+                    >
+                      <path d="m6 9 6 6 6-6" />
+                    </svg>
+                  </div>
+                </div>
+              </button>
+              
+              <AnimatePresence>
+                {isActive && (
+                  <motion.div
+                    key="content"
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="overflow-hidden border-t border-[#2A2E57]"
+                  >
+                    <div className="p-5 bg-[#1E2040]">
+                      <LessonContent
+                        lesson={lesson}
+                        setCompletedLessons={setCompletedLessons}
+                      />
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          );
+        })}
+      </div>
     </div>
   );
 }

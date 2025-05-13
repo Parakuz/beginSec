@@ -16,13 +16,16 @@ export default function Card({ href, src, title, content }) {
 
   return (
     <Link href={href}>
-      <div className="w-84 h-96 bg-gray-800 rounded-2xl overflow-hidden cursor-pointer shadow-lg transition-transform transform hover:scale-105">
-        <img src={src} alt={title} className="w-full h-72 object-cover" />
-        <div className="p-4">
-          <h3 className="text-lg font-semibold text-white line-clamp-1">
+      <div className="w-full h-[420px] bg-gradient-to-b from-[#1E2040] to-[#161831] rounded-2xl overflow-hidden cursor-pointer shadow-lg transition-all duration-300 transform hover:scale-105 border border-[#2A2E57]">
+        <div className="relative">
+          <img src={src} alt={title} className="w-full h-80 object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#161831] to-transparent opacity-40"></div>
+        </div>
+        <div className="p-5 pt-4 font-ibmthai">
+          <h3 className="text-lg font-semibold text-white line-clamp-1 mb-2">
             {truncatedTitle}
           </h3>
-          <p className="text-gray-400 text-sm line-clamp-2 font-ibmthai ">
+          <p className="text-purple-200/80 text-sm line-clamp-2">
             {truncatedContent}
           </p>
         </div>
