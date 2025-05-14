@@ -27,7 +27,6 @@ export default function LessonTabs({
 
   return (
     <div className="mt-10 mb-20 max-w-[1200px] mx-auto font-ibmthai">
-      
       <div className="space-y-4">
         {sortedData.map((lesson, index) => {
           const isCompleted = completedLessons[lesson.id];
@@ -48,7 +47,7 @@ export default function LessonTabs({
               }, 100);
             }
           };
-          
+
           return (
             <motion.div
               key={lesson.id}
@@ -104,24 +103,35 @@ export default function LessonTabs({
                           strokeLinejoin="round"
                           className="text-gray-500"
                         >
-                          <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                          <rect
+                            width="18"
+                            height="11"
+                            x="3"
+                            y="11"
+                            rx="2"
+                            ry="2"
+                          />
                           <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                         </svg>
                       </div>
                     ) : (
                       <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
-                        <span className="text-blue-400 text-sm font-medium">{index + 1}</span>
+                        <span className="text-blue-400 text-sm font-medium">
+                          {index + 1}
+                        </span>
                       </div>
                     )}
                   </span>
                   <div className="text-left">
                     <h3 className="text-lg font-semibold">{lesson.name}</h3>
                     {lesson.description && (
-                      <p className="text-sm text-gray-400 mt-1">{lesson.description}</p>
+                      <p className="text-sm text-gray-400 mt-1">
+                        {lesson.description}
+                      </p>
                     )}
                   </div>
                 </div>
-                
+
                 <div className="flex items-center gap-3">
                   {lesson.labName && (
                     <div className="flex items-center gap-1 bg-indigo-900/30 px-3 py-1 rounded-full">
@@ -143,7 +153,7 @@ export default function LessonTabs({
                       <span className="text-xs text-indigo-300">แล็บ</span>
                     </div>
                   )}
-                  
+
                   <div className="w-6 h-6 flex items-center justify-center">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -155,14 +165,16 @@ export default function LessonTabs({
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      className={`transition-transform duration-300 ${isActive ? "rotate-180" : ""}`}
+                      className={`transition-transform duration-300 ${
+                        isActive ? "rotate-180" : ""
+                      }`}
                     >
                       <path d="m6 9 6 6 6-6" />
                     </svg>
                   </div>
                 </div>
               </button>
-              
+
               <AnimatePresence>
                 {isActive && (
                   <motion.div
