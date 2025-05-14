@@ -143,10 +143,12 @@ export default function LearningPathPage() {
           </div>
 
           <div className="flex flex-col items-start gap-4">
-            <h1 className="text-4xl font-bold text-blue-400">
+            <h1 className="text-4xl font-bold text-white font-ibmthai">
               {learningPath.name}
             </h1>
-            <p className="text-gray-300 max-w-lg">{learningPath.detail}</p>
+            <p className="text-gray-400 max-w-lg font-ibmthai">
+              {learningPath.detail}
+            </p>
 
             <div className="flex gap-4">
               <BoxForLesson title="Lessons" count={totalLessons} />
