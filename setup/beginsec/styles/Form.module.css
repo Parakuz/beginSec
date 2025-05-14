@@ -1,11 +1,11 @@
 .input_group {
-    @apply flex border rounded-xl relative; /* Combined `position: relative` into the same line */
+    @apply flex border rounded-xl relative border-[#2A2E57]; /* เพิ่ม border color */
 }
 
 .input_text {
-    @apply w-full py-3 px-5 border rounded-xl bg-slate-50 focus:outline-none; /* Merged `focus:outline-none` */
+    @apply w-full py-3 px-5 border rounded-xl bg-[#242851] text-white border-[#2A2E57] focus:outline-none; /* เปลี่ยนเป็น dark mode */
 }
 
 .button {
-    @apply bg-[#391A81] text-white py-3 px-5 rounded-xl focus:outline-none font-bold;
+    @apply bg-[#391A81] text-white py-3 px-5 rounded-xl focus:outline-none font-bold hover:bg-[#6231D5] transition-colors duration-300;
 }
