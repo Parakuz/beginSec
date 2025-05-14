@@ -82,7 +82,7 @@ export default function ForgotPassword() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
-                  className={`${styles.input_text} bg-[#242851] text-white border-[#2A2E57] focus:border-[#391A81] focus:ring-2 focus:ring-[#391A81]/30 transition-all duration-300 placeholder-gray-500`}
+                  className={`${styles.input_text} bg-[#242851] text-white border-[#2A2E57] focus:border-white focus:ring-2 focus:ring-white/30 transition-all duration-300 placeholder-gray-500`}
                   required
                 />
               </div>
