@@ -62,8 +62,8 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#f5f5f7] to-[#e8e8ea] flex items-center justify-center p-8">
-      <div className="bg-white rounded-3xl shadow-2xl overflow-hidden max-w-5xl w-full flex flex-col md:flex-row border border-gray-100">
+    <div className="min-h-screen bg-gradient-to-b from-[#161831] to-[#0F0F1E] flex items-center justify-center p-8">
+      <div className="bg-[#1E2040] rounded-3xl shadow-2xl overflow-hidden max-w-5xl w-full flex flex-col md:flex-row border border-[#2A2E57]">
         <div className="w-full md:w-6/12 bg-[#161831] relative h-64 md:h-auto">
           <Image
             src="/assets/CoverLogin-Regis.png"
@@ -87,10 +87,10 @@ export default function Register() {
 
         <div className="w-full md:w-6/12 p-8 md:p-10">
           <div className="mb-6">
-            <h1 className="text-[#252525] text-2xl md:text-3xl font-bold mb-2">
+            <h1 className="text-white text-2xl md:text-3xl font-bold mb-2">
               Sign Up
             </h1>
-            <p className="text-gray-600 text-base">
+            <p className="text-gray-400 text-base">
               Please fill in your information
             </p>
           </div>
@@ -98,11 +98,11 @@ export default function Register() {
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             {error && <p className="text-red-500">{error}</p>}{" "}
             <div className="space-y-1">
-              <label className="text-[#252525] text-base font-medium text-left block mb-1">
+              <label className="text-white text-base font-medium text-left block mb-1">
                 Name
               </label>
               <div
-                className={`${styles.input_group} transition-all duration-300 hover:shadow-md`}
+                className={`${styles.input_group} transition-all duration-300 hover:shadow-md border-[#2A2E57]`}
               >
                 <input
                   type="text"
@@ -110,16 +110,16 @@ export default function Register() {
                   placeholder="Enter your name"
                   value={formData.name}
                   onChange={handleChange}
-                  className={`${styles.input_text} focus:border-[#391A81] focus:ring-2 focus:ring-[#391A81]/30 transition-all duration-300`}
+                  className={`${styles.input_text} bg-[#242851] text-white border-[#2A2E57] focus:border-white focus:ring-2 focus:ring-white/30 transition-all duration-300 placeholder-gray-500`}
                 />
               </div>
             </div>
             <div className="space-y-1">
-              <label className="text-[#252525] text-base font-medium text-left block mb-1">
+              <label className="text-white text-base font-medium text-left block mb-1">
                 Email
               </label>
               <div
-                className={`${styles.input_group} transition-all duration-300 hover:shadow-md`}
+                className={`${styles.input_group} transition-all duration-300 hover:shadow-md border-[#2A2E57]`}
               >
                 <input
                   type="email"
@@ -127,16 +127,16 @@ export default function Register() {
                   placeholder="Enter your email"
                   value={formData.email}
                   onChange={handleChange}
-                  className={`${styles.input_text} focus:border-[#391A81] focus:ring-2 focus:ring-[#391A81]/30 transition-all duration-300`}
+                  className={`${styles.input_text} bg-[#242851] text-white border-[#2A2E57] focus:border-white focus:ring-2 focus:ring-white/30 transition-all duration-300 placeholder-gray-500`}
                 />
               </div>
             </div>
             <div className="space-y-1">
-              <label className="text-[#252525] text-base font-medium text-left block mb-1">
+              <label className="text-white text-base font-medium text-left block mb-1">
                 Password
               </label>
               <div
-                className={`${styles.input_group} transition-all duration-300 hover:shadow-md`}
+                className={`${styles.input_group} transition-all duration-300 hover:shadow-md border-[#2A2E57]`}
               >
                 <input
                   type={showPassword ? "text" : "password"}
@@ -144,10 +144,10 @@ export default function Register() {
                   placeholder="Enter your password"
                   value={formData.password}
                   onChange={handleChange}
-                  className={`${styles.input_text} focus:border-[#391A81] focus:ring-2 focus:ring-[#391A81]/30 transition-all duration-300`}
+                  className={`${styles.input_text} bg-[#242851] text-white border-[#2A2E57] focus:border-white focus:ring-2 focus:ring-white/30 transition-all duration-300 placeholder-gray-500`}
                 />
                 <div
-                  className="absolute inset-y-0 right-3 flex items-center cursor-pointer text-xl text-gray-500 hover:text-[#391A81] transition-colors duration-300"
+                  className="absolute inset-y-0 right-3 flex items-center cursor-pointer text-xl text-gray-400 hover:text-white transition-colors duration-300"
                   onClick={togglePasswordVisibility}
                 >
                   {showPassword ? <IoMdEyeOff /> : <IoMdEye />}
@@ -155,11 +155,11 @@ export default function Register() {
               </div>
             </div>
             <div className="space-y-1">
-              <label className="text-[#252525] text-base font-medium text-left block mb-1">
+              <label className="text-white text-base font-medium text-left block mb-1">
                 Confirm Password
               </label>
               <div
-                className={`${styles.input_group} transition-all duration-300 hover:shadow-md`}
+                className={`${styles.input_group} transition-all duration-300 hover:shadow-md border-[#2A2E57]`}
               >
                 <input
                   type={showConfirmPassword ? "text" : "password"}
@@ -167,10 +167,10 @@ export default function Register() {
                   placeholder="Confirm your password"
                   value={formData.confirmPassword}
                   onChange={handleChange}
-                  className={`${styles.input_text} focus:border-[#391A81] focus:ring-2 focus:ring-[#391A81]/30 transition-all duration-300`}
+                  className={`${styles.input_text} bg-[#242851] text-white border-[#2A2E57] focus:border-white focus:ring-2 focus:ring-white/30 transition-all duration-300 placeholder-gray-500`}
                 />
                 <div
-                  className="absolute inset-y-0 right-3 flex items-center cursor-pointer text-xl text-gray-500 hover:text-[#391A81] transition-colors duration-300"
+                  className="absolute inset-y-0 right-3 flex items-center cursor-pointer text-xl text-gray-400 hover:text-white transition-colors duration-300"
                   onClick={toggleConfirmPasswordVisibility}
                 >
                   {showConfirmPassword ? <IoMdEyeOff /> : <IoMdEye />}
@@ -186,17 +186,17 @@ export default function Register() {
             </button>
             <div className="relative my-4">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300"></div>
+                <div className="w-full border-t border-[#2A2E57]"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">or</span>
+                <span className="px-2 bg-[#1E2040] text-gray-400">or</span>
               </div>
             </div>
-            <p className="text-center text-[#929BA4]">
+            <p className="text-center text-gray-400">
               Already have an account?{" "}
               <Link
                 href="/login"
-                className="text-[#391A81] font-medium hover:underline transition-all duration-300"
+                className="text-[#8A5CF7]  font-medium hover:underline transition-all duration-300"
               >
                 Login
               </Link>
