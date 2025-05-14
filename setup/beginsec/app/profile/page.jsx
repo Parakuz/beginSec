@@ -165,7 +165,7 @@ export default function ProfilePage() {
                     {course.name}
                   </div>
 
-                  <div className="text-gray-300 text-sm mb-4 line-clamp-2">
+                  <div className="text-gray-300 text-sm mb-4 line-clamp-2 font-ibmthai">
                     {course.detail?.substring(0, 100)}...
                   </div>
 

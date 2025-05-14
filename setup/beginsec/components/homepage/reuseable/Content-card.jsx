@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 
-function ContentCard({ src, alt, description, ontop }) {
+function ContentCard({ src, alt, description, ontop, href }) {
   const router = useRouter();
   let style = "rounded overflow-hidden cursor-pointer";
   if (ontop) {
@@ -10,7 +10,7 @@ function ContentCard({ src, alt, description, ontop }) {
   }
 
   return (
-    <div className={style} onClick={() => router.push("/learning-path")}>
+    <div className={style} onClick={() => router.push(href)}>
       <img
         src={src}
         alt={alt}

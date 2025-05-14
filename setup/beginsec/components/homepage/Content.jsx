@@ -7,26 +7,24 @@ function Content() {
       <div className="text-center mb-12">
         <Topic>Contents</Topic>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <ContentCard
-          src="/homepage/cybersecurity-job.png"
-          alt="Cybersecurity Job"
-          description="Cybersecurity Job"
+          href="/learning-path/1"
+          src="/learning-path/fundamental.png"
+          alt="Fundamental For Web Security"
+          description="Fundamental For Web Security"
         />
         <ContentCard
-          src="/homepage/cyber-blue-team.png"
-          alt="Cyber Blue Team"
-          description="Cyber Blue Team"
+          href="/learning-path/2"
+          src="/learning-path/web-exploit.png"
+          alt="Web Exploit Basic"
+          description="Web Exploit Basic"
         />
         <ContentCard
-          src="/homepage/cyber-red-team.png"
-          alt="Cyber Red Team"
-          description="Cyber Red Team"
-        />
-        <ContentCard
-          src="/homepage/basic-command-cyber.png"
-          alt="Basic Command Cyber"
-          description="Basic Command Cyber"
+          href="/learning-path/3"
+          src="/learning-path/cyber-therat.png"
+          alt="ภัยคุกคามและกฏหมายทางด้านไซเบอร์"
+          description="ภัยคุกคามและกฏหมายทางด้านไซเบอร์"
           ontop
         />
       </div>

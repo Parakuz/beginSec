@@ -251,11 +251,11 @@ const BadgesAndCertificationsPage = () => {
                           : icons[i % icons.length]}
                       </div>
 
-                      <h3 className="text-xl text-center font-bold mb-2">
+                      <h3 className="text-xl text-center font-bold mb-2 font-ibmthai">
                         {data.name}
                       </h3>
 
-                      <p className="text-gray-300 text-center mb-4">
+                      <p className="text-gray-300 text-center mb-4 font-ibmthai">
                         {data.detail}
                       </p>
 

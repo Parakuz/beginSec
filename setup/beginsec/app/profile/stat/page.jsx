@@ -199,7 +199,7 @@ const StatPage = () => {
                                 </span>
                               </div>
                             ) : (
-                              <div className="text-xl text-gray-400">
+                              <div className="text-xl text-gray-400 font-ibmthai">
                                 ยังไม่ทำบทเรียนนี้
                               </div>
                             )}
@@ -219,7 +219,7 @@ const StatPage = () => {
                                 </span>
                               </div>
                             ) : (
-                              <div className="text-xl text-gray-400">
+                              <div className="text-xl text-gray-400 font-ibmthai">
                                 ยังไม่ทำบทเรียนนี้
                               </div>
                             )}
