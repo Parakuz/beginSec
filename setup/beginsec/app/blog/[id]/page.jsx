@@ -219,7 +219,7 @@ const BlogPostPage = () => {
           </div>
 
           {/* Content with improved styling */}
-          <div className="p-6 md:p-8 rounded-xl bg-[#1a1c3d]/80 backdrop-blur-sm shadow-[0_5px_20px_rgba(0,0,0,0.3)] border border-[#2d2f5a]/50">
+          <div className="p-6 md:p-8 rounded-xl bg-[#1a1c3d] backdrop-blur-sm shadow-[0_5px_20px_rgba(0,0,0,0.3)] border border-[#2d2f5a]/50">
             <ReactQuill
               value={
                 blogPost.detail
@@ -232,7 +232,7 @@ const BlogPostPage = () => {
               modules={{
                 toolbar: false,
               }}
-              className="lesson-quill border-none blog-content text-white"
+              className="lesson-quill border-none blog-content text-white font-light"
             />
           </div>
 
