@@ -374,18 +374,25 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
           </p>
 
           {lesson.labName ? (
-            <input
-              type="text"
-              className="w-full p-2 rounded-lg border-2 bg-gray-500 text-white"
-              value={answers[q.question] || ""}
-              placeholder="Answer from the lab is ......"
-              onChange={(e) =>
-                setAnswers((prev) => ({
-                  ...prev,
-                  [q.question]: e.target.value,
-                }))
-              }
-            />
+            <div className="relative mt-2">
+              <input
+                type="text"
+                className="w-full p-3 pl-4 pr-10 rounded-lg border-2 border-[#2A2E57] bg-[#1A1C36] text-white font-ibmthai focus:border-[#8A5CF7] focus:outline-none focus:ring-2 focus:ring-[#8A5CF7]/30 transition-all duration-300"
+                value={answers[q.question] || ""}
+                placeholder="พิมพ์คำตอบจากแล็บที่นี่..."
+                onChange={(e) =>
+                  setAnswers((prev) => ({
+                    ...prev,
+                    [q.question]: e.target.value,
+                  }))
+                }
+              />
+              <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-indigo-400">
+                  <path d="m21 21-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0z" />
+                </svg>
+              </div>
+            </div>
           ) : (
             <div className="flex flex-col gap-3 mt-3">
               {q.choices.map((choice) => {

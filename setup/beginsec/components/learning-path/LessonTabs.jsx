@@ -2,6 +2,7 @@
 import LessonContent from "./reuseable/LessonContent";
 import { useState, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { FaDisplay } from "react-icons/fa6";
 
 export default function LessonTabs({
   lessons,
@@ -125,22 +126,8 @@ export default function LessonTabs({
                 <div className="flex items-center gap-3">
                   {lesson.labName && (
                     <div className="flex items-center gap-1 bg-indigo-900/30 px-3 py-1 rounded-full">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="text-indigo-400"
-                      >
-                        <rect width="18" height="12" x="3" y="6" rx="2" />
-                        <path d="M3 10h18" />
-                      </svg>
-                      <span className="text-xs text-indigo-300">แล็บ</span>
+                      <FaDisplay className="text-indigo-400" size={14} />
+                      <span className="text-xs text-indigo-300">Lab</span>
                     </div>
                   )}
                   
