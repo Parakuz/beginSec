@@ -189,6 +189,7 @@ export default function LessonTabs({
                       <LessonContent
                         lesson={lesson}
                         setCompletedLessons={setCompletedLessons}
+                        completedLessons={completedLessons}
                       />
                     </div>
                   </motion.div>

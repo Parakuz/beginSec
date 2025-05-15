@@ -5,7 +5,11 @@ import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import { toast } from "react-toastify";
 
-export default function LessonContent({ lesson, setCompletedLessons }) {
+export default function LessonContent({
+  lesson,
+  setCompletedLessons,
+  completedLessons,
+}) {
   const [answers, setAnswers] = useState({});
   const [feedback, setFeedback] = useState(null);
   const [currentUserId, setCurrentUserId] = useState(null);
@@ -14,6 +18,9 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
   const [intervalId, setIntervalId] = useState(null);
   const [port, setPort] = useState(null);
   const [checked, setChecked] = useState(false);
+
+  // console.log("completedLessons", completedLessons);
+  // console.log("LessonsId", lesson.id);
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -316,6 +323,29 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
       .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
   };
 
+  useEffect(() => {
+    const updatedAnswers = {};
+
+    randomizedQuestions.forEach((q) => {
+      const shouldAutofill =
+        completedLessons[lesson.id] &&
+        lesson.name !== "Pre Test" &&
+        lesson.name !== "Post Test" &&
+        !answers[q.question]; // อย่าเขียนทับถ้าคนตอบเองแล้ว
+
+      if (shouldAutofill) {
+        updatedAnswers[q.question] = q.answer.trim();
+      }
+    });
+
+    if (Object.keys(updatedAnswers).length > 0) {
+      setAnswers((prev) => ({
+        ...prev,
+        ...updatedAnswers,
+      }));
+    }
+  }, [randomizedQuestions, completedLessons, lesson.id, lesson.name]);
+
   return (
     <div className="mt-4">
       <div className="lesson-quill text-base sm:text-lg md:text-xl leading-relaxed">
@@ -407,6 +437,11 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
           ) : (
             <div className="flex flex-col gap-3 mt-3">
               {q.choices.map((choice) => {
+                const shouldHighlight =
+                  checked ||
+                  (completedLessons[lesson.id] &&
+                    lesson.name != "Pre Test" &&
+                    lesson.name != "Post Test");
                 const isCorrect =
                   checked &&
                   answers[q.question]?.trim().toLowerCase() ===
@@ -417,7 +452,7 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
                     key={choice}
                     className={`flex items-center gap-3 p-3 rounded-lg border-2 transition-all duration-300 cursor-pointer ${
                       answers[q.question] === choice
-                        ? isCorrect
+                        ? isCorrect || shouldHighlight
                           ? "border-green-500 bg-green-500/20 text-green-300"
                           : isWrong
                           ? "border-red-500 bg-red-500/20 text-red-300"
@@ -428,7 +463,7 @@ export default function LessonContent({ lesson, setCompletedLessons }) {
                     <div
                       className={`w-6 h-6 flex-shrink-0 rounded-full border-2 flex items-center justify-center ${
                         answers[q.question] === choice
-                          ? isCorrect
+                          ? isCorrect || shouldHighlight
                             ? "border-green-500 bg-green-500"
                             : isWrong
                             ? "border-red-500 bg-red-500"
