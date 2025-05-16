@@ -12,19 +12,19 @@ function Content() {
           href="/learning-path/1"
           src="/learning-path/fundamental.png"
           alt="Fundamental For Web Security"
-          description="Fundamental For Web Security"
+          description={<span className="font-medium">Fundamental For Web Security</span>}
         />
         <ContentCard
           href="/learning-path/2"
           src="/learning-path/web-exploit.png"
           alt="Web Exploit Basic"
-          description="Web Exploit Basic"
+          description={<span className="font-medium">Web Exploit Basic</span>}
         />
         <ContentCard
           href="/learning-path/3"
           src="/learning-path/cyber-therat.png"
           alt="ภัยคุกคามและกฏหมายทางด้านไซเบอร์"
-          description="ภัยคุกคามและกฏหมายทางด้านไซเบอร์"
+          description={<span className="font-ibmthai font-medium">ภัยคุกคามและกฏหมายทางด้านไซเบอร์</span>}
           ontop
         />
       </div>
