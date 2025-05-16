@@ -407,7 +407,7 @@ export default function LessonContent({
             <div className="relative mt-2">
               <input
                 type="text"
-                className="w-full p-3 pl-4 pr-10 rounded-lg border-2 border-[#2A2E57] bg-[#1A1C36] text-white font-ibmthai focus:border-[#8A5CF7] focus:outline-none focus:ring-2 focus:ring-[#8A5CF7]/30 transition-all duration-300"
+                className="w-full p-3 pl-4 pr-10 rounded-lg border-2 border-[#2A2E57] bg-[#1A1C36] text-white font-ibmthai focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30 transition-all duration-300"
                 value={answers[q.question] || ""}
                 placeholder="พิมพ์คำตอบจากแล็บที่นี่..."
                 onChange={(e) =>
@@ -417,7 +417,7 @@ export default function LessonContent({
                   }))
                 }
               />
-              <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+              <dwiv className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="18"
@@ -432,7 +432,7 @@ export default function LessonContent({
                 >
                   <path d="m21 21-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0z" />
                 </svg>
-              </div>
+              </dwiv>
             </div>
           ) : (
             <div className="flex flex-col gap-3 mt-3">
