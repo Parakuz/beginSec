@@ -392,18 +392,10 @@ export default function ProfileSettingsPage() {
                   </button>
 
                   <button
-                    onClick={() => setActiveTab("profile")}
-                    className={`w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 transition-all ${
-                      activeTab === "profile"
-                        ? "bg-purple-600/20 text-purple-300 border-l-4 border-purple-500"
-                        : "hover:bg-[#1e2142]/70"
-                    }`}
+                    disabled
+                    className="w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 transition-all opacity-50 cursor-not-allowed"
                   >
-                    <MdOutlinePhotoCamera
-                      className={
-                        activeTab === "profile" ? "text-purple-400" : ""
-                      }
-                    />
+                    <MdOutlinePhotoCamera />
                     <span>Profile Picture</span>
                   </button>
                 </nav>
@@ -456,7 +448,7 @@ export default function ProfileSettingsPage() {
                             value={telephone}
                             onChange={(e) => setTelephone(e.target.value)}
                             className="w-full bg-[#161831] rounded-lg py-3 px-4 text-white border border-[#3a3f6a] focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none transition-all"
-                            placeholder="+1 (123) 456-7890"
+                            placeholder="+66 (123) 456-7890"
                           />
                         </div>
                       </div>
