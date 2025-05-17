@@ -417,7 +417,7 @@ export default function LessonContent({
                   }))
                 }
               />
-              <dwiv className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+              <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="18"
@@ -432,7 +432,7 @@ export default function LessonContent({
                 >
                   <path d="m21 21-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0z" />
                 </svg>
-              </dwiv>
+              </div>
             </div>
           ) : (
             <div className="flex flex-col gap-3 mt-3">
