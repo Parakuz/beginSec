@@ -494,7 +494,7 @@ export default function ProfileSettingsPage() {
                       <button
                         type="button"
                         onClick={handleSave}
-                        className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-6 rounded-lg transition-all duration-300 flex items-center gap-2"
+                        className="bg-gradient-to-br from-[#391A81] to-[#6231D5] text-white font-medium py-2 px-6 rounded-lg transition-all duration-300 flex items-center gap-2 hover:shadow-lg hover:shadow-purple-900/20"
                       >
                         Save Changes
                       </button>
@@ -575,7 +575,7 @@ export default function ProfileSettingsPage() {
                         <button
                           type="submit"
                           disabled={passwordLoading}
-                          className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-6 rounded-lg transition-all duration-300 flex items-center gap-2"
+                          className="bg-gradient-to-r from-[#391A81] to-[#6231D5] hover:from-[#4e24ab] hover:to-[#7342e3] text-white font-medium py-2 px-6 rounded-lg transition-all duration-300 flex items-center gap-2"
                         >
                           {passwordLoading ? (
                             <>

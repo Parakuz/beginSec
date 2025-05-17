@@ -181,7 +181,7 @@ const StatPage = () => {
                       key={course.id}
                       className="bg-[#242851] rounded-lg p-6 border border-[#3a3f6a] hover:border-purple-500/50 transition-all duration-300"
                     >
-                      <h3 className="text-xl font-bold mb-4 border-b border-[#3a3f6a] pb-3">
+                      <h3 className={`text-xl font-bold mb-4 border-b border-[#3a3f6a] pb-3 ${/[\u0E00-\u0E7F]/.test(course.name) ? 'font-ibmthai' : 'font-satoshi'}`}>
                         {course.name}
                       </h3>
 

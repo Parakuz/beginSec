@@ -367,30 +367,56 @@ export default function LessonContent({
               ? () => window.open(`http://3.104.224.60:${port}`, "_blank")
               : startLabEngine
           }
-          className="w-full h-[50px] bg-[#FFA500] rounded-md text-white font-semibold mb-6 hover:bg-[#ff8c00] transition-colors"
+          className="w-full h-[50px] bg-gradient-to-r from-[#6231D5] to-[#8A63FF] rounded-lg text-white font-semibold mb-6 hover:from-[#8A63FF] hover:to-[#6231D5] transition-all duration-300 shadow-lg flex items-center justify-center gap-2 border border-[#9B7DFF]/30"
         >
-          {labStarted ? "Go to Lab" : "Start Engine"}
+          {labStarted ? (
+            <>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+              </svg>
+              Go to Lab
+            </>
+          ) : (
+            <>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+              Start Lab
+            </>
+          )}
         </button>
       )}
-
+  {/* labStarted && */}
       {labStarted && (
-        <div className="flex flex-col gap-4 mt-4 p-6 bg-[#2E2E2E] rounded-lg shadow-md">
-          <p className="text-white text-xl font-semibold mb-4">
-            Remaining Time: {formatTime(remainingTime)}
-          </p>
+        <div className="flex flex-col gap-4 mt-4 p-6 bg-gradient-to-br from-[#2E2E2E] to-[#1A1A1A] rounded-lg shadow-lg border border-gray-700">
+          <div className="flex items-center justify-between">
+            <h3 className="text-white text-xl font-semibold">Lab Status</h3>
+            <div className="px-4 py-2 bg-[#1E1E1E] rounded-full border border-gray-600 shadow-inner">
+              <p className="text-white font-medium flex items-center">
+                <span className="inline-block w-3 h-3 bg-green-500 rounded-full mr-2 animate-pulse"></span>
+                Remaining Time: {formatTime(remainingTime)}
+              </p>
+            </div>
+          </div>
 
-          <div className="flex flex-col gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
             <button
               onClick={extendLabTime}
-              className="w-full h-[45px] bg-[#32CD32] rounded-md text-white font-semibold hover:bg-[#28a745] transition-colors"
+              className="h-[45px] bg-gradient-to-r from-[#32CD32] to-[#28a745] rounded-md text-white font-semibold hover:from-[#28a745] hover:to-[#218838] transition-all duration-300 shadow-md flex items-center justify-center gap-2"
             >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              </svg>
               Extend Time (+30 minutes)
             </button>
 
             <button
               onClick={terminateLab}
-              className="w-full h-[45px] bg-[#FF4500] rounded-md text-white font-semibold hover:bg-[#e43b00] transition-colors"
+              className="h-[45px] bg-gradient-to-r from-[#FF4500] to-[#e43b00] rounded-md text-white font-semibold hover:from-[#e43b00] hover:to-[#d43500] transition-all duration-300 shadow-md flex items-center justify-center gap-2"
             >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
               Terminate Lab
             </button>
           </div>
@@ -428,7 +454,7 @@ export default function LessonContent({
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="text-indigo-400"
+                  className="text-blue-400"
                 >
                   <path d="m21 21-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0z" />
                 </svg>

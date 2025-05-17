@@ -155,10 +155,10 @@ export default function LearningPathPage() {
               <BoxForLesson title="Completed" count={completedCount} />
             </div>
 
-            <div className="flex items-center gap-4">
-              <div className="w-[474px] h-[32px] bg-[#D9D9D9] rounded-[41px] overflow-hidden relative">
+            <div className="flex items-center gap-2 mt-4">
+              <div className="w-[474px] h-[28px] bg-[#D9D9D9] rounded-[41px] overflow-hidden relative">
                 <div
-                  className="bg-blue-500 h-full rounded-[41px] transition-all flex items-center justify-center"
+                  className="bg-gradient-to-r from-[#6231D5] to-[#8A63FF] h-full rounded-[41px] transition-all flex items-center justify-center"
                   style={{ width: `${progress}%` }}
                 >
                   <span className="text-white text-sm font-semibold z-10">
@@ -166,7 +166,6 @@ export default function LearningPathPage() {
                   </span>
                 </div>
               </div>
-
               <span className="text-sm font-semibold text-white">
                 {`${completedCount}/${totalLessons}`}
               </span>
