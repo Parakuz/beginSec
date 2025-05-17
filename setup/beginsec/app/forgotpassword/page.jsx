@@ -8,11 +8,13 @@ export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
     setError("");
+    setIsLoading(true);
 
     try {
       const res = await fetch("/api/auth/forgetpassword", {
@@ -32,6 +34,8 @@ export default function ForgotPassword() {
     } catch (err) {
       setError("Failed to send reset email. Please try again later.");
     }
+
+    setIsLoading(false);
   };
 
   return (
@@ -89,10 +93,15 @@ export default function ForgotPassword() {
             </div>
 
             <button
-              className={`${styles.button} mt-6 py-3.5 text-lg shadow-lg shadow-[#391A81]/20 hover:shadow-xl hover:shadow-[#391A81]/30 hover:-translate-y-0.5 transition-all duration-300`}
+              className={`${
+                styles.button
+              } mt-6 py-3.5 text-lg shadow-lg shadow-[#391A81]/20 hover:shadow-xl hover:shadow-[#391A81]/30 hover:-translate-y-0.5 transition-all duration-300 ${
+                isLoading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
               type="submit"
+              disabled={isLoading}
             >
-              Reset Password
+              {isLoading ? "Sending..." : "Reset Password"}
             </button>
 
             {message && (
