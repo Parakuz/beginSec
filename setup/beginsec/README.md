@@ -1,10 +1,6 @@
 # Step to run
 
 - docker-compose up -d
-- npx prisma migrate dev --name @unique
-- npx prisma studio ใช้ Check DB
-- npm install
-- npm run dev
 
 # v 0.1.0
 
@@ -27,3 +23,7 @@
 # v 1.0.0
 
 ###### Ready to deploy
+
+# v 1.1.1
+
+###### This version it's has a change ui and make another function usefully

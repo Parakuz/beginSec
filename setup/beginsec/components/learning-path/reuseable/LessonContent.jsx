@@ -371,22 +371,44 @@ export default function LessonContent({
         >
           {labStarted ? (
             <>
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={1.5}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+                />
               </svg>
               Go to Lab
             </>
           ) : (
             <>
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={1.5}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M13 10V3L4 14h7v7l9-11h-7z"
+                />
               </svg>
               Start Lab
             </>
           )}
         </button>
       )}
-  {/* labStarted && */}
+      {/* labStarted && */}
       {labStarted && (
         <div className="flex flex-col gap-4 mt-4 p-6 bg-gradient-to-br from-[#2E2E2E] to-[#1A1A1A] rounded-lg shadow-lg border border-gray-700">
           <div className="flex items-center justify-between">
@@ -404,8 +426,19 @@ export default function LessonContent({
               onClick={extendLabTime}
               className="h-[45px] bg-gradient-to-r from-[#32CD32] to-[#28a745] rounded-md text-white font-semibold hover:from-[#28a745] hover:to-[#218838] transition-all duration-300 shadow-md flex items-center justify-center gap-2"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                />
               </svg>
               Extend Time (+30 minutes)
             </button>
@@ -414,8 +447,19 @@ export default function LessonContent({
               onClick={terminateLab}
               className="h-[45px] bg-gradient-to-r from-[#FF4500] to-[#e43b00] rounded-md text-white font-semibold hover:from-[#e43b00] hover:to-[#d43500] transition-all duration-300 shadow-md flex items-center justify-center gap-2"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
               Terminate Lab
             </button>
@@ -464,10 +508,10 @@ export default function LessonContent({
             <div className="flex flex-col gap-3 mt-3">
               {q.choices.map((choice) => {
                 const shouldHighlight =
-                  checked ||
-                  (completedLessons[lesson.id] &&
-                    lesson.name != "Pre Test" &&
-                    lesson.name != "Post Test");
+                  completedLessons[lesson.id] &&
+                  lesson.name !== "Pre Test" &&
+                  lesson.name !== "Post Test";
+                console.log(shouldHighlight);
                 const isCorrect =
                   checked &&
                   answers[q.question]?.trim().toLowerCase() ===
