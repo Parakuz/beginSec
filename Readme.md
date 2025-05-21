@@ -9,6 +9,7 @@ beginSec คือแพลตฟอร์มการเรียนรู้ C
 ทีมงาน beginSec:
 
 - **Jakkaphan P.** – Documentor & Project Manager & Lab Designer
+  
   ✉️ jakkrapan.p@mail.kmutt.ac.th
 
 - **Singchai A.** – UX/UI & Full stack developer  
