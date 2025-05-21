@@ -12,10 +12,12 @@ beginSec คือแพลตฟอร์มการเรียนรู้ C
   
   ✉️ jakkrapan.p@mail.kmutt.ac.th
 
-- **Singchai A.** – UX/UI & Full stack developer  
+- **Singchai A.** – UX/UI & Full stack developer
+  
   ✉️ singchai.beer@gmail.com
 
-- **Paramet L.** – Full stack developer & Container management & Cloud developer  
+- **Paramet L.** – Full stack developer & Container management & Cloud developer
+  
   ✉️ paramet.lee@gmail.com
 
 ติดต่อทีมงาน: beginsec35@gmail.com
